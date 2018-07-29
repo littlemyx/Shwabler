@@ -16,7 +16,9 @@ import {
   VTextField,
   VSelect,
   VCheckbox,
-  VInput
+  VInput,
+  VTextarea,
+  transitions
 } from 'vuetify'
 
 Vue.use(Vuetify, {
@@ -35,6 +37,8 @@ Vue.use(Vuetify, {
     VTextField,
     VSelect,
     VCheckbox,
-    VInput
+    VInput,
+    VTextarea,
+    transitions
   }
 })

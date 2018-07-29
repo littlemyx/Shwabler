@@ -1,6 +1,8 @@
 <template>
     <div>
-        <Card v-bind:title="title" v-bind:cardText="cardText"></Card>
+        <div>
+          <Card v-bind:title="title" v-bind:cardText="cardText" />
+        </div>
         <v-btn depressed color="error" @click="goBack">
           Back
         </v-btn>
@@ -9,11 +11,13 @@
 
 <script>
 import Card from '../components/Card.vue';
+const posts = require('../assets/data/posts.json');
+
 export default {
   data () {
     return {
-      title: 'Мама мыла раму',
-      cardText: 'Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui.'
+      title: posts[0].title,
+      cardText: posts[0].text
     }
   },
   methods: {

@@ -1,6 +1,7 @@
 <template>
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
+      <v-slide-y-transition>
         <v-card v-bind:color="color" class="white--text darken-3">
           <v-card-title primary-title>
             <div>
@@ -9,8 +10,21 @@
             </div>
           </v-card-title>
 
+          <v-slide-y-transition>
+            <v-card-text v-show="show">
+              <v-textarea
+                dark
+                name="input-7-1"
+                label="Place your answer here"
+                auto-grow
+                counter=110
+                value="The Woodman set to work at once, and so sharp was his axe that the tree was soon chopped nearly through."
+              ></v-textarea>
+            </v-card-text>
+          </v-slide-y-transition>
+
           <v-card-actions>
-            <v-btn fab dark v-bind:color="color" class="lighten-3 ml-3">
+            <v-btn fab dark v-bind:color="color" class="lighten-3 ml-3" @click="answer">
               <v-icon medium dark>favorite</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
@@ -19,6 +33,7 @@
             </v-btn>
           </v-card-actions>
         </v-card>
+      </v-slide-y-transition>
     </v-flex>
   </v-layout>
 </template>
@@ -44,6 +59,11 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      show: false
+    };
+  },
   computed: {
     color: (function () {
       const length = colors.length;
@@ -57,6 +77,11 @@ export default {
         return colors[seed];
       }
     }())
+  },
+  methods: {
+    answer () {
+      this.show = !this.show;
+    }
   },
   components: {
     MessageCard
