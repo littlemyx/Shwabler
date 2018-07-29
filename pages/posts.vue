@@ -29,6 +29,7 @@ export default {
   },
   components: {
     Card
-  }
+  },
+  layout: 'AppLayout'
 }
 </script>

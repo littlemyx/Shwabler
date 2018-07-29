@@ -22,6 +22,10 @@ module.exports = {
   css: [
     '~/assets/style/app.styl'
   ],
+  router: {
+    middleware: 'test' 
+  },
+  mode: 'spa',
   /*
   ** Customize the progress bar color
   */
