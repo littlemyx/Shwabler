@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-          <Card v-bind:title="title" v-bind:cardText="cardText" />
+          <Posts />
         </div>
         <v-btn depressed color="error" @click="goBack">
           Back
@@ -10,16 +10,9 @@
 </template>
 
 <script>
-import Card from '../components/Card.vue';
-const posts = require('../assets/data/posts.json');
+import Posts from '../components/Posts.vue';
 
 export default {
-  data () {
-    return {
-      title: posts[0].title,
-      cardText: posts[0].text
-    }
-  },
   methods: {
     goBack () {
       window.history.length > 1
@@ -28,7 +21,7 @@ export default {
     }
   },
   components: {
-    Card
+    Posts
   },
   layout: 'AppLayout'
 }

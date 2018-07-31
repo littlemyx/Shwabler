@@ -23,7 +23,7 @@ module.exports = {
     '~/assets/style/app.styl'
   ],
   router: {
-    middleware: 'test' 
+    middleware: 'test'
   },
   mode: 'spa',
   /*

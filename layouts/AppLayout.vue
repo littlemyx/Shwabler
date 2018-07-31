@@ -24,16 +24,16 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="indigo" dark fixed app>
+    <v-toolbar color="dark-grey" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+      <v-toolbar-title>Shwabler</v-toolbar-title>
     </v-toolbar>
     <v-content>
-      <v-container fluid fill-height>
+      <v-container fluid>
         <router-view></router-view>
       </v-container>
     </v-content>
-    <v-footer color="indigo" app>
+    <v-footer color="grey" app>
       <span class="white--text">&copy; Its your app</span>
     </v-footer>
   </v-app>
@@ -49,7 +49,7 @@
         items: [
           { icon: 'apps', title: 'Welcome', to: '/' },
           { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' },
-          { icon: 'bubble_chart', title: 'Blog', to: '/posts' },
+          { icon: 'email', title: 'Letters', to: '/posts' },
           { icon: 'apps', title: 'Login', to: '/login' }
         ],
         miniVariant: false,

@@ -2,7 +2,7 @@
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
       <v-slide-y-transition>
-        <v-card v-bind:color="color" class="white--text darken-3">
+        <v-card v-bind:color="color" class="white--text darken-3 card">
           <v-card-title primary-title>
             <div>
               <h3 class="headline mb-0">{{ this.title }}</h3>
@@ -25,10 +25,10 @@
 
           <v-card-actions>
             <v-btn fab dark v-bind:color="color" class="lighten-3 ml-3" @click="answer">
-              <v-icon medium dark>favorite</v-icon>
+              <v-icon v-bind:color="[isLike ? 'red' : '']" medium dark>favorite</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
-            <v-btn fab dark v-bind:color="color" class="darken-1 mr-3">
+            <v-btn fab dark v-bind:color="color" class="darken-1 mr-3" @click="dismiss">
               <v-icon medium dark>clear</v-icon>
             </v-btn>
           </v-card-actions>
@@ -61,7 +61,8 @@ export default {
   },
   data () {
     return {
-      show: false
+      show: false,
+      isLike: false
     };
   },
   computed: {
@@ -81,6 +82,11 @@ export default {
   methods: {
     answer () {
       this.show = !this.show;
+      this.isLike = !this.isLike;
+    },
+    dismiss () {
+      console.log('dismiss');
+      this.$store.commit('cards/change');
     }
   },
   components: {
