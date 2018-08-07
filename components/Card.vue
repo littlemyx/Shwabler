@@ -86,7 +86,7 @@ export default {
     },
     dismiss () {
       console.log('dismiss');
-      this.$store.commit('cards/change');
+      this.$store.commit('cards/changeCard');
     }
   },
   components: {

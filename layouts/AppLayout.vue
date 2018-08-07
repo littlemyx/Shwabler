@@ -22,6 +22,14 @@
             <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile @click="exit">
+          <v-list-tile-action>
+            <v-icon v-html="exit_icon"></v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Exit</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="dark-grey" dark fixed app>
@@ -43,18 +51,25 @@
   export default {
     data () {
       return {
+        exit_icon: 'exit_to_app',
         clipped: false,
         drawer: null,
         fixed: false,
         items: [
-          { icon: 'apps', title: 'Welcome', to: '/' },
-          { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' },
           { icon: 'email', title: 'Letters', to: '/posts' },
           { icon: 'apps', title: 'Login', to: '/login' }
         ],
         miniVariant: false,
         right: true,
         rightDrawer: false
+      }
+    },
+    methods: {
+      exit () {
+        this.$store.dispatch('user/signOut').then(() => {
+          this.$router.push('/login');
+          console.log('exit applayout');
+        });
       }
     },
     props: {

@@ -13,12 +13,6 @@
 import Card from '../components/Card.vue';
 
 export default {
-  fetch ({store}) {
-    const posts = require('../assets/data/posts.json');
-    console.log('fetch');
-    console.log(posts);
-    store.commit('updateCardList', posts);
-  },
   computed: {
     firstCardVisibility () { return this.$store.state.cards.firstCard; },
     secondCardVisibility () { return !this.$store.state.cards.firstCard; },
