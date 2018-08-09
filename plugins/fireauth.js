@@ -10,6 +10,7 @@ export default context => {
       if (user) {
         // setTimeout(function () {
         store.dispatch('user/setUser', user);
+        store.commit('sidebar/authChanged', user);
         // }, 10000);
       }
       return resolve();

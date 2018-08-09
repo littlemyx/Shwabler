@@ -55,13 +55,16 @@
         clipped: false,
         drawer: null,
         fixed: false,
-        items: [
-          { icon: 'email', title: 'Letters', to: '/posts' },
-          { icon: 'apps', title: 'Login', to: '/login' }
-        ],
         miniVariant: false,
         right: true,
         rightDrawer: false
+      }
+    },
+    computed: {
+      items () {
+        console.log(this.$store);
+        console.log(this.$store.state);
+        return this.$store.state.sidebar.items.filter(item => item.isAuth === !!this.$store.state.user.user);// getters['sidebar/getItems'];
       }
     },
     methods: {
