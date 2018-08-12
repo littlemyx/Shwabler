@@ -3,7 +3,7 @@ export default function ({ store, redirect, route }) {
     redirect('/posts');
     console.log('auth');
   }
-  if (store.state.user.user === null && route.name !== 'login') {
+  if (store.state.user.user === null && route.name !== 'login' && route.name !== 'signup') {
     redirect('/login');
     console.log('no auth');
   }

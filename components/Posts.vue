@@ -1,10 +1,10 @@
 <template>
     <div class="cardWrapper">
       <transition name="bounce" mode="out-in">
-        <Card key="first" v-bind:title="firstTitle" v-bind:cardText="firstCardText" v-show="firstCardVisibility"/>
+        <Card key="first" v-bind:isNew="isNew" v-bind:title="firstTitle" v-bind:cardText="firstCardText" v-show="firstCardVisibility"/>
       </transition>
       <transition name="bounce" mode="out-in">
-        <Card key="second" v-bind:title="secondTitle" v-bind:cardText="secondCardText" v-show="secondCardVisibility"/>
+        <Card key="second" v-bind:isNew="isNew" v-bind:title="secondTitle" v-bind:cardText="secondCardText" v-show="secondCardVisibility"/>
       </transition>
     </div>
 </template>
@@ -13,13 +13,18 @@
 import Card from '../components/Card.vue';
 
 export default {
+  data () {
+    return {
+      isNew: true
+    }
+  },
   computed: {
-    firstCardVisibility () { return this.$store.state.cards.firstCard; },
-    secondCardVisibility () { return !this.$store.state.cards.firstCard; },
-    firstTitle () { return this.$store.state.cards.cardList[0].title },
-    secondTitle () { return this.$store.state.cards.cardList[1].title },
-    firstCardText () { return this.$store.state.cards.cardList[0].text },
-    secondCardText () { return this.$store.state.cards.cardList[1].text }
+    firstCardVisibility () { return this.$store.state.posts.firstCard; },
+    secondCardVisibility () { return !this.$store.state.posts.firstCard; },
+    firstTitle () { return this.$store.state.posts.cardList[0].title },
+    secondTitle () { return this.$store.state.posts.cardList[1].title },
+    firstCardText () { return this.$store.state.posts.cardList[0].text },
+    secondCardText () { return this.$store.state.posts.cardList[1].text }
   },
   methods: {
     goBack () {

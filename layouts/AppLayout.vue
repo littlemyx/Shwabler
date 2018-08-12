@@ -8,6 +8,11 @@
       app
     >
       <v-list>
+        <v-list-tile>
+          <v-list-tile-content>
+            <v-list-tile-title v-text="user"></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
         <v-list-tile
           router
           :to="item.to"
@@ -42,7 +47,7 @@
       </v-container>
     </v-content>
     <v-footer color="grey" app>
-      <span class="white--text">&copy; Its your app</span>
+      <span class="white--text">&copy; 6:31 am </span>
     </v-footer>
   </v-app>
 </template>
@@ -65,6 +70,9 @@
         console.log(this.$store);
         console.log(this.$store.state);
         return this.$store.state.sidebar.items.filter(item => item.isAuth === !!this.$store.state.user.user);// getters['sidebar/getItems'];
+      },
+      user () {
+        return this.$store.getters['user/activeUser'];
       }
     },
     methods: {

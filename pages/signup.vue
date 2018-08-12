@@ -13,21 +13,19 @@
             :rules="passwordRules"
             label="Password"
             :type="'password'"
+            class="password"
           ></v-text-field>
 
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn
-              :disabled="!valid"
-              @click="submit"
-            >
-              submit
-            </v-btn>
-            <v-spacer></v-spacer>
-          </v-card-actions>
+          <v-btn
+            :disabled="!valid"
+            @click="submit"
+          >
+            submit
+          </v-btn>
+          <v-btn @click="clear">clear</v-btn>
         </v-form>
       </v-card>
-      Don't have an account yet ? <router-link to="signup"> Sign up! </router-link>
+      Have an account? <router-link to="/login"> Login! </router-link>
     </v-flex>
   </v-layout>
 </template>
@@ -60,7 +58,7 @@
           //   select: this.select,
           //   checkbox: this.checkbox
           // })
-          firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
+          firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
             (user) => {
               console.log(user);
               this.$router.push('/posts');
@@ -87,5 +85,8 @@
 <style scoped>
 .wrapper_card{
   padding: 10px;
+}
+.v-text-field__slot{
+  letter-spacing: -6px;
 }
 </style>

@@ -23,7 +23,7 @@
             </v-card-text>
           </v-slide-y-transition>
 
-          <v-card-actions>
+          <v-card-actions v-if="isNew">
             <v-btn fab dark v-bind:color="color" class="lighten-3 ml-3" @click="answer">
               <v-icon v-bind:color="[isLike ? 'red' : '']" medium dark>favorite</v-icon>
             </v-btn>
@@ -31,6 +31,10 @@
             <v-btn fab dark v-bind:color="color" class="darken-1 mr-3" @click="dismiss">
               <v-icon medium dark>clear</v-icon>
             </v-btn>
+          </v-card-actions>
+
+          <v-card-actions v-if="!isNew">
+            <v-btn  dark v-bind:color="color" class="lighten-3" @click="answer" block>Show Dialog</v-btn>
           </v-card-actions>
         </v-card>
       </v-slide-y-transition>
@@ -57,6 +61,10 @@ export default {
       validator: function (value) {
         return true;
       }
+    },
+    isNew: {
+      type: Boolean,
+      required: true
     }
   },
   data () {
@@ -86,7 +94,9 @@ export default {
     },
     dismiss () {
       console.log('dismiss');
-      this.$store.commit('cards/changeCard');
+      this.show = false;
+      this.isLike = false;
+      this.$store.commit('posts/changeCard');
     }
   },
   components: {
