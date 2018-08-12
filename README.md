@@ -1,4 +1,4 @@
-# tinmer
+# Shwabler
 
 > Nuxt.js + Vuetify.js project
 
