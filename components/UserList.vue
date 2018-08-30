@@ -1,17 +1,18 @@
 <template>
     <div class="cardWrapper">
-        <Card 
-          :key="i"
-          v-for="(card, i) in cards"
-          v-bind:title="card.title" 
-          v-bind:cardText="card.text"
-          v-bind:isNew="isNew"
-        />
+      <WardrobeCard 
+        :key="i"
+        class="wardrobeCard"
+        v-for="(card, i) in cards"
+        v-bind:title="card.title" 
+        v-bind:cardText="card.text"
+        v-bind:isNew="isNew"
+      />
     </div>
 </template>
 
 <script>
-import Card from '../components/Card.vue';
+import WardrobeCard from '../components/WardrobeCard.vue';
 
 export default {
   data () {
@@ -23,7 +24,7 @@ export default {
     cards () { return this.$store.state.userList.userList; }
   },
   components: {
-    Card
+    WardrobeCard
   },
   layout: 'AppLayout'
 }
@@ -32,6 +33,10 @@ export default {
 <style scoped>
 .cardWrapper {
   position: relative;
+}
+
+.wardrobeCard{
+  margin-bottom: 20px;
 }
 
 .bounce-enter-active {

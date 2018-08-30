@@ -39,8 +39,10 @@ module.exports = {
   build: {
 
     babel: {
+      presets: ['es2015', 'stage-2', 'vue'],
       plugins: [
-        ['transform-imports', {
+        [
+          'transform-imports', {
           'vuetify': {
             'transform': 'vuetify/es5/components/${member}',
             'preventFullImport': true
@@ -50,6 +52,7 @@ module.exports = {
     },
 
     vendor: [
+      'babel-polyfill',
       '~/plugins/vuetify.js'
     ],
     extractCSS: true,
