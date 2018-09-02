@@ -1,16 +1,22 @@
 <template>
     <div class="cardWrapper">
       <transition name="bounce" mode="out-in">
-        <Card key="first" v-bind:isNew="isNew" v-bind:title="firstTitle" v-bind:cardText="firstCardText" v-show="firstCardVisibility"/>
+        <WaterfallCard 
+          key="first"
+          v-bind:isNew="isNew"
+          v-bind:title="firstTitle"
+          v-bind:cardText="firstCardText"
+          v-show="firstCardVisibility"
+        />
       </transition>
       <transition name="bounce" mode="out-in">
-        <Card key="second" v-bind:isNew="isNew" v-bind:title="secondTitle" v-bind:cardText="secondCardText" v-show="secondCardVisibility"/>
+        <WaterfallCard key="second" v-bind:isNew="isNew" v-bind:title="secondTitle" v-bind:cardText="secondCardText" v-show="secondCardVisibility"/>
       </transition>
     </div>
 </template>
 
 <script>
-import Card from '../components/Card.vue';
+import WaterfallCard from '../components/WaterfallCard.vue';
 
 export default {
   data () {
@@ -34,7 +40,7 @@ export default {
     }
   },
   components: {
-    Card
+    WaterfallCard
   },
   layout: 'AppLayout'
 }
