@@ -1,11 +1,11 @@
 <template>
     <div>
-      <UserList />
+      <WardrobeList />
     </div>
 </template>
 
 <script>
-import UserList from '../components/UserList.vue';
+import WardrobeList from '../components/WardrobeList.vue';
 
 export default {
   fetch ({store}) {
@@ -24,7 +24,7 @@ export default {
     }
   },
   components: {
-    UserList
+    WardrobeList
   },
   layout: 'AppLayout'
 }

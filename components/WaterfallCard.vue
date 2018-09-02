@@ -1,14 +1,14 @@
 <template>
   <v-layout>
-    <Card>
+    <Card v-bind:color="color">
       <div slot="header">
         <h3 class="headline mb-0">{{ this.title }}</h3>
         <div>{{ this.cardText }}</div>
       </div>
 
-      <InputText/>
+      <InputText v-show="isShow"/>
 
-      <v-card-actions v-if="isNew" slot="footer">
+      <div class="footer" slot="footer">
         <v-btn fab dark v-bind:color="color" class="lighten-3 ml-3" @click="answer">
           <v-icon v-bind:color="[isLike ? 'red' : '']" medium dark>favorite</v-icon>
         </v-btn>
@@ -16,11 +16,7 @@
         <v-btn fab dark v-bind:color="color" class="darken-1 mr-3" @click="dismiss">
           <v-icon medium dark>clear</v-icon>
         </v-btn>
-      </v-card-actions>
-
-
-      <v-btn slot="footer" dark v-bind:color="color" class="lighten-3" @click="answer" block>Show Dialog</v-btn>
-
+      </div>
     </Card>
   </v-layout>
 </template>
@@ -49,8 +45,9 @@ export default {
   },
   data () {
     return {
-      show: false,
-      isLike: false
+      isShow: false,
+      isLike: false,
+      buttonText: 'Show Dialog'
     };
   },
   computed: {
@@ -69,12 +66,12 @@ export default {
   },
   methods: {
     answer () {
-      this.show = !this.show;
+      this.isShow = !this.isShow;
       this.isLike = !this.isLike;
     },
     dismiss () {
       console.log('dismiss');
-      this.show = false;
+      this.isShow = false;
       this.isLike = false;
       this.$store.commit('posts/changeCard');
     }
@@ -85,3 +82,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.footer{
+  width: 100%;
+  display: flex;
+}
+</style>
