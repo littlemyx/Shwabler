@@ -1,14 +1,70 @@
 [
   {
+    "title": "Sweet Home Alabama",
+    "text": "One line - one rhyme",
+    "messages": [
+      {
+        "author": "Jack",
+        "text": "Big wheels keep on turning"
+      },
+      {
+        "author": "Jill",
+        "text": "Carry me home to see my kin"
+      },
+      {
+        "author": "Jack",
+        "text": "Singing songs about the Southland"
+      },
+      {
+        "author": "Jack",
+        "text": "I miss Alabamy once again"
+      },
+      {
+        "author": "Jack",
+        "text": "Oh! I missed it!"
+      }
+    ]
+  },
+  {
     "title": "Where is your God now?",
-    "text": "\"Where is Your God Now?\" is a popular catchphrase associated with various interweb sightings (images, videos, sites, etc) that defy the logic of human understanding to the point one can no longer resist but to ask him/herself: Does God Really Exist?"
+    "text": "\"Where is Your God Now?\" is a popular catchphrase associated with various interweb sightings (images, videos, sites, etc) that defy the logic of human understanding to the point one can no longer resist but to ask him/herself: Does God Really Exist?",
+    "messages": [
+      {
+        "author": "Jack",
+        "text": "Big wheels keep on turning"
+      },
+      {
+        "author": "Jill",
+        "text": "Carry me home to see my kin"
+      }
+    ]
   },
   {
     "title": "Мама мыла раму",
-    "text": "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui."
+    "text": "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui.",
+    "messages": [
+      {
+        "author": "Jack",
+        "text": "Big wheels keep on turning"
+      },
+      {
+        "author": "Jill",
+        "text": "Carry me home to see my kin"
+      }
+    ]
   },
   {
     "title": "Больше Бена",
-    "text": "И так каждый божий день:<br>Больше денег больше дел, больше дев, больше демонов...<br>Но как из кожи не лезть:<br>Тоже небо, тоже кредо, больше Бена, Porchy демо дал...<br>Нам тут похоже пиздец:<br>Толще снег, тоньше стены, больше стрелок, глушит декаданс...<br>И так каждый божий день:<br>Больше денег, больше дел, больше дев, больше демонов..."
+    "text": "И так каждый божий день:<br>Больше денег больше дел, больше дев, больше демонов...<br>Но как из кожи не лезть:<br>Тоже небо, тоже кредо, больше Бена, Porchy демо дал...<br>Нам тут похоже пиздец:<br>Толще снег, тоньше стены, больше стрелок, глушит декаданс...<br>И так каждый божий день:<br>Больше денег, больше дел, больше дев, больше демонов...",
+    "messages": [
+      {
+        "author": "Jack",
+        "text": "Big wheels keep on turning"
+      },
+      {
+        "author": "Jill",
+        "text": "Carry me home to see my kin"
+      }
+    ]
   }
 ]
