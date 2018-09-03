@@ -6,9 +6,9 @@
         <div>{{ this.cardText }}</div>
       </div>
 
-      <InputText v-show="isShow"/>
+      <DialogBody v-show="isShow" v-bind:messages="messages"/>
 
-      <v-btn slot="footer" dark v-bind:color="color" class="lighten-3" @click="toggleDialogVisibility" block>
+      <v-btn slot="footer" dark v-bind:color="color" class="lighten-1" @click="toggleDialogVisibility" block>
         {{ this.buttonText }}
       </v-btn>
     </Card>
@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import InputText from './InputText.vue';
 import Card from './Card.vue';
+import DialogBody from './DialogBody.vue';
 const {colors} = require('../assets/data/colors.json');
 
 export default {
@@ -35,6 +35,10 @@ export default {
       validator: function (value) {
         return true;
       }
+    },
+    messages: {
+      type: Array,
+      required: false
     }
   },
   data () {
@@ -71,7 +75,7 @@ export default {
     }
   },
   components: {
-    InputText,
+    DialogBody,
     Card
   }
 }

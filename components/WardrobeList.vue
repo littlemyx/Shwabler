@@ -1,13 +1,14 @@
 <template>
-    <div class="cardWrapper">
-      <WardrobeCard 
-        :key="i"
-        class="wardrobeCard"
-        v-for="(card, i) in cards"
-        v-bind:title="card.title" 
-        v-bind:cardText="card.text"
-      />
-    </div>
+  <div class="cardWrapper">
+    <WardrobeCard 
+      :key="i"
+      class="wardrobeCard"
+      v-for="(card, i) in cards"
+      v-bind:title="card.title" 
+      v-bind:cardText="card.text"
+      v-bind:messages="card.messages"
+    />
+  </div>
 </template>
 
 <script>
