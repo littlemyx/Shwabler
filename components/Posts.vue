@@ -10,7 +10,12 @@
         />
       </transition>
       <transition name="bounce" mode="out-in">
-        <WaterfallCard key="second" v-bind:isNew="isNew" v-bind:title="secondTitle" v-bind:cardText="secondCardText" v-show="secondCardVisibility"/>
+        <WaterfallCard 
+          key="second" 
+          v-bind:isNew="isNew" 
+          v-bind:title="secondTitle" 
+          v-bind:cardText="secondCardText" 
+          v-show="secondCardVisibility"/>
       </transition>
     </div>
 </template>
