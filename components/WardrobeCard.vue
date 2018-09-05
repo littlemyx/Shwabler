@@ -6,7 +6,7 @@
         <div>{{ this.cardText }}</div>
       </div>
 
-      <DialogBody v-show="isShow" v-bind:messages="messages"/>
+      <DialogBody v-show="isShow" v-bind:messages="messages" v-bind:color="color"/>
 
       <v-btn slot="footer" dark v-bind:color="color" class="lighten-1" @click="toggleDialogVisibility" block>
         {{ this.buttonText }}

@@ -1,7 +1,9 @@
 <template>
-  <div>
+<div v-bind:class="classObject">
+  <div v-bind:class="['messageContent', 'darken-1', color]">
     {{this.text}}
   </div>
+</div>
 </template>
 
 <script>
@@ -14,7 +16,36 @@ export default {
     author: {
       type: String,
       required: true
+    },
+    color: {
+      type: String,
+      required: false
+    }
+  },
+  computed: {
+    classObject () {
+      return {
+        messageWrapper: true,
+        messageAuthor: this.author === this.$store.getters['user/activeUser']
+      }
     }
   }
 }
 </script>
+
+<style scoped>
+.messageWrapper{
+  display: flex;
+  width: 100%;
+}
+.messageAuthor{
+  justify-content: flex-end;
+}
+.messageContent{
+  margin-bottom: 3px;
+  padding: 5px;
+  display: block;
+  background-color: peru;
+  border-radius: 5px;
+}
+</style>
