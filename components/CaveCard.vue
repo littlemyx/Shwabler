@@ -9,11 +9,10 @@
       <InputText v-show="isShow"/>
 
       <div class="footer" slot="footer">
-        <v-btn fab dark v-bind:color="color" class="darken-1 ml-3" @click="answer">
+        <v-btn v-bind:color="color" class="darken-1 ml-3" @click="answer">
           <v-icon v-bind:color="isLike ? 'red' : ''" medium dark>favorite</v-icon>
         </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn fab dark v-bind:color="color" class="darken-1 mr-3" @click="dismiss">
+        <v-btn v-bind:color="color" class="darken-1 mr-3" @click="dismiss">
           <v-icon medium dark>clear</v-icon>
         </v-btn>
       </div>

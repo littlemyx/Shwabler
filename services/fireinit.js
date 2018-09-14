@@ -14,6 +14,7 @@ var config = {
 firebase.initializeApp(config);
 
 const auth = firebase.auth();
+const database = firebase.database();
 
 // auth.onAuthStateChanged(user => {
 //   if (user) {
@@ -24,5 +25,5 @@ const auth = firebase.auth();
 
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider();
 export { auth };
-export const DB = firebase.database();
+export { database };
 export default firebase;
