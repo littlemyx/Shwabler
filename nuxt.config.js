@@ -53,6 +53,7 @@ module.exports = {
 
     vendor: [
       'babel-polyfill',
+      'lodash',
       '~/plugins/vuetify.js'
     ],
     extractCSS: true,
