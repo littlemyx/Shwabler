@@ -1,6 +1,6 @@
 <template>
 <div>
-  <CaveList v-bind:cards="cards"/>
+  <CaveList v-bind:cards="cards" v-on:deleteItem="deleteItem"/>
 
   <v-btn fab dark @click="openDialog" class="add dark-gray mr-3">
       <v-icon medium dark>add</v-icon>
@@ -67,8 +67,8 @@ export default {
     }
   },
   fetch ({store}) {
-    const list = require('../assets/data/caveList.json');
-    store.commit('cave/setCaveList', list);
+    // const list = require('../assets/data/caveList.json');
+    // store.commit('cave/setCaveList', list);
   },
   computed: {
     newCardTitle () { return this.$store.state.cave.newCardTitle; },
@@ -83,12 +83,11 @@ export default {
     },
     add () {
       const newPost = {
-        title: '',
-        text: ''
+        id: 0,
+        title: this.newCardTitle,
+        text: this.newCardTitle
       };
       this.dialog = false;
-      newPost.title = this.newCardTitle;
-      newPost.text = this.newCardText;
       this.$store.dispatch('cave/addToCaveListAsync', [newPost]);
     },
     cancel () {
@@ -99,6 +98,9 @@ export default {
     },
     inputText (value) {
       this.$store.commit('cave/setNewCardText', value);
+    },
+    deleteItem (id) {
+      this.$store.dispatch('cave/removeFromCaveListAsync', id)
     }
   },
   components: {

@@ -3,17 +3,31 @@
     <CaveCard 
       :key="i"
       class="wardrobeCard"
+      v-if="cards.length >= 1"
       v-for="(card, i) in cards"
       v-bind:title="card.title" 
       v-bind:cardText="card.text"
+      v-bind:id="i"
+      v-on:deleteItem="deleteItem"
     />
+    <Card v-if="cards.length < 1" color="red">
+      <div slot="header" style="width:100%; text-align: center;">
+        <h1>{{ this.emptyText }}</h1>
+      </div>
+    </Card>
   </div>
 </template>
 
 <script>
 import CaveCard from '../components/CaveCard.vue';
+import Card from '../components/Card.vue';
 
 export default {
+  data () {
+    return {
+      emptyText: 'No cards yet :-('
+    }
+  },
   props: {
     cards: {
       type: Array,
@@ -21,7 +35,13 @@ export default {
     }
   },
   components: {
-    CaveCard
+    CaveCard,
+    Card
+  },
+  methods: {
+    deleteItem (id) {
+      this.$emit('deleteItem', id);
+    }
   },
   layout: 'AppLayout'
 }
