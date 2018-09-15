@@ -10,7 +10,7 @@
     v-model="dialog"
     width="500"
   >
-    <Card color="gray" v-bind:newCardValues="newCard">
+    <Card color="gray" v-bind:newCardValues="newCard" v-bind:defaultStyle="false">
       <InputText 
         label="Header of your card"
         slot="header"

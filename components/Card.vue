@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-flex xs12 sm6 offset-sm3>
+    <v-flex v-bind:xs12="defaultStyle" v-bind:sm6="defaultStyle" v-bind:offset-sm3="defaultStyle">
       <v-slide-y-transition>
         <v-card v-bind:color="color" class="white--text darken-3 card">
           <slot name="controlItems"></slot>
@@ -28,6 +28,11 @@
 <script>
 export default {
   props: {
+    defaultStyle: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
     color: {
       type: String,
       required: false,
