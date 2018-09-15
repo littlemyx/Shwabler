@@ -18,7 +18,11 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
   },
-  plugins: ['~/plugins/vuetify.js', { src: '~/plugins/fireauth.js', ssr: false }],
+  plugins: [
+    '~/plugins/vuetify.js',
+    { src: '~/plugins/fireauth.js', ssr: false },
+    { src: '~/plugins/initstore.js', ssr: false }
+  ],
   css: [
     '~/assets/style/app.styl'
   ],

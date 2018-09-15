@@ -1,6 +1,10 @@
 <template>
   <v-layout>
     <Card v-bind:color="color">
+      <v-btn slot="controlItems" flat icon color="black" class="deleteIcon" @click="deleteCard">
+        <v-icon medium dark>clear</v-icon>
+      </v-btn>
+
       <div slot="header">
         <h3 class="headline mb-0">{{ this.title }}</h3>
         <div>{{ this.cardText }}</div>
@@ -27,6 +31,13 @@ const {colors} = require('../assets/data/colors.json');
 
 export default {
   props: {
+    id: {
+      type: Number,
+      required: true,
+      validator: function (value) {
+        return true;
+      }
+    },
     title: {
       type: String,
       required: true,
@@ -73,6 +84,9 @@ export default {
       this.isShow = false;
       this.isLike = false;
       this.$store.commit('posts/changeCard');
+    },
+    deleteCard () {
+      this.$emit('deleteItem', this.id);
     }
   },
   components: {
@@ -86,5 +100,9 @@ export default {
 .footer{
   width: 100%;
   display: flex;
+}
+.deleteIcon{
+  position: absolute;
+  right: 5px;
 }
 </style>

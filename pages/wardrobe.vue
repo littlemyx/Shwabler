@@ -9,8 +9,8 @@ import WardrobeList from '../components/WardrobeList.vue';
 
 export default {
   fetch ({store}) {
-    const list = require('../assets/data/userList.json');
-    store.commit('userList/updateUserList', list);
+    // const list = require('../assets/data/userList.json');
+    // store.commit('userList/updateUserList', list);
   },
   methods: {
     goBack () {

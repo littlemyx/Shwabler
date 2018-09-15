@@ -3,6 +3,8 @@
     <v-flex xs12 sm6 offset-sm3>
       <v-slide-y-transition>
         <v-card v-bind:color="color" class="white--text darken-3 card">
+          <slot name="controlItems"></slot>
+          
           <v-card-title primary-title>
             <slot name="header" v-bind:value="newCardValues" v-on:input="headerInput"></slot>
           </v-card-title>
