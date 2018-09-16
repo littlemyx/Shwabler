@@ -73,7 +73,7 @@ export default {
       console.log('dismiss');
       this.isShow = false;
       this.isLike = false;
-      this.$store.commit('posts/changeCard');
+      this.$emit('dismiss');
     }
   },
   components: {

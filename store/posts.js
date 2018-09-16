@@ -1,6 +1,10 @@
 export const state = () => ({
-  firstCard: true,
-  cardList: []
+  isFirstCardVisible: true,
+  cardList: [],
+  index: 0,
+  firstCard: null,
+  secondCard: null,
+  isEnd: false
 })
 
 export const mutations = {
@@ -9,5 +13,28 @@ export const mutations = {
   },
   updateCardList (state, newList) {
     state.cardList = [...newList];
+  },
+  increaseIndex (state) {
+    state.index++;
+  },
+  setEnd (state, value) {
+    state.isEnd = value;
+  }
+}
+
+export const actions = {
+  increaseIndex ({ commit, state }, payload) {
+    const newIndex = state.index + 1;
+    if (newIndex === 10) {
+      // load next pack of cards and set index to 0
+      commit('setEnd', true);
+    }
+    commit('increaseIndex');
+  }
+}
+
+export const getters = {
+  nextCard: state => {
+    return state.cardList[state.index];
   }
 }

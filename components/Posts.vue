@@ -1,22 +1,34 @@
 <template>
     <div class="cardWrapper">
-      <transition name="bounce" mode="out-in">
-        <WaterfallCard 
-          key="first"
-          v-bind:isNew="isNew"
-          v-bind:title="firstTitle"
-          v-bind:cardText="firstCardText"
-          v-show="firstCardVisibility"
-        />
-      </transition>
-      <transition name="bounce" mode="out-in">
-        <WaterfallCard 
-          key="second" 
-          v-bind:isNew="isNew" 
-          v-bind:title="secondTitle" 
-          v-bind:cardText="secondCardText" 
-          v-show="secondCardVisibility"/>
-      </transition>
+      <template v-if="!isEnd">
+        <transition name="bounce" mode="out-in">
+          <WaterfallCard 
+            key="first"
+            v-bind:isNew="isNew"
+            v-bind:title="firstCard.title"
+            v-bind:cardText="firstCard.text"
+            v-show="firstCardVisibility"
+            v-on:dismiss="dismiss"
+          />
+        </transition>
+        <transition name="bounce" mode="out-in">
+          <WaterfallCard 
+            key="second" 
+            v-bind:isNew="isNew" 
+            v-bind:title="secondCard.title" 
+            v-bind:cardText="secondCard.text" 
+            v-show="secondCardVisibility"
+            v-on:dismiss="dismiss"
+          />
+        </transition>
+      </template>
+      <template v-if="isEnd">
+        <Card color="red">
+          <div slot="header" style="width:100%; text-align: center;">
+            <h1>{{ this.endText }}</h1>
+          </div>
+        </Card>
+      </template>
     </div>
 </template>
 
@@ -26,22 +38,40 @@ import WaterfallCard from '../components/WaterfallCard.vue';
 export default {
   data () {
     return {
-      isNew: true
+      isNew: true,
+      endText: 'No more cards yet :-('
     }
   },
   computed: {
-    firstCardVisibility () { return this.$store.state.posts.firstCard; },
-    secondCardVisibility () { return !this.$store.state.posts.firstCard; },
-    firstTitle () { return this.$store.state.posts.cardList[0].title },
-    secondTitle () { return this.$store.state.posts.cardList[1].title },
-    firstCardText () { return this.$store.state.posts.cardList[0].text },
-    secondCardText () { return this.$store.state.posts.cardList[1].text }
+    firstCardVisibility () { return this.$store.state.posts.isFirstCardVisible; },
+    secondCardVisibility () { return !this.$store.state.posts.isFirstCardVisible; },
+    isEnd () { return this.$store.state.posts.isEnd; },
+    firstCard () { return this.$store.getters['posts/nextCard']; },
+    secondCard () { return this.$store.getters['posts/nextCard']; }
+    // firstCard: {
+    //   get () {
+    //     const returnValue = this.$store.getters['posts/nextCard'];
+    //     this.$store.dispatch('posts/increaseIndex');
+    //     return returnValue;
+    //   }
+    // },
+    // secondCard: {
+    //   get () {
+    //     const returnValue = this.$store.getters['posts/nextCard'];
+    //     this.$store.dispatch('posts/increaseIndex');
+    //     return returnValue;
+    //   }
+    // }
   },
   methods: {
     goBack () {
       window.history.length > 1
         ? this.$router.go(-1)
         : this.$router.push('/');
+    },
+    dismiss () {
+      this.$store.commit('posts/changeCard');
+      this.$store.dispatch('posts/increaseIndex');
     }
   },
   components: {
