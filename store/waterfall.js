@@ -30,6 +30,9 @@ export const actions = {
       commit('setEnd', true);
     }
     commit('increaseIndex');
+  },
+  uploadCardToServer ({ commit, state, dispatch }) {
+    dispatch('increaseIndex', null);
   }
 }
 

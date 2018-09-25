@@ -61,7 +61,7 @@
           firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
             (user) => {
               console.log(user);
-              this.$router.push('/posts');
+              this.$router.push('/waterfall');
             },
             function (error) {
               alert(`oops! ${error}`);

@@ -1,2 +1,7 @@
 {
+  "editor.formatOnSave": false,
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "eslint.options": { "configFile": "/Users/a.muhin/nuxt/tinmer/.eslintrc.js" }
 }

@@ -9,6 +9,7 @@
             v-bind:cardText="firstCard.text"
             v-show="firstCardVisibility"
             v-on:dismiss="dismiss"
+            v-on:accept="accept"
           />
         </transition>
         <transition name="bounce" mode="out-in">
@@ -19,6 +20,7 @@
             v-bind:cardText="secondCard.text" 
             v-show="secondCardVisibility"
             v-on:dismiss="dismiss"
+            v-on:accept="accept"
           />
         </transition>
       </template>
@@ -43,22 +45,22 @@ export default {
     }
   },
   computed: {
-    firstCardVisibility () { return this.$store.state.posts.isFirstCardVisible; },
-    secondCardVisibility () { return !this.$store.state.posts.isFirstCardVisible; },
-    isEnd () { return this.$store.state.posts.isEnd; },
-    firstCard () { return this.$store.getters['posts/nextCard']; },
-    secondCard () { return this.$store.getters['posts/nextCard']; }
+    firstCardVisibility () { return this.$store.state.waterfall.isFirstCardVisible; },
+    secondCardVisibility () { return !this.$store.state.waterfall.isFirstCardVisible; },
+    isEnd () { return this.$store.state.waterfall.isEnd; },
+    firstCard () { return this.$store.getters['waterfall/nextCard']; },
+    secondCard () { return this.$store.getters['waterfall/nextCard']; }
     // firstCard: {
     //   get () {
-    //     const returnValue = this.$store.getters['posts/nextCard'];
-    //     this.$store.dispatch('posts/increaseIndex');
+    //     const returnValue = this.$store.getters['waterfall/nextCard'];
+    //     this.$store.dispatch('waterfall/increaseIndex');
     //     return returnValue;
     //   }
     // },
     // secondCard: {
     //   get () {
-    //     const returnValue = this.$store.getters['posts/nextCard'];
-    //     this.$store.dispatch('posts/increaseIndex');
+    //     const returnValue = this.$store.getters['waterfall/nextCard'];
+    //     this.$store.dispatch('waterfall/increaseIndex');
     //     return returnValue;
     //   }
     // }
@@ -69,9 +71,11 @@ export default {
         ? this.$router.go(-1)
         : this.$router.push('/');
     },
+    accept () {
+      this.$store.dispatch('waterfall/uploadCardToServer');
+    },
     dismiss () {
-      this.$store.commit('posts/changeCard');
-      this.$store.dispatch('posts/increaseIndex');
+      this.$store.dispatch('waterfall/increaseIndex');
     }
   },
   components: {
