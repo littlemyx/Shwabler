@@ -6,6 +6,7 @@
       name="input-7-1"
       v-bind:label="label"
       auto-grow
+      v-bind:error="error"
       v-bind:counter="counter"
       v-bind:value="value"
       @input="input"
@@ -22,6 +23,11 @@ export default {
       required: false,
       default: true
     },
+    error: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     label: {
       type: String,
       required: false,
@@ -35,7 +41,7 @@ export default {
     counter: {
       type: Number,
       required: false,
-      default: 100
+      default: null
     },
     value: {
       type: String,

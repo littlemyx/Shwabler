@@ -19,7 +19,7 @@
         items: [
           { icon: 'apps', title: 'Welcome', to: '/' },
           { icon: 'bubble_chart', title: 'Inspire', to: '/inspire' },
-          { icon: 'bubble_chart', title: 'Blog', to: '/posts' },
+          { icon: 'bubble_chart', title: 'Blog', to: '/waterfall' },
           { icon: 'apps', title: 'Login', to: '/login' }
         ],
         miniVariant: false,

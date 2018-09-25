@@ -1,7 +1,7 @@
 <template>
     <div>
         <div>
-          <Posts />
+          <Waterfall />
         </div>
         <v-btn depressed color="error" @click="goBack">
           Back
@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import Posts from '../components/Posts.vue';
+import Waterfall from '../components/Waterfall.vue';
 
 export default {
   fetch ({store}) {
-    // const posts = require('../assets/data/posts.json');
-    // store.commit('posts/updateCardList', posts);
+    // const waterfall = require('../assets/data/waterfall.json');
+    // store.commit('waterfall/updateCardList', waterfall);
   },
   methods: {
     goBack () {
@@ -33,7 +33,7 @@ export default {
     }
   },
   components: {
-    Posts
+    Waterfall
   },
   layout: 'AppLayout'
 }

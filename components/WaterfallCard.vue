@@ -6,11 +6,18 @@
         <div>{{ this.cardText }}</div>
       </div>
 
-      <InputText v-show="isShow"/>
+      <InputText 
+        v-bind:error="inputError"
+        v-bind:counter="count"
+        v-show="isShow"
+        v-bind:value="inputTextValue"
+        v-on:input="input"
+        v-bind:label="inputLabel"
+      />
 
       <div class="footer" slot="footer">
         <v-btn fab dark v-bind:color="color" class="darken-1 ml-3" @click="answer">
-          <v-icon v-bind:color="isLike ? 'red' : ''" medium dark>favorite</v-icon>
+          <v-icon medium dark>{{isLike ? 'done' : 'favorite'}}</v-icon>
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn fab dark v-bind:color="color" class="darken-1 mr-3" @click="dismiss">
@@ -45,27 +52,37 @@ export default {
   },
   data () {
     return {
+      inputTextValue: '',
+      count: null,
+      inputLabel: '',
+      inputError: false,
       isShow: false,
       isLike: false,
       buttonText: 'Show Dialog'
     };
   },
   computed: {
-    color: (function () {
-      const length = colors.length;
-      return function () {
-        let seed = this.cardText.slice(0, 5);
-        seed = seed.split('').map((x) => {
-          return x.charCodeAt(0);
-        });
-        seed = seed.reduce((x, y) => { return x + y }, 6);
-        seed %= length;
-        return colors[seed];
-      }
-    }())
+    color: function () {
+      let seed = this.cardText.slice(0, 5);
+      seed = seed.split('').map((x) => {
+        return x.charCodeAt(0);
+      });
+      seed = seed.reduce((x, y) => { return x + y }, 6);
+      seed %= colors.length;
+      return colors[seed];
+    }
   },
   methods: {
     answer () {
+      if (this.isLike) {
+        if (!this.inputTextValue.length) {
+          this.inputError = true;
+          this.inputLabel = 'Too short message!';
+          return;
+        } else {
+          this.$emit('accept');
+        }
+      }
       this.isShow = !this.isShow;
       this.isLike = !this.isLike;
     },
@@ -74,6 +91,11 @@ export default {
       this.isShow = false;
       this.isLike = false;
       this.$emit('dismiss');
+    },
+    input (value) {
+      this.inputError = false;
+      this.inputLabel = '';
+      this.inputTextValue = value;
     }
   },
   components: {
