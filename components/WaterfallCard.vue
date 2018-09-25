@@ -80,7 +80,18 @@ export default {
           this.inputLabel = 'Too short message!';
           return;
         } else {
-          this.$emit('accept');
+          let card = {
+            'title': this.title,
+            'text': this.cardText,
+            'messages': [
+              {
+                'author': this.$store.getters['user/activeUser'],
+                'text': this.inputTextValue
+              }
+            ]
+          };
+          this.$emit('accept', card);
+          this.inputTextValue = '';
         }
       }
       this.isShow = !this.isShow;

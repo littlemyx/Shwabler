@@ -71,8 +71,8 @@ export default {
         ? this.$router.go(-1)
         : this.$router.push('/');
     },
-    accept () {
-      this.$store.dispatch('waterfall/uploadCardToServer');
+    accept (payload) {
+      this.$store.dispatch('waterfall/uploadCardToServer', payload);
     },
     dismiss () {
       this.$store.dispatch('waterfall/increaseIndex');

@@ -31,7 +31,8 @@ export const actions = {
     }
     commit('increaseIndex');
   },
-  uploadCardToServer ({ commit, state, dispatch }) {
+  uploadCardToServer ({ commit, state, dispatch }, payload) {
+    dispatch('userList/updateUserListAsync', [payload], {root: 'userList'});
     dispatch('increaseIndex', null);
   }
 }
