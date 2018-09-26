@@ -85,7 +85,7 @@ export default {
       const newPost = {
         id: 0,
         title: this.newCardTitle,
-        text: this.newCardTitle
+        text: this.newCardText
       };
       this.dialog = false;
       this.$store.dispatch('cave/addToCaveListAsync', [newPost]);
