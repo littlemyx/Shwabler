@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-    <v-flex v-bind:xs12="defaultStyle" v-bind:sm6="defaultStyle" v-bind:offset-sm3="defaultStyle">
+    <v-flex v-bind:xs12="layoutedtStyle" v-bind:sm6="layoutedtStyle" v-bind:offset-sm3="layoutedtStyle">
       <v-slide-y-transition>
         <v-card v-bind:color="color" class="white--text darken-3 card">
           <slot name="controlItems"></slot>
@@ -28,7 +28,7 @@
 <script>
 export default {
   props: {
-    defaultStyle: {
+    layoutedtStyle: {
       type: Boolean,
       required: false,
       default: true
