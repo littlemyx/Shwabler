@@ -1,39 +1,46 @@
 <template>
   <v-layout>
-    <div class="dialogWrapper" v-bind:class="['darken-2', color]">
-      <Message
-        :key="i"
-        v-for="(message, i) in messages"
-        v-bind:author="message.author" 
-        v-bind:text="message.text"
-        v-bind:color="color"
-      />
+    <div class="Wrapper">
+      <div :class="['darken-2', color]" class="DialogWrapper">
+        <Message
+          v-for="(message, i) in messages"
+          :key="i"
+          :author="message.author" 
+          :text="message.text"
+          :color="color"
+        />
+      </div>
+      <AnswerInput />
     </div>
   </v-layout>
 </template>
 
 <script>
-import Message from './Message.vue';
+import Message from "./Message.vue"
+import AnswerInput from "./AnswerInput.vue"
 
 export default {
+  components: {
+    Message,
+    AnswerInput
+  },
   props: {
     messages: {
       type: Array,
-      required: false
+      required: false,
+      default: () => []
     },
     color: {
       type: String,
-      required: false
+      required: false,
+      default: "black"
     }
-  },
-  components: {
-    Message
   }
 }
 </script>
 
 <style scoped>
-.dialogWrapper{
+.DialogWrapper {
   padding: 5px 12px;
   overflow: scroll;
   overflow-x: hidden;
@@ -42,5 +49,12 @@ export default {
   max-height: 40vh;
   min-height: 20vh;
   border-radius: 3px;
+}
+.Wrapper {
+  width: 100%;
+  display: block;
+}
+.Input {
+  padding-top: 10px;
 }
 </style>

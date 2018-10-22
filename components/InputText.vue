@@ -1,17 +1,16 @@
 <template>
   <v-layout>
     <v-textarea
-      v-bind:dark="dark"
-      v-bind:color="color"
+      :dark="dark"
+      :color="color"
+      :label="label"
+      :error="error"
+      :counter="counter"
+      :value="value"
       name="input-7-1"
-      v-bind:label="label"
       auto-grow
-      v-bind:error="error"
-      v-bind:counter="counter"
-      v-bind:value="value"
       @input="input"
-      @change="change"
-    ></v-textarea>
+    />
   </v-layout>
 </template>
 
@@ -31,12 +30,12 @@ export default {
     label: {
       type: String,
       required: false,
-      default: ''
+      default: ""
     },
     color: {
       type: String,
       required: false,
-      default: 'white'
+      default: "white"
     },
     counter: {
       type: Number,
@@ -46,20 +45,15 @@ export default {
     value: {
       type: String,
       required: false,
-      default: ''
+      default: ""
     }
   },
-  data () {
-    return {
-
-    }
+  data() {
+    return {}
   },
   methods: {
-    change (val) {
-      // console.log(val);
-    },
-    input (val) {
-      this.$emit('input', val);
+    input(val) {
+      this.$emit("input", val)
     }
   }
 }

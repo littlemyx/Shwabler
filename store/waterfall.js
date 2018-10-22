@@ -8,37 +8,37 @@ export const state = () => ({
 })
 
 export const mutations = {
-  changeCard (state) {
-    state.firstCard = !state.firstCard;
+  changeCard(state) {
+    state.firstCard = !state.firstCard
   },
-  updateCardList (state, newList) {
-    state.cardList = [...newList];
+  updateCardList(state, newList) {
+    state.cardList = [...newList]
   },
-  increaseIndex (state) {
-    state.index++;
+  increaseIndex(state) {
+    state.index++
   },
-  setEnd (state, value) {
-    state.isEnd = value;
+  setEnd(state, value) {
+    state.isEnd = value
   }
 }
 
 export const actions = {
-  increaseIndex ({ commit, state }, payload) {
-    const newIndex = state.index + 1;
+  increaseIndex({ commit, state }) {
+    const newIndex = state.index + 1
     if (newIndex === 10) {
       // load next pack of cards and set index to 0
-      commit('setEnd', true);
+      commit("setEnd", true)
     }
-    commit('increaseIndex');
+    commit("increaseIndex")
   },
-  uploadCardToServer ({ commit, state, dispatch }, payload) {
-    dispatch('userList/updateUserListAsync', [payload], {root: 'userList'});
-    dispatch('increaseIndex', null);
+  uploadCardToServer({ dispatch }, payload) {
+    dispatch("userList/updateUserListAsync", [payload], { root: "userList" })
+    dispatch("increaseIndex", null)
   }
 }
 
 export const getters = {
   nextCard: state => {
-    return state.cardList[state.index];
+    return state.cardList[state.index]
   }
 }

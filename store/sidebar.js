@@ -1,17 +1,17 @@
 export const state = () => ({
   items: [
-    { icon: 'home', title: 'My Cave', to: '/cave', isAuth: true },
-    { icon: 'list', title: 'Wardrobe', to: '/wardrobe', isAuth: true },
-    { icon: 'email', title: 'Waterfall', to: '/waterfall', isAuth: true },
-    { icon: 'apps', title: 'Login', to: '/login', isAuth: false },
-    { icon: 'apps', title: 'SignUp', to: '/signup', isAuth: false }
+    { icon: "home", title: "My Cave", to: "/cave", isAuth: true },
+    { icon: "list", title: "Wardrobe", to: "/wardrobe", isAuth: true },
+    { icon: "email", title: "Waterfall", to: "/waterfall", isAuth: true },
+    { icon: "apps", title: "Login", to: "/login", isAuth: false },
+    { icon: "apps", title: "SignUp", to: "/signup", isAuth: false }
   ]
 })
 
 export const mutations = {
-  authChanged (state, payload) {
+  authChanged(state) {
     // const auth = payload === null ? falth : true;
-    state.items.map(item => item.isAuth);
+    state.items.map(item => item.isAuth)
   }
 }
 

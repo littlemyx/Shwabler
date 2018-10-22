@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import testComp from '../components/testComp.vue';
+import testComp from "../components/testComp.vue"
 
 export default {
   components: {

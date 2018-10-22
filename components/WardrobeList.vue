@@ -1,31 +1,32 @@
 <template>
   <div class="cardWrapper">
     <WardrobeCard 
-      :key="i"
-      class="wardrobeCard"
       v-for="(card, i) in cards"
-      v-bind:title="card.title" 
-      v-bind:cardText="card.text"
-      v-bind:messages="card.messages"
+      :key="i"
+      :title="card.title"
+      :card-text="card.text" 
+      :messages="card.messages"
+      class="wardrobeCard"
     />
   </div>
 </template>
 
 <script>
-import WardrobeCard from '../components/WardrobeCard.vue';
+import WardrobeCard from "../components/WardrobeCard.vue"
 
 export default {
-  data () {
-    return {
-    }
-  },
-  computed: {
-    cards () { return this.$store.state.userList.userList; }
-  },
   components: {
     WardrobeCard
   },
-  layout: 'AppLayout'
+  data() {
+    return {}
+  },
+  computed: {
+    cards() {
+      return this.$store.state.userList.userList
+    }
+  },
+  layout: "AppLayout"
 }
 </script>
 
@@ -34,17 +35,17 @@ export default {
   position: relative;
 }
 
-.wardrobeCard{
+.wardrobeCard {
   margin-bottom: 20px;
 }
 
 .bounce-enter-active {
-  animation: bounce-in .5s;
+  animation: bounce-in 0.5s;
   top: 0;
   position: absolute;
 }
 .bounce-leave-active {
-  animation: bounce-in .5s reverse;
+  animation: bounce-in 0.5s reverse;
 }
 @keyframes height-increase {
   0% {
@@ -53,7 +54,7 @@ export default {
   100% {
     height: 100%;
   }
-} 
+}
 @keyframes bounce-in {
   0% {
     opacity: 0;

@@ -1,9 +1,9 @@
 <template>
-<div v-bind:class="classObject">
-  <div v-bind:class="['messageContent', 'darken-1', color]">
-    {{this.text}}
+  <div :class="classObject">
+    <div :class="['messageContent', 'darken-1', color]">
+      {{ text }}
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -19,14 +19,15 @@ export default {
     },
     color: {
       type: String,
-      required: false
+      required: false,
+      default: "black"
     }
   },
   computed: {
-    classObject () {
+    classObject() {
       return {
         messageWrapper: true,
-        messageAuthor: this.author === this.$store.getters['user/activeUser']
+        messageAuthor: this.author === this.$store.getters["user/activeUser"]
       }
     }
   }
@@ -34,14 +35,14 @@ export default {
 </script>
 
 <style scoped>
-.messageWrapper{
+.messageWrapper {
   display: flex;
   width: 100%;
 }
-.messageAuthor{
+.messageAuthor {
   justify-content: flex-end;
 }
-.messageContent{
+.messageContent {
   margin-bottom: 3px;
   padding: 5px;
   display: block;
