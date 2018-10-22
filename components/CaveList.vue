@@ -1,32 +1,32 @@
 <template>
   <div class="cardWrapper">
-    <CaveCard 
-      :key="i"
-      class="wardrobeCard"
-      v-if="cards.length >= 1"
-      v-for="(card, i) in cards"
-      v-bind:title="card.title" 
-      v-bind:cardText="card.text"
-      v-bind:id="i"
-      v-on:deleteItem="deleteItem"
-    />
+    <template v-if="cards.length >= 1">
+      <CaveCard 
+        v-for="(card, i) in cards"
+        :key="i"
+        :title="card.title"
+        :card-text="card.text" 
+        :id="i"
+        class="wardrobeCard"
+        @deleteItem="deleteItem"
+      />
+    </template>
     <Card v-if="cards.length < 1" color="red">
       <div slot="header" style="width:100%; text-align: center;">
-        <h1>{{ this.emptyText }}</h1>
+        <h1>{{ emptyText }}</h1>
       </div>
     </Card>
   </div>
 </template>
 
 <script>
-import CaveCard from '../components/CaveCard.vue';
-import Card from '../components/Card.vue';
+import CaveCard from "../components/CaveCard.vue"
+import Card from "../components/Card.vue"
 
 export default {
-  data () {
-    return {
-      emptyText: 'No cards yet :-('
-    }
+  components: {
+    CaveCard,
+    Card
   },
   props: {
     cards: {
@@ -34,16 +34,17 @@ export default {
       required: true
     }
   },
-  components: {
-    CaveCard,
-    Card
-  },
-  methods: {
-    deleteItem (id) {
-      this.$emit('deleteItem', id);
+  data() {
+    return {
+      emptyText: "No cards yet :-("
     }
   },
-  layout: 'AppLayout'
+  methods: {
+    deleteItem(id) {
+      this.$emit("deleteItem", id)
+    }
+  },
+  layout: "AppLayout"
 }
 </script>
 
@@ -52,17 +53,17 @@ export default {
   position: relative;
 }
 
-.wardrobeCard{
+.wardrobeCard {
   margin-bottom: 20px;
 }
 
 .bounce-enter-active {
-  animation: bounce-in .5s;
+  animation: bounce-in 0.5s;
   top: 0;
   position: absolute;
 }
 .bounce-leave-active {
-  animation: bounce-in .5s reverse;
+  animation: bounce-in 0.5s reverse;
 }
 @keyframes height-increase {
   0% {
@@ -71,7 +72,7 @@ export default {
   100% {
     height: 100%;
   }
-} 
+}
 @keyframes bounce-in {
   0% {
     opacity: 0;

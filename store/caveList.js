@@ -3,7 +3,7 @@ export const state = () => ({
 })
 
 export const mutations = {
-  updateCaveList (state, newList) {
-    state.caveList = [...newList];
+  updateCaveList(state, newList) {
+    state.caveList = [...newList]
   }
 }

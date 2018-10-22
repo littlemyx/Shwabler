@@ -4,22 +4,22 @@ export const state = () => ({
 })
 
 export const mutations = {
-  changeCard (state) {
-    state.firstCard = !state.firstCard;
+  changeCard(state) {
+    state.firstCard = !state.firstCard
   },
-  updateUserList (state, newList) {
-    state.userList = [...state.userList, ...newList];
+  updateUserList(state, newList) {
+    state.userList = [...state.userList, ...newList]
   }
 }
 
 export const actions = {
-  updateUserListAsync ({ commit, state }, payload) {
-    let OKstate = true;
+  updateUserListAsync({ commit }, payload) {
+    let OKstate = true
     // sending data to server & set OKstate to false if error
     if (OKstate) {
-      commit('updateUserList', payload);
+      commit("updateUserList", payload)
     } else {
       // revert adding data to store
     }
   }
-};
+}

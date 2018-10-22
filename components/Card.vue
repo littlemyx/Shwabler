@@ -1,22 +1,26 @@
 <template>
   <v-layout>
-    <v-flex v-bind:xs12="layoutedtStyle" v-bind:sm6="layoutedtStyle" v-bind:offset-sm3="layoutedtStyle">
+    <v-flex :xs12="layoutedtStyle" :sm6="layoutedtStyle" :offset-sm3="layoutedtStyle">
       <v-slide-y-transition>
-        <v-card v-bind:color="color" class="white--text darken-3 card">
-          <slot name="controlItems"></slot>
+        <v-card :color="color" class="white--text darken-3 card">
+          <slot name="controlItems"/>
+          
+          <slot name="chips">
+            <Chips/>
+          </slot>
           
           <v-card-title primary-title>
-            <slot name="header" v-bind:value="newCardValues" v-on:input="headerInput"></slot>
+            <slot :value="newCardValues" name="header" @input="headerInput"/>
           </v-card-title>
 
           <v-slide-y-transition>
             <v-card-text>
-              <slot v-bind:value="newCardValues" v-on:input="textInput"></slot>
+              <slot :value="newCardValues" @input="textInput"/>
             </v-card-text>
           </v-slide-y-transition>
 
           <v-card-actions>
-            <slot name="footer"></slot>
+            <slot name="footer"/>
           </v-card-actions>
 
         </v-card>
@@ -26,7 +30,12 @@
 </template>
 
 <script>
+import Chips from "./Chips"
+
 export default {
+  components: {
+    Chips
+  },
   props: {
     layoutedtStyle: {
       type: Boolean,
@@ -36,28 +45,31 @@ export default {
     color: {
       type: String,
       required: false,
-      validator: function (value) {
-        return true;
-      }
+      validator: function() {
+        return true
+      },
+      default: "black"
     },
     newCardValues: {
       type: Object,
       required: false,
-      validator: function (value) {
-        return true;
-      }
+      validator: function() {
+        return true
+      },
+      default: () => {}
     }
   },
-  data () {
+  data() {
     return {
-    };
+      chips: {}
+    }
   },
   methods: {
-    headerInput ($event) {
-      this.newCardValues.title = $event.target.value;
+    headerInput($event) {
+      this.newCardValues.title = $event.target.value
     },
-    bodyInput ($event) {
-      this.newCardValues.text = $event.target.text;
+    bodyInput($event) {
+      this.newCardValues.text = $event.target.text
     }
   }
 }

@@ -9,7 +9,7 @@
         <v-input>
           <v-text-field
             label="Regular"
-          ></v-text-field>
+          />
         </v-input>
       </v-flex>
     </v-layout>
@@ -17,15 +17,15 @@
 </template>
 
 <script>
-  export default {
-    data () {
-      return {
-        text: ''
-      }
-    },
-    methods: {
-      appendIconCallback () {},
-      prependIconCallback () {}
+export default {
+  data() {
+    return {
+      text: ""
     }
+  },
+  methods: {
+    appendIconCallback() {},
+    prependIconCallback() {}
   }
+}
 </script>

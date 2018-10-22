@@ -1,26 +1,26 @@
 <template>
   <v-layout>
-    <Card v-bind:color="color">
+    <Card :color="color">
       <div slot="header">
-        <h3 class="headline mb-0">{{ this.title }}</h3>
-        <div>{{ this.cardText }}</div>
+        <h3 class="headline mb-0">{{ title }}</h3>
+        <div>{{ cardText }}</div>
       </div>
 
       <InputText 
-        v-bind:error="inputError"
-        v-bind:counter="count"
         v-show="isShow"
-        v-bind:value="inputTextValue"
-        v-on:input="input"
-        v-bind:label="inputLabel"
+        :error="inputError"
+        :counter="count"
+        :value="inputTextValue"
+        :label="inputLabel"
+        @input="input"
       />
 
-      <div class="footer" slot="footer">
-        <v-btn fab dark v-bind:color="color" class="darken-1 ml-3" @click="answer">
-          <v-icon medium dark>{{isLike ? 'done' : 'favorite'}}</v-icon>
+      <div slot="footer" class="footer">
+        <v-btn :color="color" fab dark class="darken-1 ml-3" @click="answer">
+          <v-icon medium dark>{{ isLike ? 'done' : 'favorite' }}</v-icon>
         </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn fab dark v-bind:color="color" class="darken-1 mr-3" @click="dismiss">
+        <v-spacer/>
+        <v-btn :color="color" fab dark class="darken-1 mr-3" @click="dismiss">
           <v-icon medium dark>clear</v-icon>
         </v-btn>
       </div>
@@ -29,95 +29,97 @@
 </template>
 
 <script>
-import InputText from './InputText.vue';
-import Card from './Card.vue';
-const {colors} = require('../assets/data/colors.json');
+import InputText from "./InputText.vue"
+import Card from "./Card.vue"
+const { colors } = require("../assets/data/colors.json")
 
 export default {
+  components: {
+    InputText,
+    Card
+  },
   props: {
     title: {
       type: String,
       required: true,
-      validator: function (value) {
-        return true;
+      validator: function() {
+        return true
       }
     },
     cardText: {
       type: String,
       required: true,
-      validator: function (value) {
-        return true;
+      validator: function() {
+        return true
       }
     }
   },
-  data () {
+  data() {
     return {
-      inputTextValue: '',
+      inputTextValue: "",
       count: null,
-      inputLabel: '',
+      inputLabel: "",
       inputError: false,
       isShow: false,
       isLike: false,
-      buttonText: 'Show Dialog'
-    };
+      buttonText: "Show Dialog"
+    }
   },
   computed: {
-    color: function () {
-      let seed = this.cardText.slice(0, 5);
-      seed = seed.split('').map((x) => {
-        return x.charCodeAt(0);
-      });
-      seed = seed.reduce((x, y) => { return x + y }, 6);
-      seed %= colors.length;
-      return colors[seed];
+    color: function() {
+      let seed = this.cardText.slice(0, 5)
+      seed = seed.split("").map(x => {
+        return x.charCodeAt(0)
+      })
+      seed = seed.reduce((x, y) => {
+        return x + y
+      }, 6)
+      seed %= colors.length
+      return colors[seed]
     }
   },
   methods: {
-    answer () {
+    answer() {
       if (this.isLike) {
         if (!this.inputTextValue.length) {
-          this.inputError = true;
-          this.inputLabel = 'Too short message!';
-          return;
+          this.inputError = true
+          this.inputLabel = "Too short message!"
+          return
         } else {
           let card = {
-            'title': this.title,
-            'text': this.cardText,
-            'messages': [
+            title: this.title,
+            text: this.cardText,
+            messages: [
               {
-                'author': this.$store.getters['user/activeUser'],
-                'text': this.inputTextValue
+                author: this.$store.getters["user/activeUser"],
+                text: this.inputTextValue
               }
             ]
-          };
-          this.$emit('accept', card);
-          this.inputTextValue = '';
+          }
+          this.$emit("accept", card)
+          this.inputTextValue = ""
         }
       }
-      this.isShow = !this.isShow;
-      this.isLike = !this.isLike;
+      this.isShow = !this.isShow
+      this.isLike = !this.isLike
     },
-    dismiss () {
-      console.log('dismiss');
-      this.isShow = false;
-      this.isLike = false;
-      this.$emit('dismiss');
+    dismiss() {
+      console.log("dismiss")
+      this.isShow = false
+      this.isLike = false
+      this.$emit("dismiss")
     },
-    input (value) {
-      this.inputError = false;
-      this.inputLabel = '';
-      this.inputTextValue = value;
+    input(value) {
+      this.inputError = false
+      this.inputLabel = ""
+      this.inputTextValue = value
     }
-  },
-  components: {
-    InputText,
-    Card
   }
 }
 </script>
 
 <style scoped>
-.footer{
+.footer {
   width: 100%;
   display: flex;
 }

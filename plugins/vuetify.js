@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from "vue"
 
 import {
   Vuetify,
@@ -19,8 +19,9 @@ import {
   VCheckbox,
   VInput,
   VTextarea,
+  VChip,
   transitions
-} from 'vuetify'
+} from "vuetify"
 
 Vue.use(Vuetify, {
   components: {
@@ -41,6 +42,7 @@ Vue.use(Vuetify, {
     VCheckbox,
     VInput,
     VTextarea,
+    VChip,
     transitions
   }
 })
