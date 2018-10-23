@@ -1,13 +1,14 @@
 [
-  "weather",
-  "holidays",
-  "birth day",
-  "roguelike",
-  "venom",
-  "battlefield V",
-  "the catcher in the rye",
-  "old but gold",
-  "moscow",
-  "london",
-  "fun"
+  { "header": "Select an option or create one" },
+  {"text":"weather","color":"red"},
+  {"text":"holidays","color":"purple"},
+  {"text":"birth day","color":"indigo"},
+  {"text":"roguelike","color":"cyan"},
+  {"text":"venom","color":"teal"},
+  {"text":"battlefield V","color":"orange"},
+  {"text":"the catcher in the rye","color":"purple"},
+  {"text":"old but gold","color":"indigo"},
+  {"text":"moscow","color":"cyan"},
+  {"text":"london","color":"teal"},
+  {"text":"fun","color":"red"}
 ]

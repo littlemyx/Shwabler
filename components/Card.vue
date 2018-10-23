@@ -3,11 +3,10 @@
     <v-flex :xs12="layoutedtStyle" :sm6="layoutedtStyle" :offset-sm3="layoutedtStyle">
       <v-slide-y-transition>
         <v-card :color="color" class="white--text darken-3 card">
-          <slot name="controlItems"/>
-          
-          <slot name="chips">
-            <Chips/>
-          </slot>
+          <div class="controlWrapper">
+            <slot name="controlItems"/>
+            <slot name="chips" />
+          </div>
           
           <v-card-title primary-title>
             <slot :value="newCardValues" name="header" @input="headerInput"/>
@@ -74,3 +73,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.controlWrapper {
+  display: flex;
+  flex-direction: row-reverse;
+}
+</style>

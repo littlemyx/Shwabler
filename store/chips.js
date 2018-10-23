@@ -10,6 +10,6 @@ export const mutations = {
 
 export const actions = {
   addToChipsListAsync({ commit }, payload) {
-    commit("updateChipsList", payload)
+    commit("updateChipsList", Array.isArray(payload) ? payload : [payload])
   }
 }

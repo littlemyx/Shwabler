@@ -3,7 +3,9 @@
     <Card :color="color">
       <v-btn slot="controlItems" flat icon color="black" class="deleteIcon" @click="deleteCard">
         <v-icon medium dark>clear</v-icon>
-      </v-btn>
+      </v-btn >
+
+      <Chips slot="chips"/>
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
@@ -27,12 +29,14 @@
 <script>
 import InputText from "./InputText.vue"
 import Card from "./Card.vue"
+import Chips from "./Chips.vue"
 const { colors } = require("../assets/data/colors.json")
 
 export default {
   components: {
     InputText,
-    Card
+    Card,
+    Chips
   },
   props: {
     id: {
@@ -103,8 +107,8 @@ export default {
   width: 100%;
   display: flex;
 }
+
 .deleteIcon {
-  position: absolute;
-  right: 5px;
+  flex-shrink: 0;
 }
 </style>
