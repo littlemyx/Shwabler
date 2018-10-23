@@ -20,6 +20,7 @@ import {
   VInput,
   VTextarea,
   VChip,
+  VCombobox,
   transitions
 } from "vuetify"
 
@@ -43,6 +44,7 @@ Vue.use(Vuetify, {
     VInput,
     VTextarea,
     VChip,
+    VCombobox,
     transitions
   }
 })

@@ -3,5 +3,33 @@
   "[javascript]": {
     "editor.formatOnSave": false
   },
-  "eslint.options": { "configFile": "/Users/a.muhin/nuxt/tinmer/.eslintrc.js" }
+  "eslint.options": { "configFile": "/Users/a.muhin/nuxt/tinmer/.eslintrc.js" },
+  "prettier.stylelintIntegration": true,
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "eslint.enable": true,
+  "eslint.run": "onType",
+  "eslint.validate": [
+      {
+          "language": "vue",
+          "autoFix": true
+      },
+      {
+          "language": "html",
+          "autoFix": true
+      },
+      {
+          "language": "javascript",
+          "autoFix": true
+      },
+      {
+          "language": "javascriptreact",
+          "autoFix": true
+      }
+  ],
+  "eslint.alwaysShowStatus": true,
+  "eslint.autoFixOnSave": true,
+  "vetur.format.defaultFormatter.js": "prettier",
+  "vetur.format.defaultFormatter.css": "prettier"
 }

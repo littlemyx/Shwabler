@@ -27,6 +27,7 @@ module.exports = {
   },
   plugins: [
     "~/plugins/vuetify.js",
+    "~plugins/filters.js",
     { src: "~/plugins/fireauth.js", ssr: false },
     { src: "~/plugins/initstore.js", ssr: false }
   ],
