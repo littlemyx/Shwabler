@@ -3,7 +3,7 @@
     <CaveList :cards="cards" @deleteItem="deleteItem"/>
 
     <v-btn fab dark class="add dark-gray mr-3" @click="openDialog">
-      <v-icon medium dark>add</v-icon>
+      <v-icon class="addIcon" medium dark>add</v-icon>
     </v-btn>
 
     <v-dialog
@@ -57,6 +57,7 @@ import CaveList from "../components/CaveList.vue"
 import Card from "../components/Card.vue"
 import Chips from "../components/Chips.vue"
 import InputText from "../components/InputText.vue"
+import random from "@/services/random.js"
 // <InputText label="Header of your card" slot-scope="head" slot="header" v-bind:value="head.value.title" v-bind:dark="false" v-bind:counter="50"/>
 // <InputText label="Main plot goes here" v-model="newCard.text" v-bind:dark="false" v-bind:counter="400"/>
 export default {
@@ -98,7 +99,8 @@ export default {
     },
     add() {
       const newPost = {
-        id: 0,
+        id: random(103, 999),
+        tags: [],
         title: this.newCardTitle,
         text: this.newCardText
       }
@@ -125,9 +127,13 @@ export default {
 <style scoped>
 .add {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: 10vw;
+  right: 1vw;
   opacity: 0.8;
+}
+
+.addIcon {
+  line-height: 56px;
 }
 
 .add2 {

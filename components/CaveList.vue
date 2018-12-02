@@ -2,11 +2,11 @@
   <div class="cardWrapper">
     <template v-if="cards.length >= 1">
       <CaveCard 
-        v-for="(card, i) in cards"
-        :key="i"
+        v-for="card in cards"
+        :key="card.id"
         :title="card.title"
         :card-text="card.text" 
-        :id="i"
+        :id="card.id"
         class="wardrobeCard"
         @deleteItem="deleteItem"
       />

@@ -5,7 +5,7 @@
         <v-icon medium dark>clear</v-icon>
       </v-btn >
 
-      <Chips slot="chips"/>
+      <Chips slot="chips" :list="chips" :id="id" @chips-updated="chipsUpdated"/>
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
@@ -82,7 +82,10 @@ export default {
         seed %= length
         return colors[seed]
       }
-    })()
+    })(),
+    chips() {
+      return this.$store.getters["cave/tags"](this.id)
+    }
   },
   methods: {
     answer() {
@@ -97,6 +100,16 @@ export default {
     },
     deleteCard() {
       this.$emit("deleteItem", this.id)
+    },
+    chipsUpdated(newChip) {
+      const newPost = {
+        id: this.id,
+        tags: newChip,
+        title: this.title,
+        text: this.cardText
+      }
+      //this.list = [...this.list, newChip]
+      this.$store.dispatch("cave/updateCaveCardAsync", newPost)
     }
   }
 }
