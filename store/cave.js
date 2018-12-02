@@ -10,6 +10,14 @@ export const mutations = {
   updateCaveList(state, appendix) {
     state.caveList = [...state.caveList, ...appendix]
   },
+  updateCaveCard(state, newCard) {
+    const oldCardIndex = state.caveList.findIndex(
+      card => card.id === newCard.id
+    )
+    const oldState = state.caveList
+    oldState[oldCardIndex] = newCard
+    state.caveList = oldState
+  },
   setCaveList(state, newList) {
     state.caveList = [...newList]
   },
@@ -21,7 +29,8 @@ export const mutations = {
   },
   removeFromCaveList(state, id) {
     const oldValue = cloneDeep(state.caveList)
-    oldValue.splice(id, 1)
+    const removingCardIndex = oldValue.findIndex(card => card.id === id)
+    oldValue.splice(removingCardIndex, 1)
     state.caveList = oldValue
   }
 }
@@ -29,6 +38,9 @@ export const mutations = {
 export const actions = {
   addToCaveListAsync({ commit }, payload) {
     commit("updateCaveList", payload)
+  },
+  updateCaveCardAsync({ commit }, payload) {
+    commit("updateCaveCard", payload)
   },
   setCaveListAsync({ commit }, payload) {
     commit("setCaveList", payload)
@@ -44,5 +56,12 @@ export const actions = {
       caveListClone.splice(payload, 0, tmp)
       commit("setCaveList", caveListClone)
     }
+  }
+}
+
+export const getters = {
+  tags: state => desired_id => {
+    const card = state.caveList.find(card => card.id === desired_id)
+    return (card && card.tags) || null
   }
 }

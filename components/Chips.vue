@@ -6,8 +6,9 @@
     :hide-no-data="!search"
     :items="items"
     :search-input.sync="search"
+    :disabled="disabled"
     hide-selected
-    label="Search for an option"
+    label="Search tags"
     multiple
     small-chips
     solo
@@ -70,67 +71,55 @@
           label
           small
         >
-          {{ item.text | capitalize }}
+          {{ item.text| capitalize }}
         </v-chip>
       </v-list-tile-content>
-      <v-spacer/>
-      <v-list-tile-action @click.stop>
-        <v-btn
-          icon
-          @click.stop.prevent="edit(index, item)"
-        >
-          <v-icon>{{ editing !== item ? 'edit' : 'check' }}</v-icon>
-        </v-btn>
-      </v-list-tile-action>
+      
     </template>
   </v-combobox>
 </template>
 
 <script>
+const { colors } = require("../assets/data/colors.json")
+
 export default {
   props: {
+    id: {
+      type: Number,
+      required: false,
+      default: () => {}
+    },
     existed: {
       type: Object,
       required: false,
       default: () => {}
     },
+    // list: {
+    //   type: Object,
+    //   required: false,
+    //   default: () => {}
+    // },
     list: {
-      type: Object,
+      type: Array,
       required: false,
-      default: () => {}
+      default: () => []
+    },
+    disabled: {
+      type: Boolean,
+      required: false,
+      default: false
     }
   },
   data() {
     return {
-      chipsList: {
-        monday: true,
-        friday: true,
-        sunday: true
-      },
       activator: null,
       attach: null,
-      colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
+      colors,
+      chips: this.list,
       editing: null,
       index: -1,
-      items_old: [
-        { header: "Select an option or create one" },
-        {
-          text: "Foo",
-          color: "blue"
-        },
-        {
-          text: "Bar",
-          color: "red"
-        }
-      ],
       nonce: 1,
       menu: false,
-      model: [
-        {
-          text: "Foo",
-          color: "blue"
-        }
-      ],
       x: 0,
       search: null,
       y: 0
@@ -138,28 +127,22 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.state.chips.chipsList
-    }
-  },
-  watch: {
-    model(val, prev) {
-      if (val.length === prev.length) return
-
-      this.model = val.map(v => {
-        if (typeof v === "string") {
-          v = {
-            text: v,
-            color: this.colors[this.nonce - 1]
-          }
-
-          //this.items.push(v)
-          this.$store.dispatch("chips/addToChipsListAsync", v)
-
-          this.nonce++
+      return this.$store.getters["chips/items"]
+    },
+    model: {
+      get: function() {
+        return this.$store.getters["chips/model"](this.list)
+      },
+      set: function(val) {
+        const newitem = val[val.length - 1].text || val[val.length - 1]
+        this.$emit("chips-updated", newitem)
+        if (!this.$store.state.chips.chipsList.includes(newitem)) {
+          this.$store.dispatch("chips/addToChipsListAsync", newitem)
         }
-
-        return v
-      })
+        //this.chips.push(val[val.length - 1].text) // здесь приходит массив, в последнем элементе которого лежит новое значение
+        // так же где-то тут нужно проверять на то чтобы значения в модели не дублировались
+        // this.$store.dispatch("chips/addToChipsListAsync", val[0].text)
+      }
     }
   },
 
@@ -174,8 +157,6 @@ export default {
       }
     },
     filter(item, queryText, itemText) {
-      if (item.header) return false
-
       const hasValue = val => (val != null ? val : "")
 
       const text = hasValue(itemText)
