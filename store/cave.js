@@ -16,7 +16,8 @@ export const mutations = {
     )
     const oldState = state.caveList
     oldState[oldCardIndex] = newCard
-    state.caveList = oldState
+    // state.caveList = oldState
+    state.caveList = [...oldState]
   },
   setCaveList(state, newList) {
     state.caveList = [...newList]

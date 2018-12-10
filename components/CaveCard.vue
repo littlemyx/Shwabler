@@ -108,7 +108,6 @@ export default {
         title: this.title,
         text: this.cardText
       }
-      //this.list = [...this.list, newChip]
       this.$store.dispatch("cave/updateCaveCardAsync", newPost)
     }
   }
