@@ -134,10 +134,20 @@ export default {
         return this.$store.getters["chips/model"](this.list)
       },
       set: function(val) {
-        const newitem = val[val.length - 1].text || val[val.length - 1]
-        this.$emit("chips-updated", newitem)
-        if (!this.$store.state.chips.chipsList.includes(newitem)) {
-          this.$store.dispatch("chips/addToChipsListAsync", newitem)
+        const newVal = val.map(item => {
+          return item.text || item
+        })
+        this.$emit("chips-updated", newVal)
+        if (this.model.length - val.length > 0) {
+          // const valSet = new Set(val)
+          // const diff = this.model.filter(item => {
+          //   return !valSet.has(item)
+          // })
+        } else {
+          const newItem = val[val.length - 1].text || val[val.length - 1]
+          if (!this.$store.state.chips.chipsList.includes(newItem)) {
+            this.$store.dispatch("chips/addToChipsListAsync", newItem)
+          }
         }
         //this.chips.push(val[val.length - 1].text) // здесь приходит массив, в последнем элементе которого лежит новое значение
         // так же где-то тут нужно проверять на то чтобы значения в модели не дублировались
