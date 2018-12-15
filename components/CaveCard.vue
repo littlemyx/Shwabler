@@ -5,7 +5,7 @@
         <v-icon medium dark>clear</v-icon>
       </v-btn >
 
-      <Chips slot="chips" :list="chips" :id="id" @chips-updated="chipsUpdated"/>
+      <Chips slot="chips" :list="tags" :id="id" @chips-updated="chipsUpdated"/>
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
@@ -56,6 +56,14 @@ export default {
     cardText: {
       type: String,
       required: true,
+      validator: function() {
+        return true
+      }
+    },
+    tags: {
+      type: Array,
+      required: true,
+      default: () => [],
       validator: function() {
         return true
       }
