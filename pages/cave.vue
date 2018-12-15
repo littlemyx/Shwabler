@@ -11,7 +11,7 @@
       width="500"
     >
       <Card :new-card-values="newCard" :layoutedt-style="false" color="gray">
-        <Chips slot="chips"/>
+        <Chips slot="chips" :list="newCardTags" @chips-updated="newCardTagsUpdated"/>
 
         <InputText 
           slot="header"
@@ -73,7 +73,8 @@ export default {
       newCard: {
         title: "",
         text: ""
-      }
+      },
+      newCardTags: []
     }
   },
   // fetch({ store }) {
@@ -100,15 +101,17 @@ export default {
     add() {
       const newPost = {
         id: random(103, 999),
-        tags: [],
+        tags: this.newCardTags,
         title: this.newCardTitle,
         text: this.newCardText
       }
       this.dialog = false
+      this.newCardTags = []
       this.$store.dispatch("cave/addToCaveListAsync", [newPost])
     },
     cancel() {
       this.dialog = false
+      this.newCardTags = []
     },
     inputTitle(value) {
       this.$store.commit("cave/setNewCardTitle", value)
@@ -118,6 +121,9 @@ export default {
     },
     deleteItem(id) {
       this.$store.dispatch("cave/removeFromCaveListAsync", id)
+    },
+    newCardTagsUpdated(tag) {
+      this.newCardTags = tag
     }
   },
   layout: "AppLayout"
@@ -127,7 +133,7 @@ export default {
 <style scoped>
 .add {
   position: fixed;
-  bottom: 10vw;
+  bottom: 7vh;
   right: 1vw;
   opacity: 0.8;
 }
