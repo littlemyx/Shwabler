@@ -6,6 +6,7 @@
       :title="card.title"
       :card-text="card.text" 
       :is-new="isNew"
+      :tags="card.tags"
       class="waterfallCard"
     />
   </div>

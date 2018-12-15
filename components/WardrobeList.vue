@@ -6,6 +6,7 @@
       :title="card.title"
       :card-text="card.text" 
       :messages="card.messages"
+      :tags="card.tags"
       class="wardrobeCard"
     />
   </div>

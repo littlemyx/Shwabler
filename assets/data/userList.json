@@ -2,6 +2,7 @@
   {
     "title": "Sweet Home Alabama",
     "text": "One line - one rhyme",
+    "tags": ["weather"],
     "messages": [
       {
         "author": "littlemyx@gmail.com",
