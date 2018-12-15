@@ -94,11 +94,6 @@ export default {
       required: false,
       default: () => {}
     },
-    // list: {
-    //   type: Object,
-    //   required: false,
-    //   default: () => {}
-    // },
     list: {
       type: Array,
       required: false,
@@ -115,7 +110,6 @@ export default {
       activator: null,
       attach: null,
       colors,
-      chips: this.list,
       editing: null,
       index: -1,
       nonce: 1,
@@ -138,20 +132,13 @@ export default {
           return item.text || item
         })
         this.$emit("chips-updated", newVal)
-        if (this.model.length - val.length > 0) {
-          // const valSet = new Set(val)
-          // const diff = this.model.filter(item => {
-          //   return !valSet.has(item)
-          // })
-        } else {
-          const newItem = val[val.length - 1].text || val[val.length - 1]
-          if (!this.$store.state.chips.chipsList.includes(newItem)) {
-            this.$store.dispatch("chips/addToChipsListAsync", newItem)
-          }
+        const newItem = val[val.length - 1].text || val[val.length - 1]
+        if (
+          this.model.length - val.length <= 0 &&
+          !this.$store.state.chips.chipsList.includes(newItem)
+        ) {
+          this.$store.dispatch("chips/addToChipsListAsync", newItem)
         }
-        //this.chips.push(val[val.length - 1].text) // здесь приходит массив, в последнем элементе которого лежит новое значение
-        // так же где-то тут нужно проверять на то чтобы значения в модели не дублировались
-        // this.$store.dispatch("chips/addToChipsListAsync", val[0].text)
       }
     }
   },
