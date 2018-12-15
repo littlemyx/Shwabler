@@ -1,6 +1,8 @@
 <template>
   <v-layout>
     <Card :color="color">
+      <Chips v-if="tags.length" slot="chips" :list="tags" :disabled="true"/>
+
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
         <div>{{ cardText }}</div>
@@ -31,12 +33,14 @@
 <script>
 import InputText from "./InputText.vue"
 import Card from "./Card.vue"
+import Chips from "./Chips.vue"
 const { colors } = require("../assets/data/colors.json")
 
 export default {
   components: {
     InputText,
-    Card
+    Card,
+    Chips
   },
   props: {
     title: {
@@ -52,6 +56,11 @@ export default {
       validator: function() {
         return true
       }
+    },
+    tags: {
+      type: Array,
+      required: false,
+      default: () => []
     }
   },
   data() {

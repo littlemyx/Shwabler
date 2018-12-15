@@ -6,6 +6,8 @@
         <div>{{ cardText }}</div>
       </div>
 
+      <Chips v-if="tags.length" slot="chips" :list="tags" :disabled="true"/>
+
       <DialogBody v-show="isShow" :messages="messages" :color="color"/>
 
       <v-btn slot="footer" :color="color" dark class="lighten-1" block @click="toggleDialogVisibility">
@@ -17,13 +19,15 @@
 
 <script>
 import Card from "./Card.vue"
+import Chips from "./Chips.vue"
 import DialogBody from "./DialogBody.vue"
 const { colors } = require("../assets/data/colors.json")
 
 export default {
   components: {
     DialogBody,
-    Card
+    Card,
+    Chips
   },
   props: {
     title: {
@@ -41,6 +45,11 @@ export default {
       }
     },
     messages: {
+      type: Array,
+      required: false,
+      default: () => []
+    },
+    tags: {
       type: Array,
       required: false,
       default: () => []
