@@ -5,7 +5,7 @@
         <v-icon medium dark>clear</v-icon>
       </v-btn >
 
-      <Chips slot="chips" :list="tags" :id="id" @chips-updated="chipsUpdated"/>
+      <Chips slot="chips" :list="tags" :id="id" :disabled="false" @chips-updated="chipsUpdated"/>
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>

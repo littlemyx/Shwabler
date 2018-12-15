@@ -37,13 +37,14 @@
       <v-chip
         :color="`${item.color} lighten-3`"
         :selected="selected"
+        :small="false"
         label
-        small
       >
         <span class="pr-2">
           {{ item.text | capitalize }}
         </span>
         <v-icon
+          v-if="!disabled"
           small
           @click="parent.selectItem(item)"
         >close</v-icon>
