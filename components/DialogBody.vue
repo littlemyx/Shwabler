@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <div class="Wrapper">
-      <div :class="['darken-2', color]" class="DialogWrapper">
+      <div :id="identify" :class="['darken-2', color]" class="DialogWrapper">
         <Message
           v-for="(message, i) in messages"
           :key="i"
@@ -10,7 +10,7 @@
           :color="color"
         />
       </div>
-      <AnswerInput />
+      <AnswerInput @sendMessage="sendMessage"/>
     </div>
   </v-layout>
 </template>
@@ -34,6 +34,20 @@ export default {
       type: String,
       required: false,
       default: "black"
+    },
+    id: {
+      type: Number,
+      required: true
+    }
+  },
+  data() {
+    return {
+      identify: `dialog_${this.id}`
+    }
+  },
+  methods: {
+    sendMessage(message) {
+      this.$emit("sendMessage", message)
     }
   }
 }

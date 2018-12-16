@@ -8,7 +8,7 @@
 
       <Chips v-if="tags.length" slot="chips" :list="tags" :disabled="true"/>
 
-      <DialogBody v-show="isShow" :messages="messages" :color="color"/>
+      <DialogBody v-show="isShow" :id="id" :messages="messages" :color="color" @sendMessage="sendMessage"/>
 
       <v-btn slot="footer" :color="color" dark class="lighten-1" block @click="toggleDialogVisibility">
         {{ buttonText }}
@@ -30,6 +30,13 @@ export default {
     Chips
   },
   props: {
+    id: {
+      type: Number,
+      required: true,
+      validator: function() {
+        return true
+      }
+    },
     title: {
       type: String,
       required: true,
@@ -78,16 +85,26 @@ export default {
       }
     })()
   },
+  mounted: function() {},
   methods: {
     toggleDialogVisibility() {
       this.isShow = !this.isShow
       this.buttonText = this.isShow ? "Hide Dialog" : "Show Dialog"
+      this.$nextTick(function() {
+        const container = this.$el.querySelector(`#dialog_${this.id}`)
+        container.scrollTop = container.scrollHeight
+      })
     },
-    dismiss() {
-      console.log("dismiss")
-      this.isShow = false
-      this.isLike = false
-      this.$store.commit("waterfall/changeCard")
+    sendMessage(message) {
+      this.$store.dispatch("userList/updateCardMessageListAsync", {
+        id: this.id,
+        author: this.$store.getters["user/activeUser"],
+        text: message
+      })
+      this.$nextTick(function() {
+        const container = this.$el.querySelector(`#dialog_${this.id}`)
+        container.scrollTop = container.scrollHeight
+      })
     }
   }
 }
