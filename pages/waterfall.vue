@@ -3,13 +3,13 @@
     <div>
       <Waterfall />
     </div>
-    <v-btn depressed color="error" @click="goBack">
+    <!-- <v-btn depressed color="error" @click="goBack">
       Back
     </v-btn>
     <router-link to="/login"> go to login </router-link>
     <v-btn depressed color="error" @click="logOut">
       LogOut
-    </v-btn>
+    </v-btn> -->
   </div>
 </template>
 
