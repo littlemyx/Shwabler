@@ -13,15 +13,6 @@
       </div>
 
       <InputText v-show="isShow"/>
-
-      <div slot="footer" class="footer">
-        <v-btn :color="color" class="darken-1 ml-3" @click="answer">
-          <v-icon :color="isLike ? 'red' : ''" medium dark>favorite</v-icon>
-        </v-btn>
-        <v-btn :color="color" class="darken-1 mr-3" @click="dismiss">
-          <v-icon medium dark>clear</v-icon>
-        </v-btn>
-      </div>
     </Card>
   </v-layout>
 </template>

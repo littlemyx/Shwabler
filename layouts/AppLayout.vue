@@ -12,6 +12,9 @@
           <v-list-tile-content>
             <v-list-tile-title v-text="user"/>
           </v-list-tile-content>
+          <v-list-tile-action>
+            <v-icon @click.stop="drawer = !drawer" v-html="arrow_left"/>
+          </v-list-tile-action>
         </v-list-tile>
         <v-list-tile
           v-for="(item, i) in items"
@@ -39,7 +42,7 @@
     </v-navigation-drawer>
     <v-toolbar color="dark-grey" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"/>
-      <v-toolbar-title>Shwabler</v-toolbar-title>
+      <v-toolbar-title>SHWABLER</v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container fluid>
@@ -63,6 +66,7 @@ export default {
   data() {
     return {
       exit_icon: "exit_to_app",
+      arrow_left: "arrow_left",
       clipped: false,
       drawer: null,
       fixed: false,
