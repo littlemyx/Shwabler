@@ -1,11 +1,14 @@
 <template>
   <v-layout>
-    <v-text-field
+    <v-textarea
       v-model="message"
       :append-outer-icon="'send'"
       class="Input"
       placeholder="Place your answer here"
       solo
+      auto-grow
+      row-height="8"
+      @keyup.shift.enter="sendMessage"
       @click:append-outer="sendMessage"
     />
   </v-layout>

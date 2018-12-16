@@ -3,6 +3,7 @@
     <WardrobeCard 
       v-for="(card, i) in cards"
       :key="i"
+      :id="card.id"
       :title="card.title"
       :card-text="card.text" 
       :messages="card.messages"

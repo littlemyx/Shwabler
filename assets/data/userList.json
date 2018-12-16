@@ -1,5 +1,6 @@
 [
   {
+    "id": 100,
     "title": "Sweet Home Alabama",
     "text": "One line - one rhyme",
     "tags": ["weather"],
@@ -51,6 +52,7 @@
     ]
   },
   {
+    "id": 101,
     "title": "Where is your God now?",
     "text": "\"Where is Your God Now?\" is a popular catchphrase associated with various interweb sightings (images, videos, sites, etc) that defy the logic of human understanding to the point one can no longer resist but to ask him/herself: Does God Really Exist?",
     "messages": [
@@ -65,6 +67,7 @@
     ]
   },
   {
+    "id": 102,
     "title": "Мама мыла раму",
     "text": "Lorem ipsum dolor sit amet, brute iriure accusata ne mea. Eos suavitate referrentur ad, te duo agam libris qualisque, utroque quaestio accommodare no qui.",
     "messages": [
@@ -79,6 +82,7 @@
     ]
   },
   {
+    "id": 103,
     "title": "Больше Бена",
     "text": "И так каждый божий день:<br>Больше денег больше дел, больше дев, больше демонов...<br>Но как из кожи не лезть:<br>Тоже небо, тоже кредо, больше Бена, Porchy демо дал...<br>Нам тут похоже пиздец:<br>Толще снег, тоньше стены, больше стрелок, глушит декаданс...<br>И так каждый божий день:<br>Больше денег, больше дел, больше дев, больше демонов...",
     "messages": [
