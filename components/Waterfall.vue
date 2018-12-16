@@ -1,52 +1,64 @@
 <template>
   <div class="cardWrapper">
-    <template v-if="!isEnd">
-      <transition name="bounce" mode="out-in">
-        <WaterfallCard 
-          v-show="firstCardVisibility"
-          key="first"
-          :is-new="isNew"
-          :title="firstCard.title"
-          :card-text="firstCard.text"
-          :tags="firstCard.tags"
-          @dismiss="dismiss"
-          @accept="accept"
-        />
-      </transition>
-      <transition name="bounce" mode="out-in">
-        <WaterfallCard 
-          v-show="secondCardVisibility" 
-          key="second" 
-          :is-new="isNew" 
-          :title="secondCard.title" 
-          :card-text="secondCard.text"
-          :tags="secondCard.tags"
-          @dismiss="dismiss"
-          @accept="accept"
-        />
-      </transition>
-    </template>
-    <template v-if="isEnd">
-      <Card color="red">
+    <template v-if="isLoading">
+      <Card color="green">
         <div slot="header" style="width:100%; text-align: center;">
-          <h1>{{ endText }}</h1>
+          <h1>{{ loadingText }}</h1>
         </div>
       </Card>
+    </template>
+    <template v-if="!isLoading">
+      <template v-if="!isEnd">
+        <transition name="bounce" mode="out-in">
+          <WaterfallCard 
+            v-show="firstCardVisibility"
+            key="first"
+            :is-new="isNew"
+            :title="firstCard.title"
+            :card-text="firstCard.text"
+            :tags="firstCard.tags"
+            @dismiss="dismiss"
+            @accept="accept"
+          />
+        </transition>
+        <transition name="bounce" mode="out-in">
+          <WaterfallCard 
+            v-show="secondCardVisibility" 
+            key="second" 
+            :is-new="isNew" 
+            :title="secondCard.title" 
+            :card-text="secondCard.text"
+            :tags="secondCard.tags"
+            @dismiss="dismiss"
+            @accept="accept"
+          />
+        </transition>
+      </template>
+      <template v-if="isEnd">
+        <Card color="red">
+          <div slot="header" style="width:100%; text-align: center;">
+            <h1>{{ endText }}</h1>
+          </div>
+        </Card>
+      </template>
     </template>
   </div>
 </template>
 
 <script>
-import WaterfallCard from "../components/WaterfallCard.vue"
+import WaterfallCard from "./WaterfallCard.vue"
+import Card from "./Card.vue"
 
 export default {
   components: {
-    WaterfallCard
+    WaterfallCard,
+    Card
   },
   data() {
     return {
       isNew: true,
-      endText: "No more cards yet :-("
+      endText: "No more cards yet :-(",
+      loadingText: "Loading..."
     }
   },
   computed: {
@@ -58,6 +70,9 @@ export default {
     },
     isEnd() {
       return this.$store.state.waterfall.isEnd
+    },
+    isLoading() {
+      return this.$store.state.waterfall.isLoading
     },
     firstCard() {
       return this.$store.getters["waterfall/nextCard"]

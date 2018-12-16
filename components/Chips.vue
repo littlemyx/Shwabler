@@ -86,7 +86,7 @@ const { colors } = require("../assets/data/colors.json")
 export default {
   props: {
     id: {
-      type: Number,
+      type: String,
       required: false,
       default: () => {}
     },

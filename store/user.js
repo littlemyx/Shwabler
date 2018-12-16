@@ -15,6 +15,9 @@ export const getters = {
   activeUser(state) {
     console.log("activeUser")
     return state.user && state.user.email
+  },
+  userId(state) {
+    return state.user && state.user.l
   }
 }
 

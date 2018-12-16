@@ -4,7 +4,8 @@ export const state = () => ({
   index: 0,
   firstCard: null,
   secondCard: null,
-  isEnd: false
+  isEnd: false,
+  isLoading: true
 })
 
 export const mutations = {
@@ -19,13 +20,16 @@ export const mutations = {
   },
   setEnd(state, value) {
     state.isEnd = value
+  },
+  setLoading(state, value) {
+    state.isLoading = value
   }
 }
 
 export const actions = {
   increaseIndex({ commit, state }) {
     const newIndex = state.index + 1
-    if (newIndex === 10) {
+    if (state.cardList.length === newIndex) {
       // load next pack of cards and set index to 0
       commit("setEnd", true)
     }
