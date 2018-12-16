@@ -57,7 +57,6 @@ import CaveList from "../components/CaveList.vue"
 import Card from "../components/Card.vue"
 import Chips from "../components/Chips.vue"
 import InputText from "../components/InputText.vue"
-import random from "@/services/random.js"
 // <InputText label="Header of your card" slot-scope="head" slot="header" v-bind:value="head.value.title" v-bind:dark="false" v-bind:counter="50"/>
 // <InputText label="Main plot goes here" v-model="newCard.text" v-bind:dark="false" v-bind:counter="400"/>
 export default {
@@ -100,14 +99,13 @@ export default {
     },
     add() {
       const newPost = {
-        id: random(103, 999),
         tags: this.newCardTags,
         title: this.newCardTitle,
         text: this.newCardText
       }
       this.dialog = false
       this.newCardTags = []
-      this.$store.dispatch("cave/addToCaveListAsync", [newPost])
+      this.$store.dispatch("cave/updateCaveListAsync", [newPost])
     },
     cancel() {
       this.dialog = false

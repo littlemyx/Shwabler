@@ -1,4 +1,5 @@
 import cloneDeep from "lodash/cloneDeep"
+import { firestore } from "@/services/fireinit.js"
 
 export const state = () => ({
   newCardTitle: null,
@@ -37,8 +38,20 @@ export const mutations = {
 }
 
 export const actions = {
-  addToCaveListAsync({ commit }, payload) {
-    commit("updateCaveList", payload)
+  // updateCaveListAsync({ commit, getters, rootState }, payload) {
+  updateCaveListAsync({ commit, rootGetters }, payload) {
+    payload[0].owner = rootGetters["user/activeUser"]
+    firestore
+      .collection("posts")
+      .add(payload[0])
+      .then(function(docRef) {
+        console.log("Document written with ID: ", docRef.id)
+        payload[0].id = docRef.id
+        commit("updateCaveList", payload)
+      })
+      .catch(function(error) {
+        console.error("Error adding document: ", error)
+      })
   },
   updateCaveCardAsync({ commit }, payload) {
     commit("updateCaveCard", payload)

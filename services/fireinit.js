@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/database"
+import "firebase/firestore"
 
 var config = {
   apiKey: "AIzaSyB5W8VjQpE3JscGwx0W5Px-r_ehNdY2cwM",
@@ -15,6 +16,9 @@ firebase.initializeApp(config)
 
 const auth = firebase.auth()
 const database = firebase.database()
+const firestore = firebase.firestore()
+const settings = { timestampsInSnapshots: true }
+firestore.settings(settings)
 
 // auth.onAuthStateChanged(user => {
 //   if (user) {
@@ -26,4 +30,5 @@ const database = firebase.database()
 export const GoogleProvider = new firebase.auth.GoogleAuthProvider()
 export { auth }
 export { database }
+export { firestore }
 export default firebase
