@@ -50,7 +50,8 @@
       </v-container>
     </v-content>
     <v-footer color="grey" app>
-      <span class="white--text">&copy; 6:31 am </span>
+      <span class="white--text">&copy;&nbsp;</span>
+      <span class="white--text digitalText"> 6<span class="blinking">:</span>31 AM </span>
     </v-footer>
   </v-app>
 </template>
@@ -97,3 +98,33 @@ export default {
   }
 }
 </script>
+
+<style>
+@font-face {
+  font-family: DS;
+  src: url(/assets/fonts/DS-Digital.otf);
+}
+
+.blinking {
+  animation: blink 1s infinite;
+}
+
+.digitalText {
+  font-family: DS;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+</style>
+>

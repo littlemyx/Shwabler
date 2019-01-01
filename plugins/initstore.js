@@ -3,17 +3,20 @@ import { firestore } from "@/services/fireinit.js"
 export default function({ store }) {
   firestore
     .collection("posts")
-    // .where("owner", ">", store.getters["user/activeUser"])
+    // .where("owner", ">=", store.getters["user/activeUser"])
     // .where("owner", "<", store.getters["user/activeUser"])
-    // .orderBy("owner")
+    .orderBy("owner")
     // .where("text", "==", "test")
     .get()
     .then(querySnapshot => {
       const list = []
       if (querySnapshot.docs.length) {
         querySnapshot.forEach(doc => {
-          console.log(`${doc.id} => ${doc.data()}`)
-          list.push(doc.data())
+          const data = doc.data()
+          console.log(`${doc.id} => ${data}`)
+          if (data.owner !== store.getters["user/activeUser"]) {
+            list.push(doc.data())
+          }
         })
         store.commit("waterfall/updateCardList", list)
       } else {

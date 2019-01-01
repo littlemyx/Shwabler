@@ -7,6 +7,11 @@ export const state = () => ({
 export const mutations = {
   setUser(state, payload) {
     console.log("mutation user/setUser")
+    // name = user.displayName
+    // email = user.email
+    // photoUrl = user.photoURL
+    // emailVerified = user.emailVerified
+    // uid = user.uid
     state.user = JSON.parse(JSON.stringify(payload))
   }
 }
