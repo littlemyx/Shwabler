@@ -7,12 +7,14 @@
             v-model="email"
             :rules="emailRules"
             label="Email"
+            validate-on-blur
           />
           <v-text-field
             v-model="password"
             :rules="passwordRules"
             :type="'password'"
             label="Password"
+            validate-on-blur
           />
 
           <v-card-actions>
@@ -21,13 +23,23 @@
               :disabled="!valid"
               @click="submit"
             >
-              submit
+              
+              <v-progress-circular
+                v-if="isLoading"
+                :size="20"
+                :width="3"
+                color="purple"
+                indeterminate
+              />
+              <span v-else>{{ text }}</span>
             </v-btn>
             <v-spacer/>
           </v-card-actions>
         </v-form>
       </v-card>
-      Don't have an account yet ? <router-link to="signup"> Sign up! </router-link>
+      <div class="footer">
+        Don't have an account yet ?&nbsp;<RouterLink url="signup" text="Sign up!"/>
+      </div>
     </v-flex>
   </v-layout>
 </template>
@@ -35,22 +47,38 @@
 <script>
 // import axios from 'axios';
 import firebase from "firebase"
+import RouterLink from "../components/RouterLink"
 
 export default {
+  components: {
+    RouterLink
+  },
   data: () => ({
-    valid: true,
+    valid: false,
+    text: "login",
+    isLoading: false,
     email: "",
     emailRules: [
-      v => !!v || "E-mail is required",
-      v => /.+@.+/.test(v) || "E-mail must be valid"
+      v =>
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+          v
+        ) ||
+        !v ||
+        "E-mail must be valid"
     ],
     password: "",
-    passwordRules: [v => !!v || "Password is required"]
+    passwordRules: [
+      v =>
+        v.length >= 6 ||
+        !v ||
+        "Password is required and must be longer then 6 symbols"
+    ]
   }),
 
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
+        this.isLoading = true
         // Native form submission is not yet supported
         // axios.post('/api/submit', {
         //   name: this.name,
@@ -88,5 +116,8 @@ export default {
 <style scoped>
 .wrapper_card {
   padding: 10px;
+}
+.footer {
+  display: flex;
 }
 </style>

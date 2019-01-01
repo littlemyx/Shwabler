@@ -10,6 +10,7 @@
       v-model="dialog"
       width="500"
     >
+      <!-- тут эта хрень выперает потому что в скрытом состоянии крестик в чипсах делается широким почему-то  -->
       <Card :new-card-values="newCard" :layoutedt-style="false" color="gray">
         <Chips slot="chips" :list="newCardTags" @chips-updated="newCardTagsUpdated"/>
 
