@@ -1,6 +1,7 @@
 <template>
   <v-layout>
     <v-textarea
+      ref="textarea" 
       v-model="message"
       :append-outer-icon="'send'"
       class="Input"
@@ -25,6 +26,7 @@ export default {
     sendMessage() {
       this.$emit("sendMessage", this.message)
       this.message = ""
+      this.$refs.textarea.clearableCallback()
     }
   }
 }

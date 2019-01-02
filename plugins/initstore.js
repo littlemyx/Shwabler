@@ -29,8 +29,33 @@ export default function({ store }) {
   //const waterfall = require("../assets/data/posts.json")
   //store.commit("waterfall/updateCardList", waterfall)
   // store.commit('waterfall/updateCardList', waterfall);
-  const userList = require("../assets/data/userList.json")
-  store.commit("userList/updateUserList", userList)
+
+  firestore
+    .collection("matches")
+    .where("starter_id", "==", store.getters["user/userId"])
+    // .where("owner", "<", store.getters["user/activeUser"])
+    .orderBy("date")
+    // .where("text", "==", "test")
+    .get()
+    .then(querySnapshot => {
+      const list = []
+      if (querySnapshot.docs.length) {
+        querySnapshot.forEach(doc => {
+          const data = { messages: [], tags: [], ...doc.data(), id: doc.id }
+          console.log(`${doc.id} => ${data}`)
+          list.push(data)
+        })
+        store.commit("userList/updateUserList", list)
+      } else {
+        store.commit("userList/setEmpty", true)
+      }
+      store.commit("userList/setLoading", false)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  // const userList = require("../assets/data/userList.json")
+  // store.commit("userList/updateUserList", userList)
 
   const chips = require("../assets/data/chips.json")
   store.commit("chips/updateChipsList", chips)

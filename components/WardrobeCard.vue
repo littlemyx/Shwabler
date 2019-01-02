@@ -8,7 +8,16 @@
 
       <Chips v-if="tags.length" slot="chips" :list="tags" :disabled="true"/>
 
-      <DialogBody v-show="isShow" :id="id" :messages="messages" :color="color" @sendMessage="sendMessage"/>
+      <div v-if="isMessagesShow" class="messagesWrapper">
+        <v-progress-circular
+          v-if="isMessagesLoading"
+          :size="60"
+          :width="7"
+          color="white"
+          indeterminate
+        />
+        <DialogBody v-else :id="messagesId" :messages="messages" :color="color" :is-loading="isMessagesLoading" @sendMessage="sendMessage"/>
+      </div>
 
       <v-btn slot="footer" :color="color" dark class="lighten-1" block @click="toggleDialogVisibility">
         {{ buttonText }}
@@ -31,7 +40,7 @@ export default {
   },
   props: {
     id: {
-      type: Number,
+      type: String,
       required: true,
       validator: function() {
         return true
@@ -64,7 +73,7 @@ export default {
   },
   data() {
     return {
-      isShow: false,
+      isMessagesShow: false,
       isLike: false,
       buttonText: "Show Dialog"
     }
@@ -83,16 +92,23 @@ export default {
         seed %= length
         return colors[seed]
       }
-    })()
+    })(),
+    isMessagesLoading() {
+      return this.$store.getters["messages/isLoading"](
+        this.$store.getters["userList/messagesId"](this.id)
+      )
+    },
+    messagesId() {
+      return this.$store.getters["userList/messagesId"](this.id)
+    }
   },
-  mounted: function() {},
   methods: {
     toggleDialogVisibility() {
-      this.isShow = !this.isShow
-      this.buttonText = this.isShow ? "Hide Dialog" : "Show Dialog"
-      this.$nextTick(function() {
-        const container = this.$el.querySelector(`#dialog_${this.id}`)
-        container.scrollTop = container.scrollHeight
+      this.isMessagesShow = !this.isMessagesShow
+      this.buttonText = this.isMessagesShow ? "Hide Dialog" : "Show Dialog"
+
+      this.$store.dispatch("messages/updateMessagesAsync", {
+        id: this.$store.getters["userList/messagesId"](this.id)
       })
     },
     sendMessage(message) {
@@ -103,9 +119,17 @@ export default {
       })
       this.$nextTick(function() {
         const container = this.$el.querySelector(`#dialog_${this.id}`)
-        container.scrollTop = container.scrollHeight
+        container.scrollTop = container.scrollHeight // нужно протестировать
       })
     }
   }
 }
 </script>
+
+
+<style>
+.messagesWrapper {
+  display: flex;
+  justify-content: center;
+}
+</style>

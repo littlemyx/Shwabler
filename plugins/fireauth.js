@@ -7,6 +7,7 @@ export default context => {
     // resolve(true);
     auth.onAuthStateChanged(user => {
       console.log("fireauth")
+      console.log(auth.currentUser)
       if (user) {
         // setTimeout(function () {
         store.dispatch("user/setUser", user)

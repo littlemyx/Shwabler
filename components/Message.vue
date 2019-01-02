@@ -27,7 +27,7 @@ export default {
     classObject() {
       return {
         messageWrapper: true,
-        messageAuthor: this.author === this.$store.getters["user/activeUser"]
+        messageAuthor: this.author === this.$store.getters["user/userId"]
       }
     }
   }

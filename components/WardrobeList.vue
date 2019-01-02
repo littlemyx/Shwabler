@@ -1,7 +1,20 @@
 <template>
   <div class="cardWrapper">
+    <template v-if="isLoading">
+      <Card color="green">
+        <div slot="header" style="width:100%; text-align: center;">
+          <v-progress-circular
+            :size="60"
+            :width="7"
+            color="white"
+            indeterminate
+          />
+        </div>
+      </Card>
+    </template>
     <WardrobeCard 
       v-for="(card, i) in cards"
+      v-else
       :key="i"
       :id="card.id"
       :title="card.title"
@@ -10,22 +23,39 @@
       :tags="card.tags"
       class="wardrobeCard"
     />
+    <template v-if="isEmpty">
+      <Card color="red">
+        <div slot="header" style="width:100%; text-align: center;">
+          <h1>{{ endText }}</h1>
+        </div>
+      </Card>
+    </template>
   </div>
 </template>
 
 <script>
-import WardrobeCard from "../components/WardrobeCard.vue"
+import WardrobeCard from "./WardrobeCard.vue"
+import Card from "./Card.vue"
 
 export default {
   components: {
-    WardrobeCard
+    WardrobeCard,
+    Card
   },
   data() {
-    return {}
+    return {
+      endText: "No chats..."
+    }
   },
   computed: {
     cards() {
       return this.$store.state.userList.userList
+    },
+    isLoading() {
+      return this.$store.state.userList.isLoading
+    },
+    isEmpty() {
+      return this.$store.state.userList.isEmpty
     }
   },
   layout: "AppLayout"
