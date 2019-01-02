@@ -51,7 +51,7 @@
     </v-content>
     <v-footer color="grey" app>
       <span class="white--text">&copy;&nbsp;</span>
-      <span class="white--text digitalText"> 6<span class="blinking">:</span>31 AM </span>
+      <span class="white--text digitalText"> <a class="teamLink" href="http://631am.com/" target="_blabk">6<span class="blinking">:</span>31 AM </a> </span>
     </v-footer>
   </v-app>
 </template>
@@ -107,6 +107,11 @@ export default {
 
 .blinking {
   animation: blink 1s infinite;
+}
+
+.teamLink {
+  color: inherit;
+  text-decoration: none;
 }
 
 .digitalText {

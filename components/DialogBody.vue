@@ -5,7 +5,7 @@
         <Message
           v-for="(message, i) in messages"
           :key="i"
-          :author="message.author" 
+          :author="message.author_id" 
           :text="message.text"
           :color="color"
         />
@@ -25,18 +25,13 @@ export default {
     AnswerInput
   },
   props: {
-    messages: {
-      type: Array,
-      required: false,
-      default: () => []
-    },
     color: {
       type: String,
       required: false,
       default: "black"
     },
     id: {
-      type: Number,
+      type: String,
       required: true
     }
   },
@@ -44,6 +39,24 @@ export default {
     return {
       identify: `dialog_${this.id}`
     }
+  },
+
+  computed: {
+    messages() {
+      return this.$store.getters["messages/messages"](this.id)
+    }
+  },
+  mounted() {
+    this.$nextTick(function() {
+      const container = this.$el.querySelector(`#dialog_${this.id}`)
+      container.scrollTop = container.scrollHeight
+    })
+  },
+  updated() {
+    this.$nextTick(function() {
+      const container = this.$el.querySelector(`#dialog_${this.id}`)
+      container.scrollTop = container.scrollHeight // нужно протестировать
+    })
   },
   methods: {
     sendMessage(message) {

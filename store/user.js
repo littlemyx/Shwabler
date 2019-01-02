@@ -22,7 +22,7 @@ export const getters = {
     return state.user && state.user.email
   },
   userId(state) {
-    return state.user && state.user.l
+    return state.user && state.user.uid
   }
 }
 

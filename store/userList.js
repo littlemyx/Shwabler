@@ -1,6 +1,8 @@
 export const state = () => ({
   firstCard: true,
-  userList: []
+  userList: [],
+  isLoading: true,
+  isEmpty: false
 })
 
 export const mutations = {
@@ -9,6 +11,12 @@ export const mutations = {
   },
   updateUserList(state, newList) {
     state.userList = [...state.userList, ...newList]
+  },
+  setLoading(state, flag) {
+    state.isLoading = flag
+  },
+  setEmpty(state, flag) {
+    state.isEmpty = flag
   },
   updateCardMessageList(state, newMessage) {
     const oldCardIndex = state.userList.findIndex(
@@ -33,5 +41,11 @@ export const actions = {
   },
   updateCardMessageListAsync({ commit }, payload) {
     commit("updateCardMessageList", payload)
+  }
+}
+
+export const getters = {
+  messagesId: state => id => {
+    return state.userList.find(card => card.id === id).messages_id
   }
 }

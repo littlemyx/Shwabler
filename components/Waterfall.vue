@@ -3,7 +3,12 @@
     <template v-if="isLoading">
       <Card color="green">
         <div slot="header" style="width:100%; text-align: center;">
-          <h1>{{ loadingText }}</h1>
+          <v-progress-circular
+            :size="60"
+            :width="7"
+            color="white"
+            indeterminate
+          />
         </div>
       </Card>
     </template>
@@ -57,7 +62,7 @@ export default {
   data() {
     return {
       isNew: true,
-      endText: "No more cards yet :-(",
+      endText: "No more cards yet 😭",
       loadingText: "Loading..."
     }
   },
