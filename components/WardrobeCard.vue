@@ -106,19 +106,26 @@ export default {
     toggleDialogVisibility() {
       this.isMessagesShow = !this.isMessagesShow
       this.buttonText = this.isMessagesShow ? "Hide Dialog" : "Show Dialog"
-
-      this.$store.dispatch("messages/updateMessagesAsync", {
-        id: this.$store.getters["userList/messagesId"](this.id)
-      })
+      if (this.isMessagesShow) {
+        this.$store.dispatch("messages/fetchMessagesAsync", {
+          id: this.messagesId
+        })
+      } else {
+        this.$store.dispatch("messages/unsubscribeListenerAsync", {
+          id: this.messagesId
+        })
+      }
     },
     sendMessage(message) {
-      this.$store.dispatch("userList/updateCardMessageListAsync", {
-        id: this.id,
-        author: this.$store.getters["user/activeUser"],
-        text: message
+      this.$store.dispatch("messages/updateMessagesAsync", {
+        id: this.messagesId,
+        message: {
+          author_id: this.$store.getters["user/userId"],
+          text: message
+        }
       })
       this.$nextTick(function() {
-        const container = this.$el.querySelector(`#dialog_${this.id}`)
+        const container = this.$el.querySelector(`#dialog_${this.messagesId}`)
         container.scrollTop = container.scrollHeight // нужно протестировать
       })
     }

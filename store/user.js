@@ -23,6 +23,9 @@ export const getters = {
   },
   userId(state) {
     return state.user && state.user.uid
+  },
+  isUserExist(state) {
+    return !!state.user
   }
 }
 

@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       isNew: true,
-      endText: "No more cards yet 😭",
+      endText: "No more cards yet :-(",
       loadingText: "Loading..."
     }
   },

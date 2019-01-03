@@ -8,6 +8,7 @@
             :rules="emailRules"
             label="Email"
             validate-on-blur
+            @keyup.enter.exact="submit"
           />
           <v-text-field
             v-model="password"
@@ -15,6 +16,7 @@
             :type="'password'"
             label="Password"
             validate-on-blur
+            @keyup.enter.exact="submit"
           />
 
           <v-card-actions>
@@ -78,23 +80,19 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
+        // <!-- TODO блокировать когда идёт загрузка -->
         this.isLoading = true
-        // Native form submission is not yet supported
-        // axios.post('/api/submit', {
-        //   name: this.name,
-        //   email: this.email,
-        //   select: this.select,
-        //   checkbox: this.checkbox
-        // })
         firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.password)
           .then(
             user => {
+              this.isLoading = true
               console.log(user)
               this.$router.push("/waterfall")
             },
             function(error) {
+              this.isLoading = true
               alert(`oops! ${error}`)
             }
           )
