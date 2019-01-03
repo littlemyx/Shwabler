@@ -7,9 +7,13 @@
       class="Input"
       placeholder="Place your answer here"
       solo
+      multi-line
       auto-grow
-      row-height="8"
-      @keyup.shift.enter="sendMessage"
+      rows="1"
+      @keydown.enter.exact.prevent
+      @keyup.enter.exact="sendMessage"
+      @keydown.shift.enter.exact.prevent
+      @keyup.shift.enter.exact="addNewLine"
       @click:append-outer="sendMessage"
     />
   </v-layout>
@@ -26,7 +30,15 @@ export default {
     sendMessage() {
       this.$emit("sendMessage", this.message)
       this.message = ""
-      this.$refs.textarea.clearableCallback()
+      this.$nextTick(function() {
+        this.$refs.textarea.calculateInputHeight()
+      })
+    },
+    addNewLine() {
+      this.message = this.message + "\n"
+      this.$nextTick(function() {
+        this.$refs.textarea.calculateInputHeight()
+      })
     }
   }
 }
