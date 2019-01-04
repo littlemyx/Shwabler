@@ -1,3 +1,6 @@
+import cloneDeep from "lodash/cloneDeep"
+import { firestore } from "@/services/fireinit.js"
+
 export const state = () => ({
   firstCard: true,
   userList: [],
@@ -8,6 +11,9 @@ export const state = () => ({
 export const mutations = {
   changeCard(state) {
     state.firstCard = !state.firstCard
+  },
+  setUserList(state, newList) {
+    state.userList = newList
   },
   updateUserList(state, newList) {
     state.userList = [...state.userList, ...newList]
@@ -26,6 +32,14 @@ export const mutations = {
       ...state.userList[oldCardIndex].messages,
       { author: newMessage.author, text: newMessage.text }
     ]
+  },
+  removeFromUserList(state, payload) {
+    const newValue = cloneDeep(state.userList)
+    newValue.splice(payload.index, 1)
+    state.userList = newValue
+    if (!newValue.length) {
+      state.isEmpty = true
+    }
   }
 }
 
@@ -41,6 +55,32 @@ export const actions = {
   },
   updateCardMessageListAsync({ commit }, payload) {
     commit("updateCardMessageList", payload)
+  },
+  removeFromUserListAsync({ commit, dispatch, state }, payload) {
+    const removingCardIndex = state.userList.findIndex(
+      card => card.id === payload.id
+    )
+    const tmp = state.userList[removingCardIndex]
+    const messages_id = state.userList[removingCardIndex].messages_id
+    commit("removeFromUserList", { index: removingCardIndex })
+    firestore
+      .collection("matches")
+      .doc(payload.id)
+      .delete()
+      .then(() => {
+        dispatch(
+          "messages/removeMessagesThreadAsync",
+          { messages_id },
+          { root: "messages" }
+        )
+      })
+      .catch(error => {
+        console.log(error)
+        // TODO add tmp back to list and show error message
+        let caveListClone = cloneDeep(state.caveList)
+        caveListClone.splice(payload, 0, tmp)
+        commit("setCaveList", caveListClone)
+      })
   }
 }
 

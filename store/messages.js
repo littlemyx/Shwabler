@@ -1,3 +1,4 @@
+import cloneDeep from "lodash/cloneDeep"
 import { firestore, timestamp } from "@/services/fireinit.js"
 
 export const state = () => ({
@@ -44,6 +45,11 @@ export const mutations = {
     const newState = { ...state.listeners }
     delete newState[payload.id]
     state.listeners = newState
+  },
+  removeMessagesThread(state, messages_id) {
+    const newState = { ...state.messages }
+    delete newState[messages_id]
+    state.messages = newState
   }
 }
 
@@ -59,25 +65,29 @@ export const actions = {
       // .where("messages_id", "==", payload.id)
       // .orderBy("date")
       .onSnapshot(doc => {
-        const messages = doc.data().messages
-        commit("setMessages", {
-          id: payload.id,
-          messages
-        })
+        if (doc.exists) {
+          const messages = doc.data().messages
+          commit("setMessages", {
+            id: payload.id,
+            messages
+          })
 
-        commit("updateMessgesLoading", {
-          id: payload.id,
-          isLoading: false
-        })
+          commit("updateMessgesLoading", {
+            id: payload.id,
+            isLoading: false
+          })
+        }
       })
     commit("updateListeners", {
       id: payload.id,
       listener
     })
   },
-  unsubscribeListenerAsync({ commit, state }, payload) {
-    state.listeners[payload.id]()
-    commit("unsubscribeListener", payload)
+  unsubscribeListenerAsync({ commit, state }, id) {
+    if (state.listeners[id]) {
+      state.listeners[id]()
+      commit("unsubscribeListener", id)
+    }
   },
   updateMessagesAsync({ commit, state }, payload) {
     commit("updateMessages", {
@@ -101,6 +111,26 @@ export const actions = {
       })
       .catch(error => {
         console.log(error)
+      })
+  },
+  removeMessagesThreadAsync({ commit, state, dispatch }, { messages_id: id }) {
+    const tmp = state.messages[id]
+    if (state.messages[id]) {
+      dispatch("unsubscribeListenerAsync", id)
+      commit("removeMessagesThread", id)
+    }
+    firestore
+      .collection("messages")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("messages succesfully deleted")
+      })
+      .catch(() => {
+        // TODO add tmp back to list and show error message
+        let caveListClone = cloneDeep(state.caveList)
+        caveListClone.splice(id, 0, tmp)
+        commit("setCaveList", caveListClone)
       })
   }
 }

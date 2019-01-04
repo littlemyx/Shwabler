@@ -15,7 +15,6 @@ export default function({ store }) {
           querySnapshot.forEach(doc => {
             const data = doc.data()
             data.id = doc.id
-            data.author_id = data.author_id[0]
             if (data.author_id !== store.getters["user/userId"]) {
               list.push(data)
             }
@@ -32,7 +31,7 @@ export default function({ store }) {
 
     firestore
       .collection("posts")
-      .where("author_id", "array-contains", store.getters["user/userId"])
+      .where("author_id", "==", store.getters["user/userId"])
       // .orderBy("owner")
       // .where("text", "==", "test")
       .get()
@@ -42,7 +41,6 @@ export default function({ store }) {
           querySnapshot.forEach(doc => {
             const data = doc.data()
             data.id = doc.id
-            data.author_id = data.author_id[0]
             list.push(data)
           })
           store.commit("cave/setCaveList", list)
@@ -61,8 +59,7 @@ export default function({ store }) {
       // .where("owner", "<", store.getters["user/activeUser"])
       .orderBy("date")
       // .where("text", "==", "test")
-      .get()
-      .then(querySnapshot => {
+      .onSnapshot(querySnapshot => {
         const list = []
         if (querySnapshot.docs.length) {
           querySnapshot.forEach(doc => {
@@ -70,14 +67,11 @@ export default function({ store }) {
             console.log(`${doc.id} => ${data}`)
             list.push(data)
           })
-          store.commit("userList/updateUserList", list)
+          store.commit("userList/setUserList", list)
         } else {
           store.commit("userList/setEmpty", true)
         }
         store.commit("userList/setLoading", false)
-      })
-      .catch(error => {
-        console.error(error)
       })
     // const userList = require("../assets/data/userList.json")
     // store.commit("userList/updateUserList", userList)

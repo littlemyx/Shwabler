@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     deleteItem(id) {
-      this.$emit("deleteItem", id)
+      this.$store.dispatch("cave/removeFromCaveListAsync", { id })
     }
   },
   layout: "AppLayout"

@@ -22,6 +22,7 @@
       :messages="card.messages"
       :tags="card.tags"
       class="wardrobeCard"
+      @deleteItem="deleteItem"
     />
     <template v-if="isEmpty">
       <Card color="red">
@@ -56,6 +57,11 @@ export default {
     },
     isEmpty() {
       return this.$store.state.userList.isEmpty
+    }
+  },
+  methods: {
+    deleteItem(id) {
+      this.$store.dispatch("userList/removeFromUserListAsync", { id })
     }
   },
   layout: "AppLayout"

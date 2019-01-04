@@ -29,9 +29,9 @@ export const mutations = {
   setNewCardText(state, newValue) {
     state.newCardText = newValue
   },
-  removeFromCaveList(state, id) {
+  removeFromCaveList(state, payload) {
     const oldValue = cloneDeep(state.caveList)
-    const removingCardIndex = oldValue.findIndex(card => card.id === id)
+    const removingCardIndex = oldValue.findIndex(card => card.id === payload.id)
     oldValue.splice(removingCardIndex, 1)
     state.caveList = oldValue
   }
