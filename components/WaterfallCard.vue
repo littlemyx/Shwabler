@@ -57,6 +57,20 @@ export default {
         return true
       }
     },
+    id: {
+      type: String,
+      required: true,
+      validator: function() {
+        return true
+      }
+    },
+    author_id: {
+      type: String,
+      required: true,
+      validator: function() {
+        return true
+      }
+    },
     tags: {
       type: Array,
       required: false,
@@ -92,20 +106,19 @@ export default {
       if (this.isLike) {
         if (!this.inputTextValue.length) {
           this.inputError = true
-          this.inputLabel = "Too short message!"
+          this.inputLabel = "Message is empty!"
           return
         } else {
-          let card = {
+          let answer = {
             title: this.title,
             text: this.cardText,
-            messages: [
-              {
-                author: this.$store.getters["user/activeUser"],
-                text: this.inputTextValue
-              }
-            ]
+            card_id: this.id,
+            author_id: this.$store.getters["user/userId"],
+            message: this.inputTextValue,
+            card_author_id: this.author_id
           }
-          this.$emit("accept", card)
+          this.$store.dispatch("waterfall/createMatch", answer)
+          this.$emit("accept")
           this.inputTextValue = ""
         }
       }

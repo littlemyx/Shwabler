@@ -10,7 +10,7 @@ export default function({ store, redirect, route }) {
   }
   if (
     store.state.user.user !== null &&
-    !store.state.user.user.emailVerified &&
+    !store.state.user.isEmailVerified &&
     route.name !== "verification" &&
     route.name !== "login" &&
     route.name !== "sigup"
@@ -19,6 +19,8 @@ export default function({ store, redirect, route }) {
       if (!auth.currentUser.emailVerified) {
         redirect("/verification")
         console.log("no verification")
+      } else {
+        store.commit("user/setEmailVerified", true)
       }
     })
   }

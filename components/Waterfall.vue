@@ -18,24 +18,26 @@
           <WaterfallCard 
             v-show="firstCardVisibility"
             key="first"
+            :id="firstCard.id"
+            :author_id="firstCard.author_id"
             :is-new="isNew"
             :title="firstCard.title"
             :card-text="firstCard.text"
             :tags="firstCard.tags"
-            @dismiss="dismiss"
-            @accept="accept"
+            @dismiss="discard"
           />
         </transition>
         <transition name="bounce" mode="out-in">
           <WaterfallCard 
             v-show="secondCardVisibility" 
             key="second" 
+            :id="secondCard.id"
+            :author_id="secondCard.author_id"
             :is-new="isNew" 
             :title="secondCard.title" 
             :card-text="secondCard.text"
             :tags="secondCard.tags"
-            @dismiss="dismiss"
-            @accept="accept"
+            @dismiss="discard"
           />
         </transition>
       </template>
@@ -104,11 +106,9 @@ export default {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/")
     },
-    accept(payload) {
-      this.$store.dispatch("waterfall/uploadCardToServer", payload)
-    },
-    dismiss() {
+    discard() {
       this.$store.dispatch("waterfall/increaseIndex")
+      console.log("next card")
     }
   },
   layout: "AppLayout"

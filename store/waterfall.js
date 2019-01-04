@@ -1,3 +1,5 @@
+import { firestore, timestamp } from "@/services/fireinit.js"
+
 export const state = () => ({
   isFirstCardVisible: true,
   cardList: [],
@@ -34,6 +36,53 @@ export const actions = {
       commit("setEnd", true)
     }
     commit("increaseIndex")
+  },
+  createMatch({ dispatch }, payload) {
+    // dispatch("userList/updateUserList", payload) нужно пока не научимся нормально слушать изменения в коллекции
+
+    dispatch("increaseIndex")
+    const message = [
+      {
+        text: payload.message,
+        date: new timestamp.fromDate(new Date()),
+        author_id: payload.author_id
+      }
+    ]
+
+    const doc = firestore.collection("messages").doc()
+    doc
+      .set({
+        messages: message.map(obj => {
+          return Object.assign({}, obj)
+        })
+      })
+      .then(() => {
+        const messages_id = doc.id
+        const match = {
+          post_id: payload.card_id,
+          date: new timestamp.fromDate(new Date()),
+          starter_id: payload.card_author_id,
+          follower_id: payload.author_id,
+          members: [payload.card_author_id, payload.author_id],
+          tags: [], //TODO на будущее мб
+          text: payload.text,
+          title: payload.title,
+          messages_id
+        }
+        firestore
+          .collection("matches")
+          .doc()
+          .set(match)
+          .then(error => {
+            console.log(error)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      })
+      .catch(error => {
+        console.error(error)
+      })
   },
   uploadCardToServer({ dispatch }, payload) {
     dispatch("userList/updateUserListAsync", [payload], { root: "userList" })
