@@ -1,6 +1,6 @@
 <template>
   <div>
-    <CaveList :cards="cards" @deleteItem="deleteItem"/>
+    <CaveList :cards="cards"/>
 
     <v-btn fab dark class="add dark-gray mr-3" @click="openDialog">
       <v-icon class="addIcon" medium dark>add</v-icon>
@@ -103,7 +103,7 @@ export default {
         tags: this.newCardTags,
         title: this.newCardTitle,
         text: this.newCardText,
-        author_id: [this.$store.getters["user/userId"]]
+        author_id: this.$store.getters["user/userId"]
       }
       this.dialog = false
       this.newCardTags = []
@@ -118,9 +118,6 @@ export default {
     },
     inputText(value) {
       this.$store.commit("cave/setNewCardText", value)
-    },
-    deleteItem(id) {
-      this.$store.dispatch("cave/removeFromCaveListAsync", { id })
     },
     newCardTagsUpdated(tag) {
       this.newCardTags = tag
