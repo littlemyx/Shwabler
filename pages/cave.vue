@@ -102,7 +102,8 @@ export default {
       const newPost = {
         tags: this.newCardTags,
         title: this.newCardTitle,
-        text: this.newCardText
+        text: this.newCardText,
+        author_id: [this.$store.getters["user/userId"]]
       }
       this.dialog = false
       this.newCardTags = []
@@ -119,7 +120,7 @@ export default {
       this.$store.commit("cave/setNewCardText", value)
     },
     deleteItem(id) {
-      this.$store.dispatch("cave/removeFromCaveListAsync", id)
+      this.$store.dispatch("cave/removeFromCaveListAsync", { id })
     },
     newCardTagsUpdated(tag) {
       this.newCardTags = tag

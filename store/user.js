@@ -1,7 +1,8 @@
 import { auth, GoogleProvider } from "@/services/fireinit.js"
 
 export const state = () => ({
-  user: null
+  user: null,
+  isEmailVerified: false
 })
 
 export const mutations = {
@@ -13,19 +14,9 @@ export const mutations = {
     // emailVerified = user.emailVerified
     // uid = user.uid
     state.user = JSON.parse(JSON.stringify(payload))
-  }
-}
-
-export const getters = {
-  activeUser(state) {
-    console.log("activeUser")
-    return state.user && state.user.email
   },
-  userId(state) {
-    return state.user && state.user.uid
-  },
-  isUserExist(state) {
-    return !!state.user
+  setEmailVerified(state, payload) {
+    state.isEmailVerified = payload
   }
 }
 
@@ -59,5 +50,18 @@ export const actions = {
   setUser({ commit }, payload) {
     console.log("action user/setUser")
     commit("setUser", payload)
+  }
+}
+
+export const getters = {
+  activeUser(state) {
+    console.log("activeUser")
+    return state.user && state.user.email
+  },
+  userId(state) {
+    return state.user && state.user.uid
+  },
+  isUserExist(state) {
+    return !!state.user
   }
 }

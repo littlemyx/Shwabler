@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep"
-import { firestore } from "@/services/fireinit.js"
+import { firestore, timestamp } from "@/services/fireinit.js"
 
 export const state = () => ({
   newCardTitle: null,
@@ -39,8 +39,8 @@ export const mutations = {
 
 export const actions = {
   // updateCaveListAsync({ commit, getters, rootState }, payload) {
-  updateCaveListAsync({ commit, rootGetters }, payload) {
-    payload[0].owner = rootGetters["user/activeUser"]
+  updateCaveListAsync({ commit }, payload) {
+    payload[0].createdAt = new timestamp.fromDate(new Date())
     firestore
       .collection("posts")
       .add(payload[0])
@@ -61,15 +61,18 @@ export const actions = {
   },
   removeFromCaveListAsync({ commit, state }, payload) {
     const tmp = state.caveList[payload]
-    let success = true
     commit("removeFromCaveList", payload)
+    firestore
+      .collection("posts")
+      .doc(payload.id)
+      .delete()
+      .catch(() => {
+        // TODO add tmp back to list and show error message
+        let caveListClone = cloneDeep(state.caveList)
+        caveListClone.splice(payload, 0, tmp)
+        commit("setCaveList", caveListClone)
+      })
     // TODO send id to server and wait until success will be catched
-    if (!success) {
-      // TODO add tmp back to list and show error message
-      let caveListClone = cloneDeep(state.caveList)
-      caveListClone.splice(payload, 0, tmp)
-      commit("setCaveList", caveListClone)
-    }
   }
 }
 

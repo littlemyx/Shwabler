@@ -6,7 +6,7 @@ export default function({ store }) {
       .collection("posts")
       // .where("author_id", "array-contains", store.getters["user/userId"])
       // .where("owner", "<", store.getters["user/activeUser"])
-      .orderBy("createdAt")
+      .orderBy("createdAt", "desc")
       // .where("text", "==", "test")
       .get()
       .then(querySnapshot => {
@@ -14,9 +14,10 @@ export default function({ store }) {
         if (querySnapshot.docs.length) {
           querySnapshot.forEach(doc => {
             const data = doc.data()
-            console.log(`${doc.id} => ${data}`)
-            if (data.author_id[0] !== store.getters["user/userId"]) {
-              list.push(doc.data())
+            data.id = doc.id
+            data.author_id = data.author_id[0]
+            if (data.author_id !== store.getters["user/userId"]) {
+              list.push(data)
             }
           })
           store.commit("waterfall/updateCardList", list)
@@ -41,6 +42,7 @@ export default function({ store }) {
           querySnapshot.forEach(doc => {
             const data = doc.data()
             data.id = doc.id
+            data.author_id = data.author_id[0]
             list.push(data)
           })
           store.commit("cave/setCaveList", list)
