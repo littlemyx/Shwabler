@@ -43,6 +43,7 @@
         Don't have an account yet ?&nbsp;<RouterLink url="signup" text="Sign up!"/>
       </div>
     </v-flex>
+    <NotificationsList :offset="{'top':'10px'}" top right/>
   </v-layout>
 </template>
 
@@ -50,10 +51,12 @@
 // import axios from 'axios';
 import firebase from "firebase"
 import RouterLink from "../components/RouterLink"
+import NotificationsList from "../components/NotificationsList"
 
 export default {
   components: {
-    RouterLink
+    RouterLink,
+    NotificationsList
   },
   data: () => ({
     valid: false,
@@ -63,7 +66,7 @@ export default {
     emailRules: [
       v =>
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-          v
+          v.trim()
         ) ||
         !v ||
         "E-mail must be valid"
@@ -71,29 +74,41 @@ export default {
     password: "",
     passwordRules: [
       v =>
-        v.length >= 6 ||
-        !v ||
+        v.trim().length >= 6 ||
+        !v.trim() ||
         "Password is required and must be longer then 6 symbols"
     ]
   }),
-
+  // beforeRouteLeave(to, from, next) {
+  //   console.log(to, from, next)
+  //   this.$store.dispatch(storeInitialize(to))
+  //   next()
+  // },
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
         // <!-- TODO блокировать когда идёт загрузка -->
         this.isLoading = true
+        const resetLoading = this.resetLoading
+        const store = this.$store
         firebase
           .auth()
           .signInWithEmailAndPassword(this.email, this.password)
           .then(
             user => {
-              this.isLoading = true
+              resetLoading()
               console.log(user)
               this.$router.push("/waterfall")
             },
             function(error) {
-              this.isLoading = true
-              alert(`oops! ${error}`)
+              resetLoading()
+              store.commit("notifications/updateNotificationsList", [
+                {
+                  type: "error",
+                  text: error.message,
+                  id: error.code + new Date().getTime()
+                }
+              ])
             }
           )
         // this.$store.dispatch('user/signInWithGoogle').then(() => {
@@ -102,6 +117,9 @@ export default {
         //   console.log(e.message);
         // })
       }
+    },
+    resetLoading() {
+      this.isLoading = false
     },
     clear() {
       // this.$refs.form.reset()

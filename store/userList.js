@@ -81,6 +81,28 @@ export const actions = {
         caveListClone.splice(payload, 0, tmp)
         commit("setCaveList", caveListClone)
       })
+  },
+  initFetch({ commit, rootGetters }) {
+    firestore
+      .collection("matches")
+      .where("members", "array-contains", rootGetters["user/userId"])
+      // .where("owner", "<", store.getters["user/activeUser"])
+      .orderBy("date")
+      // .where("text", "==", "test")
+      .onSnapshot(querySnapshot => {
+        const list = []
+        if (querySnapshot.docs.length) {
+          querySnapshot.forEach(doc => {
+            const data = { messages: [], tags: [], ...doc.data(), id: doc.id }
+            console.log(`${doc.id} => ${data}`)
+            list.push(data)
+          })
+          commit("setUserList", list)
+        } else {
+          commit("setEmpty", true)
+        }
+        commit("setLoading", false)
+      })
   }
 }
 

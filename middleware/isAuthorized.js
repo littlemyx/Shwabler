@@ -32,4 +32,5 @@ export default function({ store, redirect, route }) {
     redirect("/login")
     console.log("no auth")
   }
+  return false
 }
