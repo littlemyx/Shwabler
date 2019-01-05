@@ -48,6 +48,7 @@
       <v-container fluid>
         <router-view/>
       </v-container>
+      <NotificationsList :offset="{'top':'56px'}" top right/>
     </v-content>
     <v-footer color="grey" app>
       <span class="white--text">&copy;&nbsp;</span>
@@ -57,7 +58,12 @@
 </template>
 
 <script>
+import NotificationsList from "../components/NotificationsList"
+
 export default {
+  components: {
+    NotificationsList
+  },
   props: {
     source: {
       type: String,

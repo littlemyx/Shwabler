@@ -1,7 +1,5 @@
 <template>
-  <v-layout>
-    <router-link :to="url" class="link"> {{ text }} </router-link>
-  </v-layout>
+  <router-link :to="url" class="link"> {{ text }} </router-link>
 </template>
 
 <script>

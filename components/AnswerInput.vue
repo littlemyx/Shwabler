@@ -28,11 +28,13 @@ export default {
   },
   methods: {
     sendMessage() {
-      this.$emit("sendMessage", this.message)
-      this.message = ""
-      this.$nextTick(function() {
-        this.$refs.textarea.calculateInputHeight()
-      })
+      if (this.message.length) {
+        this.$emit("sendMessage", this.message)
+        this.message = ""
+        this.$nextTick(function() {
+          this.$refs.textarea.calculateInputHeight()
+        })
+      }
     },
     addNewLine() {
       this.message = this.message + "\n"

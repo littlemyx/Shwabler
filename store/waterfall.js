@@ -7,7 +7,8 @@ export const state = () => ({
   firstCard: null,
   secondCard: null,
   isEnd: false,
-  isLoading: true
+  isLoading: true,
+  isInitialized: false
 })
 
 export const mutations = {
@@ -25,6 +26,9 @@ export const mutations = {
   },
   setLoading(state, value) {
     state.isLoading = value
+  },
+  setInitialized(state, value) {
+    state.isInitialized = value
   }
 }
 
@@ -84,9 +88,36 @@ export const actions = {
         console.error(error)
       })
   },
-  uploadCardToServer({ dispatch }, payload) {
-    dispatch("userList/updateUserListAsync", [payload], { root: "userList" })
-    dispatch("increaseIndex", null)
+  initFetch({ commit, rootGetters, state }) {
+    if (!state.isInitialized) {
+      firestore
+        .collection("posts")
+        // .where("author_id", "array-contains", store.getters["user/userId"])
+        // .where("owner", "<", store.getters["user/activeUser"])
+        .orderBy("createdAt", "desc")
+        // .where("text", "==", "test")
+        .get()
+        .then(querySnapshot => {
+          const list = []
+          if (querySnapshot.docs.length) {
+            querySnapshot.forEach(doc => {
+              const data = doc.data()
+              data.id = doc.id
+              if (data.author_id !== rootGetters["user/userId"]) {
+                list.push(data)
+              }
+            })
+            commit("updateCardList", list)
+          } else {
+            commit("setEnd", true)
+          }
+          commit("setLoading", false)
+          commit("setInitialized", true)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 

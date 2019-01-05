@@ -54,7 +54,7 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchMessagesAsync({ commit }, payload) {
+  fetchMessagesAsync({ commit, state }, payload) {
     commit("updateMessgesLoading", {
       id: payload.id,
       isLoading: true
@@ -67,15 +67,36 @@ export const actions = {
       .onSnapshot(doc => {
         if (doc.exists) {
           const messages = doc.data().messages
-          commit("setMessages", {
-            id: payload.id,
-            messages
-          })
-
           commit("updateMessgesLoading", {
             id: payload.id,
             isLoading: false
           })
+          if (!state.messages[payload.id].messages) {
+            commit("setMessages", {
+              id: payload.id,
+              messages
+            })
+          } else {
+            if (
+              messages.length !== state.messages[payload.id].messages.length
+            ) {
+              commit("setMessages", {
+                id: payload.id,
+                messages
+              })
+              commit(
+                "notifications/updateNotificationsList",
+                [
+                  {
+                    type: "info",
+                    text: "You have a new message!",
+                    id: "info" + new Date().getTime()
+                  }
+                ],
+                { root: "notifications" }
+              )
+            }
+          }
         }
       })
     commit("updateListeners", {
