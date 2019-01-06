@@ -14,7 +14,7 @@ export default {
   components: { Card },
   data() {
     return {
-      text: "Check your email, we send you a verification letter"
+      text: "Check your email, we have send you a verification letter"
     }
   },
   layout: "AppLayout"
