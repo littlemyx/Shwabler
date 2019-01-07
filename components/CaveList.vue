@@ -7,7 +7,6 @@
         :title="card.title"
         :card-text="card.text" 
         :id="card.id"
-        :tags="card.tags"
         class="wardrobeCard"
         @deleteItem="deleteItem"
       />

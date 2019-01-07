@@ -23,7 +23,6 @@
             :is-new="isNew"
             :title="firstCard.title"
             :card-text="firstCard.text"
-            :tags="firstCard.tags"
             @dismiss="discard"
           />
         </transition>
@@ -36,7 +35,6 @@
             :is-new="isNew" 
             :title="secondCard.title" 
             :card-text="secondCard.text"
-            :tags="secondCard.tags"
             @dismiss="discard"
           />
         </transition>
