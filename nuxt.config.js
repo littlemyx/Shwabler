@@ -63,7 +63,7 @@ module.exports = {
       ]
     },
 
-    vendor: ["babel-polyfill", "lodash", "~/plugins/vuetify.js"],
+    vendor: ["babel-polyfill", "lodash", "~/plugins/vuetify.js", "arr-diff"],
     extractCSS: true,
     /*
     ** Run ESLint on save

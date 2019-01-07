@@ -124,5 +124,15 @@ export const actions = {
 export const getters = {
   nextCard: state => {
     return state.cardList[state.index]
+  },
+  tags: state => desired_id => {
+    const card = state.cardList.find(card => card.id === desired_id)
+    return (
+      (card &&
+        card.tags.map(tag => ({
+          text: Object.values(tag)[0]
+        }))) ||
+      null
+    )
   }
 }

@@ -53,6 +53,20 @@ export const actions = {
       // revert adding data to store
     }
   },
+  // updateCardTagsAsync({ commit }, payload){
+  //   firestore
+  //       .collection("tags")
+  //       .add(payload[0])
+  //       .then(function(docRef) {
+  //         console.log("Document written with ID: ", docRef.id)
+  //         payload[0].id = docRef.id
+  //         commit("updateTagsList", Array.isArray(payload) ? payload : [payload])
+  //         resolve(docRef.id)
+  //       })
+  //       .catch(function(error) {
+  //         console.error("Error adding document: ", error)
+  //       })
+  // },
   updateCardMessageListAsync({ commit }, payload) {
     commit("updateCardMessageList", payload)
   },

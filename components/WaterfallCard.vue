@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <Card :color="color">
-      <Chips v-if="tags.length" slot="chips" :list="tags" :disabled="true"/>
+      <Chips v-if="tags.length" slot="chips" :list="tags" :parent="id" :disabled="true"/>
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
@@ -70,11 +70,6 @@ export default {
       validator: function() {
         return true
       }
-    },
-    tags: {
-      type: Array,
-      required: false,
-      default: () => []
     }
   },
   data() {
@@ -99,6 +94,9 @@ export default {
       }, 6)
       seed %= colors.length
       return colors[seed]
+    },
+    tags() {
+      return this.$store.getters["waterfall/tags"](this.id)
     }
   },
   methods: {

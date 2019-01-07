@@ -5,7 +5,7 @@
         <v-icon medium dark>clear</v-icon>
       </v-btn >
 
-      <Chips slot="chips" :list="tags" :id="id" :disabled="false" @chips-updated="chipsUpdated"/>
+      <Chips slot="chips" :list="tags" :id="id" :disabled="false" :reversemap="textToId" @chips-updated="chipsUpdated"/>
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
@@ -50,14 +50,6 @@ export default {
       validator: function() {
         return true
       }
-    },
-    tags: {
-      type: Array,
-      required: true,
-      default: () => [],
-      validator: function() {
-        return true
-      }
     }
   },
   data() {
@@ -68,6 +60,12 @@ export default {
     }
   },
   computed: {
+    tags() {
+      return this.$store.getters["cave/tags"](this.id)
+    },
+    textToId() {
+      return this.$store.getters["cave/textToId"](this.id)
+    },
     color: (function() {
       const length = colors.length
       return function() {
@@ -100,14 +98,19 @@ export default {
     deleteCard() {
       this.$emit("deleteItem", this.id)
     },
-    chipsUpdated(newChip) {
-      const newPost = {
-        id: this.id,
-        tags: newChip,
-        title: this.title,
-        text: this.cardText
+    chipsUpdated({ id, text, deleted = false }) {
+      if (!deleted) {
+        const newPost = {
+          id: this.id,
+          tags: [{ [id]: text }]
+        }
+        this.$store.dispatch("cave/addCaveCardTagsAsync", newPost)
+      } else {
+        this.$store.dispatch("cave/removeTagAsync", {
+          id: this.id,
+          tag_id: id
+        })
       }
-      this.$store.dispatch("cave/updateCaveCardAsync", newPost)
     }
   }
 }

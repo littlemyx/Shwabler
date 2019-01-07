@@ -18,12 +18,21 @@
     class="chips-combobox"
   >
     <template slot="no-data">
-      <v-list-tile>
-        <span class="subheading">Create</span>
+      <v-list-tile v-if="isResultsLoading">
+        <v-progress-circular
+          :size="20"
+          :width="3"
+          color="purple"
+          indeterminate
+        />
+      </v-list-tile>
+      <v-list-tile v-else>
+        <span class="subheading">{{ isResultsLoading && "Or p" || "P" }}ress <code>Enter</code> to add tag</span>
         <v-chip
           :color="`${colors[nonce - 1]} lighten-3`"
           label
           small
+          class="chip"
         >
           {{ search }}
         </v-chip>
@@ -39,9 +48,10 @@
         :selected="selected"
         :small="false"
         label
+        class="chip"
       >
         <span class="pr-2">
-          {{ item.text | capitalize }}
+          {{ item.text | hashtagged }}
         </span>
         <v-icon
           v-if="!disabled"
@@ -71,8 +81,9 @@
           dark
           label
           small
+          class="chip"
         >
-          {{ item.text| capitalize }}
+          {{ item.text | hashtagged }}
         </v-chip>
       </v-list-tile-content>
       
@@ -81,6 +92,8 @@
 </template>
 
 <script>
+import arrDiff from "arr-diff"
+
 const { colors } = require("../assets/data/colors.json")
 
 export default {
@@ -91,6 +104,11 @@ export default {
       default: () => {}
     },
     existed: {
+      type: Object,
+      required: false,
+      default: () => {}
+    },
+    reversemap: {
       type: Object,
       required: false,
       default: () => {}
@@ -121,29 +139,73 @@ export default {
     }
   },
   computed: {
+    searchItems() {
+      return this.$store.getters["tags/searchItems"]
+    },
     items() {
-      return this.$store.getters["chips/items"]
+      const isSearch = Object.keys(this.searchItems).length
+      if (isSearch) {
+        return this.searchItems
+      } else {
+        return this.$store.getters["tags/items"]
+      }
+    },
+    isResultsLoading() {
+      return this.$store.state.tags.isLoading
     },
     model: {
       get: function() {
-        return this.$store.getters["chips/model"](this.list)
+        return this.list
       },
       set: function(val) {
-        const newVal = val.map(item => {
-          return item.text || item
-        })
-        this.$emit("chips-updated", newVal)
-        const newItem = val[val.length - 1].text || val[val.length - 1]
-        if (
-          this.model.length - val.length <= 0 &&
-          !this.$store.state.chips.chipsList.includes(newItem)
-        ) {
-          this.$store.dispatch("chips/addToChipsListAsync", newItem)
+        // const newVal = val.map(item => {
+        //   return item.text || item
+        // })
+        if (this.model.length - val.length <= 0) {
+          const newVal = val[val.length - 1]
+          const newTag = this.items.find(tag => tag.text === newVal) || newVal
+          if (
+            typeof newTag === "string" ||
+            !this.$store.getters["tags/ids"].includes(newTag.id) // TODO а вот с этим условием нужно разобраться - как определить что тэг новосозданный
+          ) {
+            this.$store
+              .dispatch("tags/addToTagsListAsync", {
+                text: newTag,
+                card_id: this.id
+              })
+              .then(id => {
+                this.$emit("chips-updated", { id: id, text: newTag })
+              })
+          } else {
+            this.$store.dispatch("tags/updateActivityAsync", {
+              id: newTag.id,
+              card_id: this.id
+            })
+            this.$emit("chips-updated", { id: newTag.id, text: newTag.text })
+          }
+        } else {
+          const deletedTag = arrDiff(this.model, val)
+          this.$store
+            .dispatch("tags/removeTagAsync", {
+              parent_id: this.id,
+              id: this.reversemap[deletedTag[0].text]
+            })
+            .then(() => {
+              this.$emit("chips-updated", {
+                id: this.reversemap[deletedTag[0].text],
+                text: deletedTag[0].text,
+                deleted: true
+              })
+            })
         }
       }
     }
   },
-
+  watch: {
+    search: function(val) {
+      this.$store.dispatch("tags/fetchSearch", val)
+    }
+  },
   methods: {
     edit(index, item) {
       if (!this.editing) {
@@ -170,3 +232,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.chip {
+  font-size: 15px;
+}
+</style>
+>
