@@ -1,8 +1,8 @@
 export const state = () => ({
   items: [
+    { icon: "email", title: "Waterfall", to: "/waterfall", isAuth: true },
     { icon: "home", title: "My Cave", to: "/cave", isAuth: true },
     { icon: "list", title: "Wardrobe", to: "/wardrobe", isAuth: true },
-    { icon: "email", title: "Waterfall", to: "/waterfall", isAuth: true },
     { icon: "apps", title: "Login", to: "/login", isAuth: false },
     { icon: "apps", title: "SignUp", to: "/signup", isAuth: false }
   ]

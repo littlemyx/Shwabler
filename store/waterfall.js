@@ -1,3 +1,4 @@
+const { colors } = require("../assets/data/colors.json")
 import { firestore, timestamp } from "@/services/fireinit.js"
 
 export const state = () => ({
@@ -12,6 +13,16 @@ export const state = () => ({
 })
 
 export const mutations = {
+  resetStore(state) {
+    state.isFirstCardVisible = true
+    state.cardList = []
+    state.index = 0
+    state.firstCard = null
+    state.secondCard = null
+    state.isEnd = false
+    state.isLoading = true
+    state.isInitialized = false
+  },
   changeCard(state) {
     state.firstCard = !state.firstCard
   },
@@ -88,6 +99,44 @@ export const actions = {
         console.error(error)
       })
   },
+  async conditionalTagsFetch({ commit, rootGetters }, payload) {
+    const refTags = firestore.collection("tags")
+    const refPosts = firestore.collection("posts")
+    let posts = []
+    const cards = []
+    commit("setLoading", true)
+    await Promise.all(
+      payload.map(tag => {
+        return refTags
+          .doc(tag.id)
+          .get()
+          .then(doc => {
+            posts = [...posts, ...doc.data().posts]
+          })
+      })
+    )
+    posts = new Set(posts)
+    await Promise.all(
+      [...posts].map(post => {
+        return refPosts
+          .doc(post)
+          .get()
+          .then(doc => {
+            const data = doc.data()
+            data.id = doc.id
+            if (data.author_id !== rootGetters["user/userId"]) {
+              cards.push(data)
+            }
+          })
+      })
+    )
+
+    if (cards.length) {
+      commit("setEnd", false)
+    }
+    commit("updateCardList", cards)
+    commit("setLoading", false)
+  },
   initFetch({ commit, rootGetters, state }) {
     if (!state.isInitialized) {
       firestore
@@ -130,7 +179,8 @@ export const getters = {
     return (
       (card &&
         card.tags.map(tag => ({
-          text: Object.values(tag)[0]
+          text: Object.values(tag)[0],
+          color: colors[Object.keys(tag)[0].charCodeAt(0) % colors.length]
         }))) ||
       null
     )

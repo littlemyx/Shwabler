@@ -5,6 +5,9 @@ export const state = () => ({
 })
 
 export const mutations = {
+  resetStore(state) {
+    state.notificationsList = []
+  },
   setNotificationsList(state, newList) {
     state.notificationsList = newList
   },
