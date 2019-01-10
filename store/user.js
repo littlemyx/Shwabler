@@ -6,6 +6,10 @@ export const state = () => ({
 })
 
 export const mutations = {
+  resetStore(state) {
+    state.user = null
+    state.isEmailVerified = false
+  },
   setUser(state, payload) {
     console.log("mutation user/setUser")
     // name = user.displayName

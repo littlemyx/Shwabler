@@ -11,6 +11,12 @@ export const state = () => ({
 })
 
 export const mutations = {
+  resetStore(state) {
+    state.newCardTitle = null
+    state.newCardText = null
+    state.caveList = []
+    state.isInitialized = false
+  },
   updateCaveList(state, appendix) {
     state.caveList = [...state.caveList, ...appendix]
   },

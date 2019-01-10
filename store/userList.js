@@ -9,6 +9,12 @@ export const state = () => ({
 })
 
 export const mutations = {
+  resetStore(state) {
+    state.firstCard = true
+    state.userList = []
+    state.isLoading = true
+    state.isEmpty = false
+  },
   changeCard(state) {
     state.firstCard = !state.firstCard
   },

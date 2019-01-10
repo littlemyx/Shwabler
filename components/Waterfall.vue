@@ -1,5 +1,9 @@
 <template>
   <div class="cardWrapper">
+    <div class="tagsWrapper">
+      <Chips :list="tags" :disabled="false" @updated="searchTagsUpdated"/>
+      <v-btn :disabled="!tags.length" large @click="search">Search</v-btn>
+    </div>
     <template v-if="isLoading">
       <Card color="green">
         <div slot="header" style="width:100%; text-align: center;">
@@ -53,17 +57,20 @@
 <script>
 import WaterfallCard from "./WaterfallCard.vue"
 import Card from "./Card.vue"
+import Chips from "./Chips.vue"
 
 export default {
   components: {
     WaterfallCard,
-    Card
+    Card,
+    Chips
   },
   data() {
     return {
       isNew: true,
       endText: "No more cards yet :-(",
-      loadingText: "Loading..."
+      loadingText: "Loading...",
+      tags: []
     }
   },
   computed: {
@@ -107,6 +114,12 @@ export default {
     discard() {
       this.$store.dispatch("waterfall/increaseIndex")
       console.log("next card")
+    },
+    searchTagsUpdated(val) {
+      this.tags = val
+    },
+    search() {
+      this.$store.dispatch("waterfall/conditionalTagsFetch", this.tags)
     }
   },
   layout: "AppLayout"
@@ -114,6 +127,10 @@ export default {
 </script>
 
 <style scoped>
+.tagsWrapper {
+  display: flex;
+}
+
 .cardWrapper {
   position: relative;
 }

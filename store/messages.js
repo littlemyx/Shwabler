@@ -7,6 +7,10 @@ export const state = () => ({
 })
 
 export const mutations = {
+  resetStore(state) {
+    state.messages = {}
+    state.listeners = {}
+  },
   setMessages(state, payload) {
     state.messages = {
       ...state.messages,
