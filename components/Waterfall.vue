@@ -1,8 +1,8 @@
 <template>
   <div class="cardWrapper">
     <div class="tagsWrapper">
-      <Chips :list="tags" :disabled="false" @updated="searchTagsUpdated"/>
-      <v-btn :disabled="!tags.length" large @click="search">Search</v-btn>
+      <Chips :list="searchTags" :disabled="false" @updated="searchTagsUpdated"/>
+      <v-btn large @click="search">Search</v-btn>
     </div>
     <template v-if="isLoading">
       <Card color="green">
@@ -69,8 +69,7 @@ export default {
     return {
       isNew: true,
       endText: "No more cards yet :-(",
-      loadingText: "Loading...",
-      tags: []
+      loadingText: "Loading..."
     }
   },
   computed: {
@@ -91,6 +90,9 @@ export default {
     },
     secondCard() {
       return this.$store.getters["waterfall/nextCard"]
+    },
+    searchTags() {
+      return this.$store.state.waterfall.searchTags
     }
     // firstCard: {
     //   get () {
@@ -116,10 +118,14 @@ export default {
       console.log("next card")
     },
     searchTagsUpdated(val) {
-      this.tags = val
+      this.$store.commit("waterfall/setSearchTags", val)
     },
     search() {
-      this.$store.dispatch("waterfall/conditionalTagsFetch", this.tags)
+      if (this.searchTags.length) {
+        this.$store.dispatch("waterfall/conditionalTagsFetch", this.searchTags)
+      } else {
+        this.$store.dispatch("waterfall/fetchCards")
+      }
     }
   },
   layout: "AppLayout"

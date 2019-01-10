@@ -9,7 +9,8 @@ export const state = () => ({
   secondCard: null,
   isEnd: false,
   isLoading: true,
-  isInitialized: false
+  isInitialized: false,
+  searchTags: []
 })
 
 export const mutations = {
@@ -22,6 +23,7 @@ export const mutations = {
     state.isEnd = false
     state.isLoading = true
     state.isInitialized = false
+    state.searchTags = []
   },
   changeCard(state) {
     state.firstCard = !state.firstCard
@@ -40,6 +42,9 @@ export const mutations = {
   },
   setInitialized(state, value) {
     state.isInitialized = value
+  },
+  setSearchTags(state, value) {
+    state.searchTags = value
   }
 }
 
@@ -137,35 +142,38 @@ export const actions = {
     commit("updateCardList", cards)
     commit("setLoading", false)
   },
-  initFetch({ commit, rootGetters, state }) {
+  fetchCards({ commit, rootGetters }) {
+    firestore
+      .collection("posts")
+      // .where("author_id", "array-contains", store.getters["user/userId"])
+      // .where("owner", "<", store.getters["user/activeUser"])
+      .orderBy("createdAt", "desc")
+      // .where("text", "==", "test")
+      .get()
+      .then(querySnapshot => {
+        const list = []
+        if (querySnapshot.docs.length) {
+          querySnapshot.forEach(doc => {
+            const data = doc.data()
+            data.id = doc.id
+            if (data.author_id !== rootGetters["user/userId"]) {
+              list.push(data)
+            }
+          })
+          commit("updateCardList", list)
+        } else {
+          commit("setEnd", true)
+        }
+        commit("setLoading", false)
+        commit("setInitialized", true)
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  },
+  initFetch({ dispatch, state }) {
     if (!state.isInitialized) {
-      firestore
-        .collection("posts")
-        // .where("author_id", "array-contains", store.getters["user/userId"])
-        // .where("owner", "<", store.getters["user/activeUser"])
-        .orderBy("createdAt", "desc")
-        // .where("text", "==", "test")
-        .get()
-        .then(querySnapshot => {
-          const list = []
-          if (querySnapshot.docs.length) {
-            querySnapshot.forEach(doc => {
-              const data = doc.data()
-              data.id = doc.id
-              if (data.author_id !== rootGetters["user/userId"]) {
-                list.push(data)
-              }
-            })
-            commit("updateCardList", list)
-          } else {
-            commit("setEnd", true)
-          }
-          commit("setLoading", false)
-          commit("setInitialized", true)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      dispatch("fetchCards")
     }
   }
 }
@@ -174,6 +182,7 @@ export const getters = {
   nextCard: state => {
     return state.cardList[state.index]
   },
+  // searchTags: state => state.searchTags,
   tags: state => desired_id => {
     const card = state.cardList.find(card => card.id === desired_id)
     return (
