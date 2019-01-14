@@ -12,31 +12,30 @@ export const mutations = {
     state.listeners = {}
   },
   setMessages(state, payload) {
-    state.messages = {
-      ...state.messages,
-      [payload.id]: {
-        ...state.messages[payload.id],
-        messages: payload.messages
-      }
+    state.messages[payload.id] = {
+      ...state.messages[payload.id],
+      messages: payload.messages
     }
+  },
+  setEmptyMessages(state, payload) {
+    // нужно не только при ините выставлять поря для подхватывания реактивности, но и при добавлении новых чатов тоже либо посмотреть в сторону Vue.set()
+    const messages = {}
+    payload.forEach(card => {
+      messages[card] = { messages: [], isLoading: false }
+    })
+    state.messages = messages
   },
   updateMessages(state, payload) {
     // state.messages[payload.id] = payload.messages
-    state.messages = {
-      ...state.messages,
-      [payload.id]: {
-        ...state.messages[payload.id],
-        messages: [...state.messages[payload.id].messages, payload.message]
-      }
+    state.messages[payload.id] = {
+      ...state.messages[payload.id],
+      messages: [...state.messages[payload.id].messages, payload.message]
     }
   },
   updateMessgesLoading(state, payload) {
-    state.messages = {
-      ...state.messages,
-      [payload.id]: {
-        ...state.messages[payload.id],
-        isLoading: payload.isLoading
-      }
+    state.messages[payload.id] = {
+      ...state.messages[payload.id],
+      isLoading: payload.isLoading
     }
   },
   updateListeners(state, payload) {
@@ -75,7 +74,7 @@ export const actions = {
             id: payload.id,
             isLoading: false
           })
-          if (!state.messages[payload.id].messages) {
+          if (!state.messages[payload.id].messages.length) {
             commit("setMessages", {
               id: payload.id,
               messages

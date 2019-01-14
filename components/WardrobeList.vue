@@ -13,13 +13,12 @@
       </Card>
     </template>
     <WardrobeCard 
-      v-for="(card, i) in cards"
+      v-for="card in cards"
       v-else
-      :key="i"
+      :key="card.id"
       :id="card.id"
       :title="card.title"
       :card-text="card.text" 
-      :messages="card.messages"
       :tags="card.tags"
       class="wardrobeCard"
       @deleteItem="deleteItem"
@@ -58,6 +57,9 @@ export default {
     isEmpty() {
       return this.$store.state.userList.isEmpty
     }
+  },
+  updated() {
+    console.log("wardrobe list updated")
   },
   methods: {
     deleteItem(id) {

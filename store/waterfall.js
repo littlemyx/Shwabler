@@ -34,6 +34,9 @@ export const mutations = {
   increaseIndex(state) {
     state.index++
   },
+  resetIndex(state) {
+    state.index = 0
+  },
   setEnd(state, value) {
     state.isEnd = value
   },
@@ -104,7 +107,7 @@ export const actions = {
         console.error(error)
       })
   },
-  async conditionalTagsFetch({ commit, rootGetters }, payload) {
+  async findByTag({ commit, rootGetters }, payload) {
     const refTags = firestore.collection("tags")
     const refPosts = firestore.collection("posts")
     let posts = []
@@ -139,6 +142,7 @@ export const actions = {
     if (cards.length) {
       commit("setEnd", false)
     }
+    commit("resetIndex")
     commit("updateCardList", cards)
     commit("setLoading", false)
   },
@@ -160,20 +164,22 @@ export const actions = {
               list.push(data)
             }
           })
-          commit("updateCardList", list)
+          commit("updateCardList", list) // тут нужно подумать над механикой индекса
+          commit("setEnd", false)
+          commit("resetIndex")
         } else {
           commit("setEnd", true)
         }
         commit("setLoading", false)
-        commit("setInitialized", true)
       })
       .catch(error => {
         console.log(error)
       })
   },
-  initFetch({ dispatch, state }) {
+  initFetch({ dispatch, commit, state }) {
     if (!state.isInitialized) {
       dispatch("fetchCards")
+      commit("setInitialized", true)
     }
   }
 }

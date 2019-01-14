@@ -22,7 +22,7 @@
           color="white"
           indeterminate
         />
-        <DialogBody v-else :id="messagesId" :messages="messages" :color="color" :is-loading="isMessagesLoading" @sendMessage="sendMessage"/>
+        <DialogBody v-else :key="messagesId" :id="messagesId" :messages="messages" :color="color" :is-loading="isMessagesLoading" @sendMessage="sendMessage"/>
       </div>
 
       <v-btn slot="footer" :color="color" dark class="lighten-1" block @click="toggleDialogVisibility">
