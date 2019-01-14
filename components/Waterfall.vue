@@ -122,7 +122,7 @@ export default {
     },
     search() {
       if (this.searchTags.length) {
-        this.$store.dispatch("waterfall/conditionalTagsFetch", this.searchTags)
+        this.$store.dispatch("waterfall/findByTag", this.searchTags)
       } else {
         this.$store.dispatch("waterfall/fetchCards")
       }

@@ -3,8 +3,8 @@
     <div class="Wrapper">
       <div :id="identify" :class="['darken-2', color]" class="DialogWrapper">
         <Message
-          v-for="(message, i) in messages"
-          :key="i"
+          v-for="message in messages"
+          :key="`${message.date.seconds}_${message.date.nanoseconds}_${message.text}`"
           :author="message.author_id" 
           :text="message.text"
           :color="color"

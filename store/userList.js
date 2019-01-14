@@ -82,12 +82,12 @@ export const actions = {
     )
     const tmp = state.userList[removingCardIndex]
     const messages_id = state.userList[removingCardIndex].messages_id
-    commit("removeFromUserList", { index: removingCardIndex })
     firestore
       .collection("matches")
       .doc(payload.id)
       .delete()
       .then(() => {
+        // commit("removeFromUserList", { index: removingCardIndex })
         dispatch(
           "messages/removeMessagesThreadAsync",
           { messages_id },
@@ -112,10 +112,15 @@ export const actions = {
       .onSnapshot(querySnapshot => {
         const list = []
         if (querySnapshot.docs.length) {
+          const messagesIds = []
           querySnapshot.forEach(doc => {
             const data = { messages: [], tags: [], ...doc.data(), id: doc.id }
+            messagesIds.push(data.messages_id)
             console.log(`${doc.id} => ${data}`)
             list.push(data)
+          })
+          commit("messages/setEmptyMessages", messagesIds, {
+            root: "messages"
           })
           commit("setUserList", list)
         } else {
