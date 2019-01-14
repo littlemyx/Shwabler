@@ -53,6 +53,7 @@ module.exports = {
       plugins: [
         [
           "transform-imports",
+
           {
             vuetify: {
               transform: "vuetify/es5/components/${member}",
@@ -63,7 +64,12 @@ module.exports = {
       ]
     },
 
-    vendor: ["babel-polyfill", "lodash", "~/plugins/vuetify.js", "arr-diff"],
+    vendor: [
+      "babel-polyfill",
+      "lodash/cloneDeep",
+      "~/plugins/vuetify.js",
+      "arr-diff"
+    ],
     extractCSS: true,
     /*
     ** Run ESLint on save
