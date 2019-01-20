@@ -62,7 +62,7 @@
     </template>
     <template
       slot="item"
-      slot-scope="{ index, item, parent }"
+      slot-scope="{ index, item }"
     >
       <v-list-tile-content>
         <v-text-field
@@ -161,46 +161,27 @@ export default {
         // const newVal = val.map(item => {
         //   return item.text || item
         // })
-        if (this.id) {
-          // СУПЕРМЕГА КОСТЫЛЬ
-          if (this.model.length - val.length <= 0) {
-            const newVal = val[val.length - 1]
-            const newTag = this.items.find(tag => tag.text === newVal) || newVal
-            if (
-              typeof newTag === "string" ||
-              !this.$store.getters["tags/ids"].includes(newTag.id) // TODO а вот с этим условием нужно разобраться - как определить что тэг новосозданный
-            ) {
-              this.$store
-                .dispatch("tags/addToTagsListAsync", {
-                  text: newTag,
-                  card_id: this.id
-                })
-                .then(id => {
-                  this.$emit("chips-updated", { id: id, text: newTag })
-                })
-            } else {
-              this.$store.dispatch("tags/updateActivityAsync", {
-                id: newTag.id,
-                card_id: this.id
-              })
-            }
+
+        if (this.model.length - val.length <= 0) {
+          const newVal = val[val.length - 1]
+          const newTag = this.items.find(tag => tag.text === newVal) || newVal
+          if (
+            typeof newTag === "string" ||
+            !this.$store.getters["tags/ids"].includes(newTag.id) // TODO а вот с этим условием нужно разобраться - как определить что тэг новосозданный
+          ) {
+            this.$emit("new-tag-added", newTag)
           } else {
-            const deletedTag = arrDiff(this.model, val)
-            this.$store
-              .dispatch("tags/removeTagAsync", {
-                parent_id: this.id,
-                id: this.reversemap[deletedTag[0].text]
-              })
-              .then(() => {
-                this.$emit("chips-updated", {
-                  id: this.reversemap[deletedTag[0].text],
-                  text: deletedTag[0].text,
-                  deleted: true
-                })
-              })
+            this.$emit("tag-added", newTag)
           }
+        } else {
+          const deletedTag = arrDiff(this.model, val)
+          this.$emit("chips-updated", {
+            id:
+              (this.reversemap && this.reversemap[deletedTag[0].text]) || null,
+            text: deletedTag[0].text,
+            deleted: true
+          })
         }
-        this.$emit("updated", val)
       }
     }
   },
@@ -236,9 +217,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .chip {
   font-size: 15px;
+}
+.chips-combobox .v-input__append-inner {
+  display: none;
 }
 </style>
 >

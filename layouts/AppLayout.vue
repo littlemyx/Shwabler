@@ -38,6 +38,11 @@
             <v-list-tile-title>Exit</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile class="feedback">
+          <v-list-tile-content>
+            <v-list-tile-title>Send your feedback to: <a href="mailto:feedback@shwabler.com">feedback@shwabler.com</a></v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="dark-grey" dark fixed app>
@@ -110,6 +115,11 @@ export default {
 @font-face {
   font-family: DS;
   src: url(/assets/fonts/DS-Digital.otf);
+}
+
+.feedback {
+  position: absolute;
+  bottom: 0;
 }
 
 .blinking {

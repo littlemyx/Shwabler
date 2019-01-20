@@ -7,7 +7,8 @@ export const state = () => ({
   newCardTitle: null,
   newCardText: null,
   caveList: [],
-  isInitialized: false
+  isInitialized: false,
+  isLoading: true
 })
 
 export const mutations = {
@@ -28,6 +29,9 @@ export const mutations = {
     oldState[oldCardIndex] = newCard
     // state.caveList = oldState
     state.caveList = [...oldState]
+  },
+  setLoading(state, flag) {
+    state.isLoading = flag
   },
   setCaveList(state, newList) {
     state.caveList = [...newList]
@@ -70,17 +74,20 @@ export const actions = {
   // updateCaveListAsync({ commit, getters, rootState }, payload) {
   updateCaveListAsync({ commit }, payload) {
     payload[0].createdAt = new timestamp.fromDate(new Date())
-    firestore
-      .collection("posts")
-      .add(payload[0])
-      .then(function(docRef) {
-        console.log("Document written with ID: ", docRef.id)
-        payload[0].id = docRef.id
-        commit("updateCaveList", payload)
-      })
-      .catch(function(error) {
-        console.error("Error adding document: ", error)
-      })
+    return new Promise(resolve =>
+      firestore
+        .collection("posts")
+        .add(payload[0])
+        .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id)
+          payload[0].id = docRef.id
+          commit("updateCaveList", payload)
+          resolve(docRef.id)
+        })
+        .catch(function(error) {
+          console.error("Error adding document: ", error)
+        })
+    )
   },
   updateCaveCardAsync({ commit }, payload) {
     commit("updateCaveCard", payload)
@@ -150,6 +157,7 @@ export const actions = {
             commit("setCaveList", list)
             commit("setInitialized", true)
           }
+          commit("setLoading", false)
 
           // store.commit("waterfall/setLoading", false)
         })
