@@ -1,21 +1,35 @@
 <template>
   <div class="cardWrapper">
-    <template v-if="cards.length >= 1">
-      <CaveCard 
-        v-for="card in cards"
-        :key="card.id"
-        :title="card.title"
-        :card-text="card.text" 
-        :id="card.id"
-        class="wardrobeCard"
-        @deleteItem="deleteItem"
-      />
+    <template v-if="isLoading">
+      <Card color="green">
+        <div slot="header" style="width:100%; text-align: center;">
+          <v-progress-circular
+            :size="60"
+            :width="7"
+            color="white"
+            indeterminate
+          />
+        </div>
+      </Card>
     </template>
-    <Card v-if="cards.length < 1" color="red">
-      <div slot="header" style="width:100%; text-align: center;">
-        <h1>{{ emptyText }}</h1>
-      </div>
-    </Card>
+    <template v-else>
+      <template v-if="cards.length >= 1">
+        <CaveCard 
+          v-for="card in cards"
+          :key="card.id"
+          :title="card.title"
+          :card-text="card.text" 
+          :id="card.id"
+          class="wardrobeCard"
+          @deleteItem="deleteItem"
+        />
+      </template>
+      <Card v-if="cards.length < 1" color="red">
+        <div slot="header" style="width:100%; text-align: center;">
+          <h1>{{ emptyText }}</h1>
+        </div>
+      </Card>
+    </template>
   </div>
 </template>
 
@@ -37,6 +51,11 @@ export default {
   data() {
     return {
       emptyText: "No cards yet :-("
+    }
+  },
+  computed: {
+    isLoading() {
+      return this.$store.state.cave.isLoading
     }
   },
   methods: {

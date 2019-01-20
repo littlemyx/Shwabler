@@ -87,7 +87,7 @@ export const actions = {
   },
   updateActivityAsync(context, payload) {
     // TODO недоделано
-    return new Promise(() => {
+    return new Promise(resolve => {
       firestore
         .collection("tags")
         .doc(payload.id)
@@ -96,6 +96,9 @@ export const actions = {
             new Date(new Date().setUTCHours(0, 0, 0, 0))
           ),
           posts: fieldvalue.arrayUnion(payload.card_id)
+        })
+        .then(() => {
+          resolve()
         })
         // .then(function(docRef) {
         //   console.log("Document written with ID: ", docRef.id)

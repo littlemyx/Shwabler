@@ -1,5 +1,6 @@
 import cloneDeep from "lodash/cloneDeep"
 import { firestore, timestamp } from "@/services/fireinit.js"
+import Vue from "vue"
 
 export const state = () => ({
   messages: {},
@@ -18,7 +19,7 @@ export const mutations = {
     }
   },
   setEmptyMessages(state, payload) {
-    // нужно не только при ините выставлять поря для подхватывания реактивности, но и при добавлении новых чатов тоже либо посмотреть в сторону Vue.set()
+    // нужно не только при ините выставлять поля для подхватывания реактивности, но и при добавлении новых чатов тоже либо посмотреть в сторону Vue.set()
     const messages = {}
     payload.forEach(card => {
       messages[card] = { messages: [], isLoading: false }
@@ -27,10 +28,14 @@ export const mutations = {
   },
   updateMessages(state, payload) {
     // state.messages[payload.id] = payload.messages
-    state.messages[payload.id] = {
+    Vue.set(state.messages, payload.id, {
       ...state.messages[payload.id],
       messages: [...state.messages[payload.id].messages, payload.message]
-    }
+    })
+    // state.messages[payload.id] = {
+    //   ...state.messages[payload.id],
+    //   messages: [...state.messages[payload.id].messages, payload.message]
+    // }
   },
   updateMessgesLoading(state, payload) {
     state.messages[payload.id] = {

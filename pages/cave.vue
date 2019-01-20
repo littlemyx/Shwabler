@@ -10,9 +10,10 @@
       v-model="dialog"
       width="500"
     >
+      <div v-if="isNewCardLoading">Loading</div>
       <!-- тут эта хрень выперает потому что в скрытом состоянии крестик в чипсах делается широким почему-то  -->
       <Card :new-card-values="newCard" :layoutedt-style="false" color="gray">
-        <Chips slot="chips" :list="newCardTags" @chips-updated="newCardTagsUpdated"/>
+        <Chips id="0" slot="chips" :list="[...newCardTags, ...newCardNewTags]" @updated="newCardTagsUpdated" @tag-added="tagAdded" @new-tag-added="newTagAdded" @chips-updated="chipsUpdated"/>
 
         <InputText 
           slot="header"
@@ -74,7 +75,9 @@ export default {
         title: "",
         text: ""
       },
-      newCardTags: []
+      newCardTags: [],
+      newCardNewTags: [],
+      isNewCardLoading: false
     }
   },
   // fetch({ store }) {
@@ -99,19 +102,57 @@ export default {
       this.$store.commit("cave/setNewCardText", "")
     },
     add() {
+      this.isNewCardLoading = true
       const newPost = {
-        tags: this.newCardTags,
+        tags: [],
         title: this.newCardTitle,
         text: this.newCardText,
         author_id: this.$store.getters["user/userId"]
       }
-      this.dialog = false
-      this.newCardTags = []
-      this.$store.dispatch("cave/updateCaveListAsync", [newPost])
+      this.$store
+        .dispatch("cave/updateCaveListAsync", [newPost])
+        .then(async id => {
+          await Promise.all(
+            this.newCardNewTags.map(newTag => {
+              return this.$store
+                .dispatch("tags/addToTagsListAsync", {
+                  text: newTag.text,
+                  card_id: id
+                })
+                .then(newTagId => {
+                  this.chipsUpdated({
+                    parent_id: id,
+                    id: newTagId,
+                    text: newTag.text
+                  })
+                })
+            })
+          )
+          await Promise.all(
+            this.newCardTags.map(tag => {
+              return this.$store
+                .dispatch("tags/updateActivityAsync", {
+                  id: tag.id,
+                  card_id: id
+                })
+                .then(() => {
+                  this.chipsUpdated({
+                    parent_id: id,
+                    id: tag.id,
+                    text: tag.text
+                  })
+                })
+            })
+          )
+          this.dialog = false
+          this.newCardTags = []
+          this.isNewCardLoading = false
+        })
     },
     cancel() {
       this.dialog = false
       this.newCardTags = []
+      this.newCardNewTags = []
     },
     inputTitle(value) {
       this.$store.commit("cave/setNewCardTitle", value)
@@ -121,6 +162,48 @@ export default {
     },
     newCardTagsUpdated(tag) {
       this.newCardTags = tag
+    },
+    chipsUpdated({ parent_id, id, text, deleted = false }) {
+      if (!deleted) {
+        const newPost = {
+          id: parent_id,
+          tags: [{ [id]: text }]
+        }
+
+        this.$store.dispatch("cave/addCaveCardTagsAsync", newPost)
+      } else {
+        if (id) {
+          this.$store
+            .dispatch("tags/removeTagAsync", {
+              parent_id: parent_id,
+              id
+            })
+            .then(() => {
+              this.$store.dispatch("cave/removeTagAsync", {
+                id: parent_id,
+                tag_id: id
+              })
+            })
+        } else {
+          const newTagIndex = this.newCardNewTags.findIndex(
+            tag => tag.text === text
+          )
+          const newTagArray = [...this.newCardNewTags]
+          newTagArray.splice(newTagIndex, 1)
+          this.newCardNewTags = newTagArray
+
+          const tagIndex = this.newCardTags.findIndex(tag => tag.text === text)
+          const tagArray = [...this.newCardTags]
+          tagArray.splice(tagIndex, 1)
+          this.newCardTags = tagArray
+        }
+      }
+    },
+    newTagAdded(tagText) {
+      this.newCardNewTags.push({ text: tagText, color: "red", id: 0 })
+    },
+    tagAdded(newTag) {
+      this.newCardTags.push(newTag)
     }
   },
   layout: "AppLayout"

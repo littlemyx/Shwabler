@@ -5,7 +5,7 @@
         <v-icon medium dark>clear</v-icon>
       </v-btn >
 
-      <Chips slot="chips" :list="tags" :id="id" :disabled="false" :reversemap="textToId" @chips-updated="chipsUpdated"/>
+      <Chips slot="chips" :list="tags" :id="id" :disabled="false" :reversemap="textToId" @tag-added="tagAdded" @new-tag-added="newTagAdded" @chips-updated="chipsUpdated"/>
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
@@ -104,13 +104,41 @@ export default {
           id: this.id,
           tags: [{ [id]: text }]
         }
+
         this.$store.dispatch("cave/addCaveCardTagsAsync", newPost)
       } else {
-        this.$store.dispatch("cave/removeTagAsync", {
-          id: this.id,
-          tag_id: id
-        })
+        this.$store
+          .dispatch("tags/removeTagAsync", {
+            parent_id: this.id,
+            id
+          })
+          .then(() => {
+            this.$store.dispatch("cave/removeTagAsync", {
+              id: this.id,
+              tag_id: id
+            })
+          })
       }
+    },
+    newTagAdded(tagText) {
+      this.$store
+        .dispatch("tags/addToTagsListAsync", {
+          text: tagText,
+          card_id: this.id
+        })
+        .then(id => {
+          this.chipsUpdated({ id: id, text: tagText })
+        })
+    },
+    tagAdded(newTag) {
+      this.$store
+        .dispatch("tags/updateActivityAsync", {
+          id: newTag.id,
+          card_id: this.id
+        })
+        .then(() => {
+          this.chipsUpdated({ id: newTag.id, text: newTag.text })
+        })
     }
   }
 }
