@@ -1,7 +1,7 @@
 <template>
   <div class="cardWrapper">
     <template v-if="isLoading">
-      <Card color="green">
+      <Card color="indigo">
         <div slot="header" style="width:100%; text-align: center;">
           <v-progress-circular
             :size="60"

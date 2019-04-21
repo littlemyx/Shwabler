@@ -1,11 +1,12 @@
 <template>
-  <v-layout>
-    <v-flex xs12 sm6 offset-sm3>
+  <v-container fluid>
+    <v-layout align-center justify-center column fill-height>
       <v-card class="wrapper_card">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             v-model="email"
             :rules="emailRules"
+            color="indigo darken-3"
             label="Email"
             validate-on-blur
             @keyup.enter.exact="submit"
@@ -14,6 +15,7 @@
             v-model="password"
             :rules="passwordRules"
             :type="'password'"
+            color="indigo darken-3"
             label="Password"
             validate-on-blur
             @keyup.enter.exact="submit"
@@ -39,12 +41,15 @@
           </v-card-actions>
         </v-form>
       </v-card>
-      <div class="footer">
-        Don't have an account yet ?&nbsp;<RouterLink url="signup" text="Sign up!"/>
-      </div>
-    </v-flex>
+      <v-flex pt-3>
+        <div class="footer">
+          Don't have an account yet ?&nbsp;<RouterLink url="signup" text="Sign up!"/>
+        </div>
+      </v-flex>
+    </v-layout>
     <NotificationsList :offset="{'top':'10px'}" top right/>
-  </v-layout>
+    
+  </v-container>
 </template>
 
 <script>
@@ -125,12 +130,15 @@ export default {
       // this.$refs.form.reset()
       this.$store.dispatch("user/signOut")
     }
-  }
+  },
+  layout: "centerLayout"
 }
 </script>
 
 <style scoped>
 .wrapper_card {
+  width: 100%;
+  max-width: 400px;
   padding: 10px;
 }
 .footer {

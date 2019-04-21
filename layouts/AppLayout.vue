@@ -20,6 +20,7 @@
           v-for="(item, i) in items"
           :to="item.to"
           :key="i"
+          class="list"
           router
           exact
         >
@@ -45,7 +46,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="dark-grey" dark fixed app>
+    <v-toolbar color="indigo-purple" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"/>
       <v-toolbar-title>SHWABLER</v-toolbar-title>
     </v-toolbar>
@@ -133,6 +134,10 @@ export default {
 
 .digitalText {
   font-family: DS;
+}
+
+.list .v-list__tile--active {
+  color: #842552 !important;
 }
 
 @keyframes blink {

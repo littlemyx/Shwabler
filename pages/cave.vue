@@ -20,6 +20,7 @@
           :value="newCardTitle"
           :dark="false"
           :counter="50"
+          color="indigo darken-3"
           label="Header of your card"
           @input="inputTitle"
         />
@@ -28,6 +29,7 @@
           :value="newCardText"
           :dark="false"
           :counter="400"
+          color="indigo darken-3"
           label="Main plot goes here"
           @input="inputText"
         />

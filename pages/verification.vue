@@ -1,5 +1,5 @@
 <template>
-  <Card color="green">
+  <Card color="indigo">
     <div slot="header" style="width:100%; text-align: center;">
       <h1>{{ text }}</h1>
     </div>

@@ -27,9 +27,11 @@ export default function({ store, redirect, route }) {
   if (
     store.state.user.user === null &&
     (route.name === "verification" ||
-      (route.name !== "login" && route.name !== "signup"))
+      (route.name !== "welcome" &&
+        route.name !== "login" &&
+        route.name !== "signup"))
   ) {
-    redirect("/login")
+    redirect("/welcome")
     console.log("no auth")
   }
   return false
