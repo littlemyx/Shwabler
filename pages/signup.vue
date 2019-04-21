@@ -1,21 +1,26 @@
 <template>
-  <v-layout>
-    <v-flex xs12 sm6 offset-sm3>
+  <!-- <v-flex xs12 sm6 offset-sm3> -->
+  <v-container fluid>
+    <v-layout align-center justify-center column fill-height>
       <v-card class="wrapper_card">
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
             v-model="email"
             :rules="emailRules"
             label="Email"
+            color="indigo darken-3"
             validate-on-blur
+            @keyup.enter.exact="submit"
           />
           <v-text-field
             v-model="password"
             :rules="passwordRules"
             :type="'password'"
+            color="indigo darken-3"
             label="Password"
             class="password"
             validate-on-blur
+            @keyup.enter.exact="submit"
           />
           <v-card-actions>
             <v-spacer/>
@@ -37,21 +42,26 @@
           </v-card-actions>
         </v-form>
       </v-card>
-      <div class="footer">
-        Already have an account ?&nbsp;<RouterLink url="login" text="Login!"/>
-      </div>
-    </v-flex>
-  </v-layout>
+      <v-flex pt-3>
+        <div class="footer">
+          Already have an account ?&nbsp;<RouterLink url="login" text="Login!"/>
+        </div>
+      </v-flex>
+    </v-layout>
+    <NotificationsList :offset="{'top':'10px'}" top right/>
+  </v-container>
 </template>
 
 <script>
 // import axios from 'axios';
 import { auth } from "@/services/fireinit.js"
 import RouterLink from "../components/RouterLink"
+import NotificationsList from "../components/NotificationsList"
 
 export default {
   components: {
-    RouterLink
+    RouterLink,
+    NotificationsList
   },
   data: () => ({
     valid: false,
@@ -78,6 +88,7 @@ export default {
   methods: {
     submit() {
       if (this.$refs.form.validate()) {
+        this.isLoading = true
         // Native form submission is not yet supported
         // axios.post('/api/submit', {
         //   name: this.name,
@@ -88,31 +99,36 @@ export default {
         auth
           .createUserWithEmailAndPassword(this.email, this.password)
           .then(wrap => {
-            wrap.user
-              .sendEmailVerification()
-              .then(
-                function() {
-                  console.log(wrap)
-                  // auth.onAuthStateChanged(user => {
-                  //   console.log(user)
-                  //   // if (user) {
-                  //   //   // setTimeout(function () {
-                  //   //   store.dispatch("user/setUser", user)
-                  //   //   store.commit("sidebar/authChanged", user)
-                  //   //   // }, 10000);
-                  //   // }
-                  //   // return resolve()
-                  // })
-                  this.$router.push("/verification")
-                }.bind(this)
-              )
-              .catch(function(error) {
-                console.log(error)
-              })
+            wrap.user.sendEmailVerification().then(
+              function() {
+                console.log(wrap)
+                // auth.onAuthStateChanged(user => {
+                //   console.log(user)
+                //   // if (user) {
+                //   //   // setTimeout(function () {
+                //   //   store.dispatch("user/setUser", user)
+                //   //   store.commit("sidebar/authChanged", user)
+                //   //   // }, 10000);
+                //   // }
+                //   // return resolve()
+                // })
+                this.$router.push("/verification")
+              }.bind(this)
+            )
           })
-          .catch(function(error) {
-            alert(`oops! ${error}`)
-          })
+          .catch(
+            function(error) {
+              this.resetLoading()
+              this.$store.commit("notifications/updateNotificationsList", [
+                {
+                  type: "error",
+                  text: error.message,
+                  id: error.code + new Date().getTime()
+                }
+              ])
+            }.bind(this)
+          )
+
         // this.$store.dispatch('user/signInWithGoogle').then(() => {
         //   console.log('inside then statement on login');
         // }).catch((e) => {
@@ -120,16 +136,23 @@ export default {
         // })
       }
     },
+
+    resetLoading() {
+      this.isLoading = false
+    },
     clear() {
       // this.$refs.form.reset()
       this.$store.dispatch("user/signOut")
     }
-  }
+  },
+  layout: "centerLayout"
 }
 </script>
 
 <style scoped>
 .wrapper_card {
+  width: 100%;
+  max-width: 400px;
   padding: 10px;
 }
 .v-text-field__slot {
