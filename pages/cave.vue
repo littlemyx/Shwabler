@@ -95,6 +95,11 @@ export default {
       return this.$store.state.cave.caveList
     }
   },
+  watch: {
+    dialog(value) {
+      !value && this.cancel()
+    }
+  },
   methods: {
     openDialog() {
       this.dialog = true
@@ -188,22 +193,29 @@ export default {
           const newTagIndex = this.newCardNewTags.findIndex(
             tag => tag.text === text
           )
-          const newTagArray = [...this.newCardNewTags]
-          newTagArray.splice(newTagIndex, 1)
-          this.newCardNewTags = newTagArray
+          if (newTagIndex !== -1) {
+            const newTagArray = [...this.newCardNewTags]
+            newTagArray.splice(newTagIndex, 1)
+            this.newCardNewTags = newTagArray
+          }
 
           const tagIndex = this.newCardTags.findIndex(tag => tag.text === text)
-          const tagArray = [...this.newCardTags]
-          tagArray.splice(tagIndex, 1)
-          this.newCardTags = tagArray
+          if (tagIndex !== -1) {
+            const tagArray = [...this.newCardTags]
+            tagArray.splice(tagIndex, 1)
+            this.newCardTags = tagArray
+          }
         }
       }
     },
     newTagAdded(tagText) {
-      this.newCardNewTags.push({ text: tagText, color: "red", id: 0 })
+      this.newCardNewTags = [
+        ...this.newCardNewTags,
+        { text: tagText, color: "red", id: 0 }
+      ]
     },
     tagAdded(newTag) {
-      this.newCardTags.push(newTag)
+      this.newCardTags = [...this.newCardTags, newTag]
     }
   },
   layout: "AppLayout"
