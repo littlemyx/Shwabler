@@ -146,7 +146,7 @@ export const actions = {
     commit("updateCardList", cards)
     commit("setLoading", false)
   },
-  fetchCards({ commit, rootGetters }) {
+  fetchCards({ commit, rootGetters }, ids) {
     firestore
       .collection("posts")
       // .where("author_id", "array-contains", store.getters["user/userId"])
@@ -160,25 +160,50 @@ export const actions = {
           querySnapshot.forEach(doc => {
             const data = doc.data()
             data.id = doc.id
-            if (data.author_id !== rootGetters["user/userId"]) {
+            if (
+              data.author_id !== rootGetters["user/userId"] &&
+              !ids.includes(data.id)
+            ) {
               list.push(data)
             }
           })
+        }
+        if (list.length) {
           commit("updateCardList", list) // тут нужно подумать над механикой индекса
           commit("setEnd", false)
           commit("resetIndex")
         } else {
           commit("setEnd", true)
         }
+
         commit("setLoading", false)
       })
       .catch(error => {
         console.log(error)
       })
   },
+  fetchCardsWithMatches({ dispatch, rootGetters }) {
+    if (rootGetters["userList/isInitialized"]) {
+      dispatch("fetchCards", rootGetters["userList/ids"])
+    } else {
+      firestore
+        .collection("matches")
+        .where("members", "array-contains", rootGetters["user/userId"])
+        .orderBy("date")
+        .onSnapshot(querySnapshot => {
+          const ids = []
+          if (querySnapshot.docs.length) {
+            querySnapshot.forEach(doc => {
+              ids.push(doc.data().post_id)
+            })
+          }
+          dispatch("fetchCards", ids)
+        })
+    }
+  },
   initFetch({ dispatch, commit, state }) {
     if (!state.isInitialized) {
-      dispatch("fetchCards")
+      dispatch("fetchCardsWithMatches")
       commit("setInitialized", true)
     }
   }

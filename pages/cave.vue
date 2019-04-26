@@ -20,7 +20,7 @@
           :value="newCardTitle"
           :dark="false"
           :counter="50"
-          color="indigo darken-3"
+          color="dark-shwabler"
           label="Header of your card"
           @input="inputTitle"
         />
@@ -29,7 +29,7 @@
           :value="newCardText"
           :dark="false"
           :counter="400"
-          color="indigo darken-3"
+          color="dark-shwabler"
           label="Main plot goes here"
           @input="inputText"
         />
@@ -37,14 +37,14 @@
         <template slot="footer">
           <v-spacer/>
           <v-btn
-            color="primary"
+            color="dark-shwabler darken-1"
             flat
             @click="cancel"
           >
             Cancel
           </v-btn>
           <v-btn
-            color="primary"
+            color="dark-shwabler darken-1"
             flat
             @click="add"
           >

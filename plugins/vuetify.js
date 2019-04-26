@@ -1,4 +1,5 @@
 import Vue from "vue"
+import theme from "./theme"
 
 import {
   Vuetify,
@@ -49,9 +50,5 @@ Vue.use(Vuetify, {
     VProgressCircular,
     transitions
   },
-  theme: {
-    "indigo-purple": "#841b4d",
-    shwabler: "#e94191",
-    "dark-shwabler": "#842552"
-  }
+  theme
 })

@@ -46,6 +46,11 @@ module.exports = {
     color: "#e94191",
     height: "5px"
   },
+  loadingIndicator: {
+    name: "rectangle-bounce",
+    color: "#e94191",
+    background: "#fafafa"
+  },
   /*
   ** Build configuration
   */

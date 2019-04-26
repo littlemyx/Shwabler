@@ -4,7 +4,9 @@ import { firestore } from "@/services/fireinit.js"
 export const state = () => ({
   firstCard: true,
   userList: [],
+  ids: [],
   isLoading: true,
+  isInitialized: false,
   isEmpty: false
 })
 
@@ -29,6 +31,9 @@ export const mutations = {
   },
   setEmpty(state, flag) {
     state.isEmpty = flag
+  },
+  setInitialized(state, value) {
+    state.isInitialized = value
   },
   updateCardMessageList(state, newMessage) {
     const oldCardIndex = state.userList.findIndex(
@@ -110,6 +115,7 @@ export const actions = {
       .orderBy("date")
       // .where("text", "==", "test")
       .onSnapshot(querySnapshot => {
+        commit("setInitialized", true)
         const list = []
         if (querySnapshot.docs.length) {
           const messagesIds = []
@@ -134,5 +140,7 @@ export const actions = {
 export const getters = {
   messagesId: state => id => {
     return state.userList.find(card => card.id === id).messages_id
-  }
+  },
+  ids: state => state.ids,
+  isInitialized: state => state.isInitialized
 }

@@ -13,7 +13,7 @@
             <v-list-tile-title v-text="user"/>
           </v-list-tile-content>
           <v-list-tile-action>
-            <v-icon @click.stop="drawer = !drawer" v-html="arrow_left"/>
+            <v-icon class="closeArrow" @click.stop="drawer = !drawer" v-html="arrow_left"/>
           </v-list-tile-action>
         </v-list-tile>
         <v-list-tile
@@ -56,7 +56,7 @@
       </v-container>
       <NotificationsList :offset="{'top':'56px'}" top right/>
     </v-content>
-    <v-footer color="grey" app>
+    <v-footer color="grey" class="footer" app>
       <span class="white--text">&copy;&nbsp;</span>
       <span class="white--text digitalText"> <a class="teamLink" href="http://631am.com/" target="_blabk">6<span class="blinking">:</span>31 AM </a> </span>
     </v-footer>
@@ -112,7 +112,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @font-face {
   font-family: DS;
   src: url(/assets/fonts/DS-Digital.otf);
@@ -121,6 +121,10 @@ export default {
 .feedback {
   position: absolute;
   bottom: 0;
+}
+
+.closeArrow:hover {
+  color: #842552;
 }
 
 .blinking {
@@ -134,6 +138,10 @@ export default {
 
 .digitalText {
   font-family: DS;
+}
+
+.footer {
+  background-color: #45062e !important;
 }
 
 .list .v-list__tile--active {

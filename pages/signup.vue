@@ -8,7 +8,7 @@
             v-model="email"
             :rules="emailRules"
             label="Email"
-            color="indigo darken-3"
+            color="dark-shwabler"
             validate-on-blur
             @keyup.enter.exact="submit"
           />
@@ -16,7 +16,7 @@
             v-model="password"
             :rules="passwordRules"
             :type="'password'"
-            color="indigo darken-3"
+            color="dark-shwabler"
             label="Password"
             class="password"
             validate-on-blur
@@ -64,7 +64,7 @@ export default {
     NotificationsList
   },
   data: () => ({
-    valid: false,
+    valid: true,
     email: "",
     text: "submit",
     isLoading: false,
