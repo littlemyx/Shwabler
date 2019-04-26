@@ -6,7 +6,7 @@
           <v-text-field
             v-model="email"
             :rules="emailRules"
-            color="indigo darken-3"
+            color="dark-shwabler"
             label="Email"
             validate-on-blur
             @keyup.enter.exact="submit"
@@ -15,7 +15,7 @@
             v-model="password"
             :rules="passwordRules"
             :type="'password'"
-            color="indigo darken-3"
+            color="dark-shwabler"
             label="Password"
             validate-on-blur
             @keyup.enter.exact="submit"
@@ -64,7 +64,7 @@ export default {
     NotificationsList
   },
   data: () => ({
-    valid: false,
+    valid: true,
     text: "login",
     isLoading: false,
     email: "",

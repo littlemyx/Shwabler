@@ -5,7 +5,7 @@
       <v-btn large @click="search">Search</v-btn>
     </div>
     <template v-if="isLoading">
-      <Card color="indigo">
+      <Card color="dark-shwabler">
         <div slot="header" style="width:100%; text-align: center;">
           <v-progress-circular
             :size="60"
@@ -44,7 +44,7 @@
         </transition>
       </template>
       <template v-if="isEnd">
-        <Card color="red">
+        <Card color="dark-shwabler">
           <div slot="header" style="width:100%; text-align: center;">
             <h1>{{ endText }}</h1>
           </div>
@@ -124,7 +124,7 @@ export default {
       if (this.searchTags.length) {
         this.$store.dispatch("waterfall/findByTag", this.searchTags)
       } else {
-        this.$store.dispatch("waterfall/fetchCards")
+        this.$store.dispatch("waterfall/fetchCardsWithMatches")
       }
     }
   },

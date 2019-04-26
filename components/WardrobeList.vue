@@ -1,7 +1,7 @@
 <template>
   <div class="cardWrapper">
     <template v-if="isLoading">
-      <Card color="indigo">
+      <Card color="dark-shwabler">
         <div slot="header" style="width:100%; text-align: center;">
           <v-progress-circular
             :size="60"
@@ -24,7 +24,7 @@
       @deleteItem="deleteItem"
     />
     <template v-if="isEmpty">
-      <Card color="red">
+      <Card color="dark-shwabler">
         <div slot="header" style="width:100%; text-align: center;">
           <h1>{{ endText }}</h1>
         </div>
