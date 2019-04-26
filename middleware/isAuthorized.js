@@ -5,7 +5,7 @@ export default function({ store, redirect, route }) {
     store.state.user.user.emailVerified &&
     (route.name === "login" ||
       route.name === "index" ||
-      route.name !== "welcome") //TODO remove "!"
+      route.name === "welcome") //TODO remove "!"
   ) {
     redirect("/waterfall")
     console.log("auth")
