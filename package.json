@@ -27,7 +27,7 @@
     "nuxt": "^1.0.0",
     "nuxt-material-design-icons": "^1.0.4",
     "prettier": "^1.14.3",
-    "vuetify": "^1.0.0"
+    "vuetify": "^1.5.13"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
