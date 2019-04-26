@@ -47,7 +47,7 @@
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo-purple" dark fixed app>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"/>
+      <v-toolbar-side-icon v-if="!drawer" @click.stop="drawer = !drawer"/>
       <v-toolbar-title>SHWABLER</v-toolbar-title>
     </v-toolbar>
     <v-content>
@@ -137,7 +137,7 @@ export default {
 }
 
 .list .v-list__tile--active {
-  color: #842552 !important;
+  color: #e94191 !important;
 }
 
 @keyframes blink {

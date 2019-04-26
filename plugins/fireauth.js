@@ -6,6 +6,7 @@ export default ({ store }) => {
     auth.onAuthStateChanged(user => {
       if (user) {
         store.commit("user/setUser", user)
+        store.commit("user/setEmailVerified", user.emailVerified)
         store.commit("sidebar/authChanged", user)
       }
       return resolve()
