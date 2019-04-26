@@ -3,7 +3,9 @@ export default function({ store, redirect, route }) {
   if (
     store.state.user.user !== null &&
     store.state.user.user.emailVerified &&
-    (route.name === "login" || route.name === "index")
+    (route.name === "login" ||
+      route.name === "index" ||
+      route.name !== "welcome") //TODO remove "!"
   ) {
     redirect("/waterfall")
     console.log("auth")
