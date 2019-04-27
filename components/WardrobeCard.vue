@@ -1,11 +1,11 @@
 <template>
   <v-layout>
     <Card :color="color">
-      <v-btn slot="controlItems" flat icon color="black" class="deleteIcon" @click="deleteCard">
-        <v-icon medium dark>clear</v-icon>
+      <v-btn slot="controlItems" flat icon color="#fff" class="deleteIcon" @click="deleteCard">
+        <v-icon medium light>clear</v-icon>
       </v-btn >
 
-      <Chips v-if="tags.length" slot="chips" :list="tags" :id="id" :disabled="true"/>
+      <Chips v-if="tags.length" slot="chips" :list="tags" :id="id" :disabled="true" dark/>
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>

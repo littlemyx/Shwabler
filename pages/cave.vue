@@ -10,7 +10,16 @@
       v-model="dialog"
       width="500"
     >
-      <div v-if="isNewCardLoading">Loading</div>
+      <div v-if="isNewCardLoading" class="newCardLoaderWrapper" >
+        <div class="newCardLoader">
+          <v-progress-circular
+            :size="60"
+            :width="7"
+            color="dark-shwabler"
+            indeterminate
+          />
+        </div>
+      </div>
       <!-- тут эта хрень выперает потому что в скрытом состоянии крестик в чипсах делается широким почему-то  -->
       <Card :new-card-values="newCard" :layoutedt-style="false" color="gray">
         <Chips id="0" slot="chips" :list="[...newCardTags, ...newCardNewTags]" @updated="newCardTagsUpdated" @tag-added="tagAdded" @new-tag-added="newTagAdded" @chips-updated="chipsUpdated"/>
@@ -55,6 +64,10 @@
     </v-dialog>
   </div>
 </template>
+
+<router lang="yaml">
+    path: /cards
+</router>
 
 <script>
 import CaveList from "../components/CaveList.vue"
@@ -249,6 +262,20 @@ export default {
 
 .dialogHeader {
   width: 100%;
+}
+.newCardLoaderWrapper {
+  width: 500px;
+  height: 60%;
+  position: absolute;
+  z-index: 10;
+}
+
+.newCardLoader {
+  width: 500px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .footer {

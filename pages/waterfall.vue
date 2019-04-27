@@ -13,6 +13,10 @@
   </div>
 </template>
 
+<router lang="yaml">
+    path: /feed
+</router>
+
 <script>
 import Waterfall from "../components/Waterfall.vue"
 

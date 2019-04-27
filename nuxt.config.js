@@ -51,14 +51,16 @@ module.exports = {
     color: "#e94191",
     background: "#fafafa"
   },
+  modules: ["@nuxtjs/router-extras"],
   /*
   ** Build configuration
   */
   build: {
     analize: true,
     babel: {
-      presets: ["es2015", "stage-2", "vue"],
+      presets: ["vue"],
       plugins: [
+        "@babel/plugin-syntax-dynamic-import",
         [
           "transform-imports",
           {

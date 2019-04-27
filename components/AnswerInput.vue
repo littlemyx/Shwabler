@@ -50,4 +50,12 @@ export default {
 .Input {
   padding-top: 10px;
 }
+>>> .v-icon--link,
+>>> .v-icon--link.primary--text {
+  color: #eb529b !important;
+}
+
+>>> textarea {
+  margin-top: 0px !important;
+}
 </style>

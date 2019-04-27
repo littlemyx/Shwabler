@@ -20,8 +20,14 @@ export default {
 </script>
 
 <style scoped>
+.logoWrapper {
+  position: relative;
+}
+
 .beta {
   position: absolute;
+  top: 0;
+  right: -26px;
 }
 </style>
 >
