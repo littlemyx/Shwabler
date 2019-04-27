@@ -1,0 +1,25 @@
+[debug] [2019-04-27T23:42:33.317Z] ----------------------------------------------------------------------
+[debug] [2019-04-27T23:42:33.319Z] Command:       /Users/a.muhin/.nvm/versions/node/v10.15.0/bin/node /Users/a.muhin/.nvm/versions/node/v10.15.0/bin/firebase serve
+[debug] [2019-04-27T23:42:33.319Z] CLI Version:   6.7.0
+[debug] [2019-04-27T23:42:33.319Z] Platform:      darwin
+[debug] [2019-04-27T23:42:33.319Z] Node Version:  v10.15.0
+[debug] [2019-04-27T23:42:33.320Z] Time:          Sun Apr 28 2019 02:42:33 GMT+0300 (GMT+03:00)
+[debug] [2019-04-27T23:42:33.320Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-04-27T23:42:33.328Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-04-27T23:42:33.328Z] > authorizing via signed-in user
+[debug] [2019-04-27T23:42:33.328Z] [iam] checking project shwabler0 for permissions ["firebase.projects.get"]
+[debug] [2019-04-27T23:42:33.331Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/shwabler0:testIamPermissions  
+
+[debug] [2019-04-27T23:42:34.457Z] <<< HTTP RESPONSE 200
+[debug] [2019-04-27T23:42:34.458Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/shwabler0  
+ 
+[debug] [2019-04-27T23:42:35.573Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/a.muhin/nuxt/tinmer'...
+[info] 
+[debug] [2019-04-27T23:42:35.577Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/388257651056/clients/_:getWebAppConfig  
+ 
+[debug] [2019-04-27T23:42:36.186Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: dist
+[info] ✔  hosting: Local server: http://localhost:5000
