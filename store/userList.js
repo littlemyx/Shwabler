@@ -131,6 +131,7 @@ export const actions = {
           commit("setUserList", list)
         } else {
           commit("setEmpty", true)
+          commit("setUserList", [])
         }
         commit("setLoading", false)
       })

@@ -56,9 +56,11 @@
       </v-container>
       <NotificationsList :offset="{'top':'56px'}" top right/>
     </v-content>
-    <v-footer color="grey" class="footer" app>
-      <span class="white--text">&copy;&nbsp;</span>
-      <span class="white--text digitalText"> <a class="teamLink" href="http://631am.com/" target="_blabk">6<span class="blinking">:</span>31 AM </a> </span>
+    <v-footer color="grey" class="appFooter" app>
+      <div class="logo">
+        <span class="white--text">&copy;&nbsp;</span>
+        <span class="white--text digitalText"> <a class="teamLink" href="http://631am.com/" target="_blabk">6<span class="blinking">:</span>31 AM </a> </span>
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -90,11 +92,9 @@ export default {
   },
   computed: {
     items() {
-      console.log(this.$store)
-      console.log(this.$store.state)
       return this.$store.state.sidebar.items.filter(
         item => item.isAuth === !!this.$store.state.user.user
-      ) // getters['sidebar/getItems'];
+      )
     },
     user() {
       return this.$store.getters["user/activeUser"]
@@ -112,7 +112,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
 @font-face {
   font-family: DS;
   src: url(/assets/fonts/DS-Digital.otf);
@@ -140,8 +140,12 @@ export default {
   font-family: DS;
 }
 
-.footer {
+.appFooter {
   background-color: #45062e !important;
+}
+
+.logo {
+  margin-left: 10px;
 }
 
 .list .v-list__tile--active {
