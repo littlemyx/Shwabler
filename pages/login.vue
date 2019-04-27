@@ -100,10 +100,9 @@ export default {
           .auth()
           .signInWithEmailAndPassword(this.email, this.password)
           .then(
-            user => {
+            () => {
               resetLoading()
-              console.log(user)
-              this.$router.push("/waterfall")
+              this.$router.push("/feed")
             },
             function(error) {
               resetLoading()

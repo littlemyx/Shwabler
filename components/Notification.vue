@@ -50,4 +50,10 @@ export default {
 .text {
   color: white;
 }
+.info {
+  background-color: #a77894 !important;
+}
+.error {
+  background-color: #5d0446 !important;
+}
 </style>

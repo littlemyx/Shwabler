@@ -4,6 +4,10 @@
   </div>
 </template>
 
+<router lang="yaml">
+    path: /dialogs
+</router>
+
 <script>
 import WardrobeList from "../components/WardrobeList.vue"
 

@@ -23,3 +23,11 @@ export const mutations = {
     state.notificationsList = [...state.notificationsList, ...appendix]
   }
 }
+
+//TODO add notification deleting after some interval
+
+export const actions = {
+  updateNotificationsList({ commit }, payload) {
+    commit("updateNotificationsList", payload)
+  }
+}

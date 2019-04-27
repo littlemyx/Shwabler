@@ -41,7 +41,7 @@
         </v-list-tile>
         <v-list-tile class="feedback">
           <v-list-tile-content>
-            <v-list-tile-title>Send your feedback to: <a href="mailto:feedback@shwabler.com">feedback@shwabler.com</a></v-list-tile-title>
+            <v-list-tile-title>Send your feedback to: <a class="feedbackEmail" href="mailto:feedback@shwabler.com">feedback@shwabler.com</a></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -116,11 +116,22 @@ export default {
 @font-face {
   font-family: DS;
   src: url(/assets/fonts/DS-Digital.otf);
+  src: url("../assets/fonts/DS-Digital.eot?#iefix&v=4.4.0")
+      format("embedded-opentype"),
+    url("../assets/fonts/DS-Digital.woff2?v=4.4.0") format("woff2"),
+    url("../assets/fonts/DS-Digital.woff?v=4.4.0") format("woff"),
+    url("../assets/fonts/DS-Digital.ttf?v=4.4.0") format("truetype"),
+    url("../assets/fonts/DS-Digital.svg?v=4.4.0#futuranewbook") format("svg");
 }
 
 .feedback {
   position: absolute;
   bottom: 0;
+}
+
+.feedbackEmail {
+  color: #e94191;
+  text-decoration: none;
 }
 
 .closeArrow:hover {

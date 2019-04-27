@@ -101,7 +101,6 @@ export default {
           .then(wrap => {
             wrap.user.sendEmailVerification().then(
               function() {
-                console.log(wrap)
                 // auth.onAuthStateChanged(user => {
                 //   console.log(user)
                 //   // if (user) {

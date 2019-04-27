@@ -1,6 +1,6 @@
 <template>
   <div class="cardWrapper">
-    <div class="tagsWrapper">
+    <div class="tagsWrapper flex xs12 sm6 offset-sm3">
       <Chips :list="searchTags" :disabled="false" @updated="searchTagsUpdated"/>
       <v-btn large @click="search">Search</v-btn>
     </div>

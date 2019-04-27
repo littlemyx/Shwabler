@@ -7,7 +7,7 @@ export default function({ store, redirect, route }) {
       route.name === "index" ||
       route.name === "welcome")
   ) {
-    redirect("/waterfall")
+    redirect("/feed")
     console.log("auth")
   }
   if (

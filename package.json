@@ -13,18 +13,20 @@
     "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
+    "@babel/core": "^7.0.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.0.0",
+    "@nuxtjs/router-extras": "^0.1.0",
     "arr-diff": "^4.0.0",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
     "babel-preset-vue": "^2.0.2",
     "eslint-config-prettier": "^3.1.0",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-vue": "^4.7.1",
     "firebase": "^5.7.2",
     "lodash": "^4.17.11",
-    "nuxt": "^1.0.0",
+    "nuxt": "^2.6.3",
     "nuxt-material-design-icons": "^1.0.4",
     "prettier": "^1.14.3",
     "vuetify": "^1.5.13"

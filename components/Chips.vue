@@ -7,6 +7,7 @@
     :items="items"
     :search-input.sync="search"
     :disabled="disabled"
+    :dark="dark"
     hide-selected
     label="Search tags"
     multiple
@@ -31,6 +32,7 @@
         <v-chip
           :color="`${colors[nonce - 1]} lighten-3`"
           label
+          dark
           small
           class="chip"
         >
@@ -47,6 +49,7 @@
         :color="`${item.color} lighten-3`"
         :selected="selected"
         :small="false"
+        dark
         label
         class="chip"
       >
@@ -70,6 +73,7 @@
           v-model="editing.text"
           autofocus
           flat
+          dark
           background-color="transparent"
           hide-details
           solo
@@ -119,6 +123,11 @@ export default {
       default: () => []
     },
     disabled: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
+    dark: {
       type: Boolean,
       required: false,
       default: false

@@ -43,6 +43,7 @@ export default {
   justify-content: flex-end;
 }
 .messageContent {
+  word-break: break-all;
   margin-bottom: 3px;
   padding: 5px;
   display: block;
