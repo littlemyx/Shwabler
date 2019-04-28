@@ -34,6 +34,7 @@ export default function({ store, redirect, route }) {
     (route.name === "verification" ||
       (route.name !== "welcome" &&
         route.name !== "login" &&
+        route.name !== "privacy" &&
         route.name !== "signup"))
   ) {
     redirect("/welcome")
