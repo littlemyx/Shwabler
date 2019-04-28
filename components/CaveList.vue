@@ -24,7 +24,7 @@
           @deleteItem="deleteItem"
         />
       </template>
-      <Card v-if="cards.length < 1" color="red">
+      <Card v-if="cards.length < 1" color="shwabler">
         <div slot="header" style="width:100%; text-align: center;">
           <h1>{{ emptyText }}</h1>
         </div>
