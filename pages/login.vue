@@ -46,6 +46,26 @@
           Don't have an account yet ?&nbsp;<RouterLink url="signup" text="Sign up!"/>
         </div>
       </v-flex>
+      <!-- TODO when confirm -->
+      <!-- <span>OR</span>
+      <v-flex>
+        <v-btn color="#4267b2" @click="facebookAuth">
+          <v-layout align-center justify-center row fill-height>
+            <div class="facebookIcon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 216 216" class="_5h0m" color="#FFFFFF"><path fill="#FFFFFF" d="
+          M204.1 0H11.9C5.3 0 0 5.3 0 11.9v192.2c0 6.6 5.3 11.9 11.9
+          11.9h103.5v-83.6H87.2V99.8h28.1v-24c0-27.9 17-43.1 41.9-43.1
+          11.9 0 22.2.9 25.2 1.3v29.2h-17.3c-13.5 0-16.2 6.4-16.2
+          15.9v20.8h32.3l-4.2 32.6h-28V216h55c6.6 0 11.9-5.3
+          11.9-11.9V11.9C216 5.3 210.7 0 204.1 0z"/></svg>
+            </div>
+            <div class="facebookText">
+              Continue with Facebook
+            </div>
+          </v-layout>
+        </v-btn>
+      </v-flex> -->
+      <!-- TODO -->
     </v-layout>
     <NotificationsList :offset="{'top':'10px'}" top right/>
     
@@ -125,6 +145,33 @@ export default {
         // })
       }
     },
+    facebookAuth() {
+      const provider = new firebase.auth.FacebookAuthProvider()
+      const router = this.$router
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(function(result) {
+          console.log(result)
+          router.push("/feed")
+          // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+          // var token = result.credential.accessToken
+          // The signed-in user info.
+          // var user = result.user
+          // ...
+        })
+        .catch(function(error) {
+          console.log(error)
+          // Handle Errors here.
+          // var errorCode = error.code
+          // var errorMessage = error.message
+          // // The email of the user's account used.
+          // var email = error.email
+          // // The firebase.auth.AuthCredential type that was used.
+          // var credential = error.credential
+          // ...
+        })
+    },
     resetLoading() {
       this.isLoading = false
     },
@@ -145,5 +192,14 @@ export default {
 }
 .footer {
   display: flex;
+}
+.facebookIcon {
+  display: flex;
+}
+.facebookText {
+  font-family: Helvetica, Arial, sans-serif;
+  color: white;
+  margin-left: 10px;
+  text-transform: none;
 }
 </style>

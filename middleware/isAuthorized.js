@@ -2,8 +2,10 @@ import { auth } from "@/services/fireinit.js"
 export default function({ store, redirect, route }) {
   if (
     store.state.user.user !== null &&
-    store.state.user.user.emailVerified &&
+    (store.state.user.user.emailVerified ||
+      !store.getters["user/isUserNeedVerification"]) &&
     (route.name === "login" ||
+      route.name === "verification" ||
       route.name === "index" ||
       route.name === "welcome")
   ) {
@@ -13,6 +15,7 @@ export default function({ store, redirect, route }) {
   if (
     store.state.user.user !== null &&
     !store.state.user.isEmailVerified &&
+    store.getters["user/isUserNeedVerification"] &&
     route.name !== "verification" &&
     route.name !== "login" &&
     route.name !== "sigup"

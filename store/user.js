@@ -67,5 +67,11 @@ export const getters = {
   },
   isUserExist(state) {
     return !!state.user
+  },
+  isUserNeedVerification(state) {
+    return state.user.providerData.some(provider => {
+      console.log(provider.providerId)
+      return provider.providerId === "password"
+    })
   }
 }
