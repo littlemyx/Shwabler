@@ -97,7 +97,10 @@ export default {
         //   checkbox: this.checkbox
         // })
         auth
-          .createUserWithEmailAndPassword(this.email, this.password)
+          .createUserWithEmailAndPassword(
+            this.email.toLowerCase().trim(),
+            this.password
+          )
           .then(wrap => {
             wrap.user.sendEmailVerification().then(
               function() {

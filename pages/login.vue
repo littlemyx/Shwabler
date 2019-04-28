@@ -98,7 +98,10 @@ export default {
         const store = this.$store
         firebase
           .auth()
-          .signInWithEmailAndPassword(this.email, this.password)
+          .signInWithEmailAndPassword(
+            this.email.toLowerCase().trim(),
+            this.password
+          )
           .then(
             () => {
               resetLoading()
