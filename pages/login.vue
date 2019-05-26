@@ -46,8 +46,7 @@
           Don't have an account yet ?&nbsp;<RouterLink url="signup" text="Sign up!"/>
         </div>
       </v-flex>
-      <!-- TODO when confirm -->
-      <!-- <span>OR</span>
+      <span>OR</span>
       <v-flex>
         <v-btn color="#4267b2" @click="facebookAuth">
           <v-layout align-center justify-center row fill-height>
@@ -64,8 +63,7 @@
             </div>
           </v-layout>
         </v-btn>
-      </v-flex> -->
-      <!-- TODO -->
+      </v-flex>
     </v-layout>
     <NotificationsList :offset="{'top':'10px'}" top right/>
     
