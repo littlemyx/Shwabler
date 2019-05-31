@@ -128,6 +128,7 @@ export const actions = {
           commit("messages/setEmptyMessages", messagesIds, {
             root: "messages"
           })
+          commit("setEmpty", false)
           commit("setUserList", list)
         } else {
           commit("setEmpty", true)

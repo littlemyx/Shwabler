@@ -95,6 +95,10 @@ module.exports = {
           })
         ]
       }
+
+      if (ctx.isClient) {
+        config.devtool = "eval-source-map"
+      }
     }
   }
 }
