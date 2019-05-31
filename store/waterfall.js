@@ -141,9 +141,12 @@ export const actions = {
 
     if (cards.length) {
       commit("setEnd", false)
+      commit("updateCardList", cards)
+    } else {
+      commit("setEnd", true)
     }
     commit("resetIndex")
-    commit("updateCardList", cards)
+
     commit("setLoading", false)
   },
   fetchCards({ commit, rootGetters }, ids) {
