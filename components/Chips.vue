@@ -8,8 +8,8 @@
     :search-input.sync="search"
     :disabled="disabled"
     :dark="dark"
+    :label="label"
     hide-selected
-    label="Search tags"
     multiple
     small-chips
     solo
@@ -161,6 +161,9 @@ export default {
     },
     isResultsLoading() {
       return this.$store.state.tags.isLoading
+    },
+    label() {
+      return this.$t("search_tag")
     },
     model: {
       get: function() {

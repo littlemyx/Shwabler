@@ -28,7 +28,7 @@
             <v-icon v-html="item.icon"/>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"/>
+            <v-list-tile-title v-text="item.title.toUpperCase()"/>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile @click="exit">
@@ -36,12 +36,17 @@
             <v-icon v-html="exit_icon"/>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Exit</v-list-tile-title>
+            <v-list-tile-title>{{ $t("exit") | uppercase }}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile >
+          <v-list-tile-content>
+            <LanguageSelector />
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile class="feedback">
           <v-list-tile-content>
-            <v-list-tile-title>Send your feedback to: <a class="feedbackEmail" href="mailto:feedback@shwabler.com">feedback@shwabler.com</a></v-list-tile-title>
+            <v-list-tile-title>{{ $t("send_feedback") | capitalize }} <a class="feedbackEmail" href="mailto:feedback@shwabler.com">feedback@shwabler.com</a></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -67,10 +72,12 @@
 
 <script>
 import NotificationsList from "../components/NotificationsList"
+import LanguageSelector from "../components/LanguageSelector"
 
 export default {
   components: {
-    NotificationsList
+    NotificationsList,
+    LanguageSelector
   },
   props: {
     source: {
@@ -92,12 +99,32 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.state.sidebar.items.filter(
-        item => item.isAuth === !!this.$store.state.user.user
-      )
+      return [
+        { icon: "email", title: this.$t("feed"), to: "/feed", isAuth: true },
+        {
+          icon: "home",
+          title: this.$t("my_cards"),
+          to: "/cards",
+          isAuth: true
+        },
+        {
+          icon: "list",
+          title: this.$t("dialogs"),
+          to: "/dialogs",
+          isAuth: true
+        },
+        { icon: "apps", title: this.$t("login"), to: "/login", isAuth: false },
+        { icon: "apps", title: this.$t("signup"), to: "/signup", isAuth: false }
+      ].filter(item => item.isAuth === !!this.$store.state.user.user)
     },
     user() {
       return this.$store.getters["user/activeUser"]
+    },
+    locales() {
+      return this.$store.state.locales
+    },
+    locale() {
+      return this.$store.state.locale
     }
   },
   methods: {
@@ -107,6 +134,12 @@ export default {
         this.$router.push("/login")
         console.log("exit applayout")
       })
+    },
+    switchLanguage(localeCode) {
+      // document.cookie = `locale=${localeCode}`
+      // location.reload()
+      this.$store.commit("SET_LANG", localeCode)
+      this._i18n.locale = this.$store.state.locale
     }
   }
 }
