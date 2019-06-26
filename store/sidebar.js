@@ -1,6 +1,8 @@
+// import i18n from "~/plugins/i18n"
+
 export const state = () => ({
   items: [
-    { icon: "email", title: "Feed", to: "/feed", isAuth: true },
+    { icon: "email", title: "feed", to: "/feed", isAuth: true },
     { icon: "home", title: "My cards", to: "/cards", isAuth: true },
     { icon: "list", title: "Dialogs", to: "/dialogs", isAuth: true },
     { icon: "apps", title: "Login", to: "/login", isAuth: false },

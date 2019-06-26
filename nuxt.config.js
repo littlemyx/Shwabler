@@ -32,11 +32,12 @@ module.exports = {
     "~/plugins/vuetify.js",
     "~plugins/filters.js",
     { src: "~/plugins/fireauth.js", ssr: false },
-    { src: "~/plugins/initstore.js", ssr: false }
+    { src: "~/plugins/initstore.js", ssr: false },
+    "~/plugins/i18n.js"
   ],
   css: ["~/assets/style/app.styl"],
   router: {
-    middleware: ["isAuthorized", "storeInit"]
+    middleware: ["isAuthorized", "storeInit", "i18n"]
   },
   mode: "spa",
   /*
@@ -73,7 +74,13 @@ module.exports = {
       ]
     },
 
-    vendor: ["babel-polyfill", "lodash", "~/plugins/vuetify.js", "arr-diff"],
+    vendor: [
+      "babel-polyfill",
+      "lodash",
+      "~/plugins/vuetify.js",
+      "arr-diff",
+      "vue-i18n"
+    ],
     extractCSS: true,
     /*
     ** Run ESLint on save
