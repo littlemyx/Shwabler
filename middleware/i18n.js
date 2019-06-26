@@ -7,11 +7,10 @@ export default function({ isHMR, app, store, route }) {
   // if (req) {
   if (route.name) {
     if (!store.state.locale) {
-      let locale =
-        document.cookie
-          .split("; ")
-          .map(stringCookie => stringCookie.split("="))
-          .find(cookie => cookie[0] === "locale")[1] || "EN"
+      let locale = document.cookie
+        .split("; ")
+        .map(stringCookie => stringCookie.split("="))
+        .find(cookie => cookie[0] === "locale") || ["locale", "EN"]
 
       // check if the locale cookie is set
       // if (req.headers.cookie) {
@@ -33,7 +32,7 @@ export default function({ isHMR, app, store, route }) {
       //     .substring(0, 2)
       // }
 
-      store.commit("SET_LANG", locale)
+      store.commit("SET_LANG", locale[1]) //костыль!
       app.i18n.locale = store.state.locale
     }
   }
