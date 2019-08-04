@@ -11,7 +11,6 @@
   "signup": "регистрация",
   "send_feedback": "Отправить отзыв",
   "enter": "вход",
-  "search_tag": "Поиск по тэгам",
   "delete": "Удалить",
   "newCardPlaceholderHead": "Заголовок",
   "newCardPlaceholderBody": "Текст карточки",
@@ -20,5 +19,7 @@
   "dialog_placeholder": "Сообщение",
   "new_message": "Новое сообщение",
   "no_cards": "Пока карточек больше нет",
-  "no_tag": "Тэг не найден"
+  "no_tag": "Тэг не найден",
+  "search_tag": "Найти тэги",
+  "selling_text": "Шваблер это круто"
 }
