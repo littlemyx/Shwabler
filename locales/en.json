@@ -11,7 +11,6 @@
   "signup": "signup",
   "send_feedback": "send your feedback to",
   "enter": "enter",
-  "search_tag": "Find by tags",
   "delete": "Delete",
   "newCardPlaceholderHead": "Header of your card",
   "newCardPlaceholderBody": "Main plot goes here",
@@ -20,5 +19,7 @@
   "dialog_placeholder": "Message",
   "new_message": "New Message",
   "no_cards": "No more cards yet",
-  "no_tag": "There are no such tag yet"
+  "no_tag": "There are no such tag yet",
+  "search_tag": "Search tags",
+  "selling_text": "Shwabler is cool"
 }
