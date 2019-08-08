@@ -52,7 +52,10 @@ module.exports = {
     color: "#e94191",
     background: "#fafafa"
   },
-  modules: ["@nuxtjs/router-extras"],
+  modules: ["@nuxtjs/router-extras", "@nuxtjs/pwa"],
+  icon: {
+    iconSrc: "static/icons/icon.png"
+  },
   /*
    ** Build configuration
    */
