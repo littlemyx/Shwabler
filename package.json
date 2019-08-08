@@ -1,7 +1,7 @@
 {
-  "name": "tinmer",
+  "name": "Shwabler",
   "version": "1.0.0",
-  "description": "Nuxt.js + Vuetify.js project",
+  "description": "Share your thoughts",
   "author": "littlemyx@gmail.com",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.0.0",
     "@mdi/font": "^3.9.97",
+    "@nuxtjs/pwa": "^3.0.0-beta.16",
     "@nuxtjs/router-extras": "^0.1.0",
     "arr-diff": "^4.0.0",
     "axios": "^0.18.0",
