@@ -19,6 +19,7 @@ module.exports = {
         content: "Free secret discussion"
       }
     ],
+    noscript: [{ innerHTML: "This website requires JavaScript.", body: true }],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
       {
@@ -44,12 +45,12 @@ module.exports = {
    ** Customize the progress bar color
    */
   loading: {
-    color: "#e94191",
+    color: "#A01259",
     height: "5px"
   },
   loadingIndicator: {
     name: "rectangle-bounce",
-    color: "#e94191",
+    color: "#A01259",
     background: "#fafafa"
   },
   modules: ["@nuxtjs/router-extras", "@nuxtjs/pwa"],
