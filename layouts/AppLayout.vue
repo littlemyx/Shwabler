@@ -163,7 +163,7 @@ export default {
 }
 
 .feedbackEmail {
-  color: #e94191;
+  color: #a01259;
   text-decoration: none;
 }
 
@@ -193,7 +193,7 @@ export default {
 }
 
 .list .v-list__tile--active {
-  color: #e94191 !important;
+  color: #a01259 !important;
 }
 
 @keyframes blink {

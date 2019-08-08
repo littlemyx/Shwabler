@@ -9,7 +9,7 @@ export default {
     lighten3: "#A5597D"
   },
   shwabler: {
-    base: "#e94191",
+    base: "#A01259",
     darken1: "#d43c84",
     darken2: "#bf3677",
     darken3: "#aa306a",

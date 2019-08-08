@@ -25,9 +25,9 @@ export default {
 <style>
 .link {
   text-decoration: none;
-  color: #e94191;
+  color: #a01259;
 }
 .link:hover {
-  color: #a90754;
+  color: #a01259;
 }
 </style>
