@@ -5,7 +5,7 @@
         <v-icon medium light>clear</v-icon>
       </v-btn >
 
-      <Chips 
+      <!-- <Chips 
         slot="chips" 
         :list="tags" 
         :id="id" 
@@ -15,7 +15,17 @@
         @tag-added="tagAdded" 
         @new-tag-added="newTagAdded" 
         @chips-updated="chipsUpdated"
+      /> -->
+
+      <TagList 
+        slot="chips"
+        :preselected_tags="tags" 
+        :editable="false" 
+        :addable="false" 
+        :id="id"
       />
+      <!-- @selectTag="selectTag" 
+        @deleteTag="deleteTag" -->
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
@@ -30,14 +40,14 @@
 <script>
 import InputText from "./InputText.vue"
 import Card from "./Card.vue"
-import Chips from "./Chips.vue"
+import TagList from "./Tags"
 const { colors } = require("../assets/data/colors.json")
 
 export default {
   components: {
     InputText,
     Card,
-    Chips
+    TagList
   },
   props: {
     id: {

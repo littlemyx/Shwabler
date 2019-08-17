@@ -1,8 +1,6 @@
 import cloneDeep from "lodash/cloneDeep"
 import { firestore, timestamp } from "@/services/fireinit.js"
 
-const { colors } = require("../assets/data/colors.json")
-
 export const state = () => ({
   newCardTitle: null,
   newCardText: null,
@@ -169,10 +167,11 @@ export const getters = {
   tags: state => desired_id => {
     const card = state.caveList.find(card => card.id === desired_id)
     if (card) {
-      return card.tags.map(tag => ({
-        text: Object.values(tag)[0],
-        color: colors[Object.keys(tag)[0].charCodeAt(0) % colors.length]
-      }))
+      let tags = {}
+      card.tags.forEach(tag => {
+        tags = { ...tags, ...tag }
+      })
+      return tags
     } else {
       return []
     }

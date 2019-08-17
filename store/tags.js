@@ -5,7 +5,8 @@ export const state = () => ({
   tagsList: {},
   idsList: [],
   isLoading: false,
-  searchResults: {}
+  searchResults: {},
+  popular: {}
 })
 
 export const mutations = {
@@ -22,6 +23,9 @@ export const mutations = {
   },
   setSearchResults(state, results) {
     state.searchResults = results
+  },
+  setPopular(state, results) {
+    state.popular = results
   },
   resetSearchResults(state) {
     state.searchResults = {}
@@ -63,27 +67,32 @@ export const actions = {
     })
   },
   fetchSearch({ commit }, substring) {
-    if (substring) {
-      commit("setLoading", true)
-      firestore
-        .collection("tags")
-        .where("searchIndex", "array-contains", substring)
-        .limit(20)
-        .get()
-        .then(querySnapshot => {
-          commit("setLoading", false)
-          if (querySnapshot.docs.length) {
-            const list = {}
-            querySnapshot.forEach(doc => {
-              const data = doc.data()
-              list[doc.id] = data.text
-            })
-            commit("setSearchResults", list)
-          }
-        })
-    } else {
-      commit("resetSearchResults")
-    }
+    return new Promise(resolve => {
+      if (substring) {
+        firestore
+          .collection("tags")
+          .where("searchIndex", "array-contains", substring)
+          .limit(20)
+          .get()
+          .then(querySnapshot => {
+            if (querySnapshot.docs.length) {
+              const list = {}
+              querySnapshot.forEach(doc => {
+                const data = doc.data()
+                list[doc.id] = data.text
+              })
+              commit("setSearchResults", list)
+            } else {
+              commit("resetSearchResults")
+            }
+
+            resolve()
+          })
+      } else {
+        commit("resetSearchResults")
+        resolve()
+      }
+    })
   },
   updateActivityAsync(context, payload) {
     // TODO недоделано
@@ -140,7 +149,7 @@ export const actions = {
             const data = doc.data()
             list[doc.id] = data.text
           })
-          commit("setTagsList", list)
+          commit("setPopular", list)
         }
       })
   }
@@ -165,6 +174,8 @@ export const getters = {
   model: (state, getters) => chips => {
     return getters.items.filter(chip => chips.includes(chip.text))
   },
+  popular: state => state.popular,
+  result: state => state.searchResults,
   tagIdByText: (state, getters) => text =>
     getters.items.find(tag => tag.text === text)
 }

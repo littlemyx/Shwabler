@@ -9,5 +9,6 @@
   "signup": "signup",
   "send_feedback": "send your feedback to",
   "enter": "enter",
-  "search_tag": "Search tags"
+  "search_tag": "Search tags",
+  "no_tag": "There are no such tag yet"
 }

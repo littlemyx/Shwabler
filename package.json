@@ -10,12 +10,15 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore ."
+    "lintfix": "eslint --fix --ext .js,.vue --ignore-path .gitignore .",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@babel/core": "^7.0.1",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.0.0",
+    "@mdi/font": "^3.9.97",
     "@nuxtjs/router-extras": "^0.1.0",
     "arr-diff": "^4.0.0",
     "axios": "^0.18.0",
@@ -33,7 +36,12 @@
     "vuetify": "^1.5.13"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^5.1.10",
+    "@storybook/addon-links": "^5.1.10",
+    "@storybook/addons": "^5.1.10",
+    "@storybook/vue": "^5.1.10",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.6",
     "babel-plugin-transform-imports": "^1.4.1",
     "eslint": "^5.7.0",
     "eslint-config-standard": "^10.2.1",

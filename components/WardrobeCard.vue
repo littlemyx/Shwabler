@@ -5,14 +5,21 @@
         <v-icon medium light>clear</v-icon>
       </v-btn >
 
-      <Chips v-if="tags.length" slot="chips" :list="tags" :id="id" :disabled="true" dark/>
+      
 
       <div slot="header">
         <h3 class="headline mb-0">{{ title }}</h3>
         <div>{{ cardText }}</div>
       </div>
 
-      <Chips v-if="tags.length" slot="chips" :list="tags" :disabled="true"/>
+      
+      <TagList 
+        slot="chips"
+        :preselected_tags="selectedTags" 
+        :editable="false" 
+        :addable="false" 
+        :id="id"
+      />
 
       <div v-if="isMessagesShow" class="messagesWrapper">
         <v-progress-circular
@@ -34,7 +41,7 @@
 
 <script>
 import Card from "./Card.vue"
-import Chips from "./Chips.vue"
+import TagList from "./Tags"
 import DialogBody from "./DialogBody.vue"
 const { colors } = require("../assets/data/colors.json")
 
@@ -42,7 +49,7 @@ export default {
   components: {
     DialogBody,
     Card,
-    Chips
+    TagList
   },
   props: {
     id: {
@@ -106,6 +113,13 @@ export default {
     },
     messagesId() {
       return this.$store.getters["userList/messagesId"](this.id)
+    },
+    selectedTags() {
+      let tags = {}
+      this.tags.forEach(tag => {
+        tags = { ...tags, ...tag }
+      })
+      return tags
     }
   },
   methods: {

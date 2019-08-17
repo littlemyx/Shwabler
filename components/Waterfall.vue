@@ -1,8 +1,15 @@
 <template>
   <div class="cardWrapper">
     <div class="tagsWrapper flex xs12 sm6 offset-sm3">
-      <Chips :list="searchTags" :disabled="false" @updated="searchTagsUpdated"/>
-      <v-btn large @click="search">{{ $t('search') }}</v-btn>
+      <TagList 
+        :incoming_items="searchTags" 
+        :addable="false" 
+        :placeholder="$t('search_tag')" 
+        @selectTag="selectTag" 
+        @deleteTag="deleteTag"
+        @blurred="closeTagSearchHandler"
+      />
+      
     </div>
     <template v-if="isLoading">
       <Card color="dark-shwabler">
@@ -58,20 +65,25 @@
 import WaterfallCard from "./WaterfallCard.vue"
 import Card from "./Card.vue"
 import Chips from "./Chips.vue"
+import TagList from "./Tags"
 
 export default {
   components: {
     WaterfallCard,
     Card,
+    TagList,
     Chips
   },
   data() {
     return {
       isNew: true,
       endText: "No more cards yet :-(",
-      loadingText: "Loading..."
+      loadingText: "Loading...",
+      selectedTags: [],
+      selectedListChanged: false
     }
   },
+
   computed: {
     firstCardVisibility() {
       return this.$store.state.waterfall.isFirstCardVisible
@@ -92,7 +104,7 @@ export default {
       return this.$store.getters["waterfall/nextCard"]
     },
     searchTags() {
-      return this.$store.state.waterfall.searchTags
+      return this.$store.getters["tags/result"]
     }
     // firstCard: {
     //   get () {
@@ -109,6 +121,7 @@ export default {
     //   }
     // }
   },
+
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/")
@@ -117,14 +130,30 @@ export default {
       this.$store.dispatch("waterfall/increaseIndex")
       console.log("next card")
     },
-    searchTagsUpdated(val) {
-      this.$store.commit("waterfall/setSearchTags", val)
+    deleteTag(event) {
+      const deletedIndex = this.selectedTags.findIndex(
+        tag => tag.id === event.id
+      )
+      const newArray = [...this.selectedTags]
+      newArray.splice(deletedIndex, 1)
+      this.selectedTags = newArray
+    },
+    selectTag(event) {
+      // this.$store.commit("waterfall/setSearchTags", val)
+      this.selectedListChanged = true
+      this.selectedTags = [...this.selectedTags, { id: event.key }]
     },
     search() {
-      if (this.searchTags.length) {
-        this.$store.dispatch("waterfall/findByTag", this.searchTags)
+      this.selectedListChanged = false
+      if (this.selectedTags.length) {
+        this.$store.dispatch("waterfall/findByTag", this.selectedTags)
       } else {
         this.$store.dispatch("waterfall/fetchCardsWithMatches")
+      }
+    },
+    closeTagSearchHandler() {
+      if (this.selectedListChanged) {
+        this.search()
       }
     }
   },
