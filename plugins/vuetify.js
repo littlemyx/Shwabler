@@ -26,6 +26,8 @@ import {
   transitions
 } from "vuetify"
 
+import { Ripple } from "vuetify/lib/directives"
+
 Vue.use(Vuetify, {
   components: {
     VApp,
@@ -49,6 +51,9 @@ Vue.use(Vuetify, {
     VCombobox,
     VProgressCircular,
     transitions
+  },
+  directives: {
+    Ripple
   },
   theme
 })
