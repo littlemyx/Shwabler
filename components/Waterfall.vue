@@ -3,12 +3,17 @@
     <div class="tagsWrapper flex xs12 sm6 offset-sm3">
       <TagList 
         :incoming_items="searchTags" 
+        :preselected_tags="searchedTags" 
         :addable="false" 
         :placeholder="$t('search_tag')" 
         @selectTag="selectTag" 
         @deleteTag="deleteTag"
         @blurred="closeTagSearchHandler"
-      />
+      >
+        <v-btn slot="right" :disabled="!Object.keys(searchedTags).length" text icon @click="clear">
+          <v-icon>clear</v-icon>
+        </v-btn>
+      </TagList>
       
     </div>
     <template v-if="isLoading">
@@ -79,7 +84,6 @@ export default {
       isNew: true,
       endText: "No more cards yet :-(",
       loadingText: "Loading...",
-      selectedTags: [],
       selectedListChanged: false
     }
   },
@@ -105,7 +109,11 @@ export default {
     },
     searchTags() {
       return this.$store.getters["tags/result"]
+    },
+    searchedTags() {
+      return this.$store.getters["waterfall/searchedTags"]
     }
+
     // firstCard: {
     //   get () {
     //     const returnValue = this.$store.getters['waterfall/nextCard'];
@@ -131,25 +139,33 @@ export default {
       console.log("next card")
     },
     deleteTag(event) {
-      const deletedIndex = this.selectedTags.findIndex(
-        tag => tag.id === event.id
-      )
-      const newArray = [...this.selectedTags]
-      newArray.splice(deletedIndex, 1)
-      this.selectedTags = newArray
+      // const deletedIndex = this.selectedTags.findIndex(
+      //   tag => tag.id === event.id
+      // )
+      // const newArray = [...this.selectedTags]
+      // newArray.splice(deletedIndex, 1)
+      // this.selectedTags = newArray
+      this.selectedListChanged = true
+      this.$store.commit("waterfall/removeTagById", event.id)
     },
     selectTag(event) {
-      // this.$store.commit("waterfall/setSearchTags", val)
       this.selectedListChanged = true
-      this.selectedTags = [...this.selectedTags, { id: event.key }]
+      this.$store.commit("waterfall/setSearchTags", {
+        ...this.searchedTags,
+        [event.id]: event.text
+      })
     },
     search() {
       this.selectedListChanged = false
-      if (this.selectedTags.length) {
-        this.$store.dispatch("waterfall/findByTag", this.selectedTags)
+      if (Object.keys(this.searchedTags).length) {
+        this.$store.dispatch("waterfall/findByTag", this.searchedTags)
       } else {
         this.$store.dispatch("waterfall/fetchCardsWithMatches")
       }
+    },
+    clear() {
+      this.$store.commit("waterfall/setSearchTags", {})
+      this.search()
     },
     closeTagSearchHandler() {
       if (this.selectedListChanged) {

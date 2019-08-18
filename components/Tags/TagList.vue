@@ -8,11 +8,11 @@
   >
     <div class="inputWrapper">
       <span 
-        v-for="tag in Object.keys(selectedTags)" 
+        v-for="tag in Object.keys(preselected_tags)" 
         :key="`selected-${tag}`" 
         class="selectedTag" >
         <Tag 
-          :text="selectedTags[tag]" 
+          :text="preselected_tags[tag]" 
           :id="tag"
           :deletable="editable"
           @tagDeleted="deleteSelectedTagHandler"
@@ -93,7 +93,6 @@ export default {
       isFocused: false,
       timeoutId: null,
       isTagsLoading: false,
-      selectedTags: this.preselected_tags,
       tagsPull: this.incoming_items,
       justSelectedTagKey: null
     }
@@ -108,10 +107,6 @@ export default {
     isSuggestOpen() {
       return this.editable && this.isFocused
     }
-
-    // tagsPull() {
-    //   return this.incoming_items.filter(value => !this.selectedTags.includes(value))
-    // }
   },
   watch: {
     value: function() {
@@ -125,7 +120,7 @@ export default {
         this.isTagsLoading = false
       })
     },
-    selectedTags: function() {
+    preselected_tags: function() {
       const filtered = { ...this.tagsPull }
       if (this.justSelectedTagKey) {
         delete filtered[this.justSelectedTagKey]
@@ -140,12 +135,12 @@ export default {
       if (!this.value) {
         tmp = this.$store.getters["tags/popular"]
         comparator = key => {
-          return !this.selectedTags[key]
+          return !this.preselected_tags[key]
         }
       } else {
         tmp = this.incoming_items
         comparator = key => {
-          return !tmp[key].includes(this.value) && !this.selectedTags[key]
+          return !tmp[key].includes(this.value) && !this.preselected_tags[key]
         }
       }
       Object.keys(tmp).forEach(key => {
@@ -160,18 +155,6 @@ export default {
     }
   },
   methods: {
-    fetchTags() {
-      setTimeout(
-        function() {
-          this.isTagsLoading = false
-          this.tagsPull = this.incoming_items.filter(
-            value =>
-              value.includes(this.value) && !this.selectedTags.includes(value)
-          )
-        }.bind(this),
-        1000
-      )
-    },
     blurHandler() {
       this.timeoutId = setTimeout(() => {
         if (this.isFocused) {
@@ -188,9 +171,9 @@ export default {
       }
     },
     deleteSelectedTagHandler(event) {
-      const filtered = { ...this.selectedTags }
+      const filtered = { ...this.preselected_tags }
       delete filtered[event]
-      this.selectedTags = filtered
+      this.preselected_tags = filtered
       this.$emit("deleteTag", { id: event })
     },
     addTag() {
@@ -199,11 +182,11 @@ export default {
     },
     tagSelectedHandler(event) {
       this.justSelectedTagKey = event
-      this.selectedTags = {
-        ...this.selectedTags,
-        [event]: this.tagsPull[event]
-      }
-      this.$emit("selectTag", { key: event, value: this.tagsPull[event] })
+      // this.preselected_tags = {
+      //   ...this.selectedTags,
+      //   [event]: this.tagsPull[event]
+      // }
+      this.$emit("selectTag", { id: event, text: this.tagsPull[event] })
     }
   }
 }

@@ -10,6 +10,7 @@
       @deleteTag="deleteTag"
       @blurred="blurred"
     />
+    <slot name="right"/>
   </div>
 </template>
 
@@ -54,5 +55,6 @@ export default {
 <style scoped>
 .body {
   width: 100%;
+  display: flex;
 }
 </style>

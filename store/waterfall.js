@@ -10,7 +10,7 @@ export const state = () => ({
   isEnd: false,
   isLoading: true,
   isInitialized: false,
-  searchTags: []
+  searchedTags: {}
 })
 
 export const mutations = {
@@ -23,7 +23,7 @@ export const mutations = {
     state.isEnd = false
     state.isLoading = true
     state.isInitialized = false
-    state.searchTags = []
+    state.searchedTags = {}
   },
   changeCard(state) {
     state.firstCard = !state.firstCard
@@ -47,7 +47,12 @@ export const mutations = {
     state.isInitialized = value
   },
   setSearchTags(state, value) {
-    state.searchTags = value
+    state.searchedTags = value
+  },
+  removeTagById(state, value) {
+    const tmpSercheddTags = { ...state.searchedTags }
+    delete tmpSercheddTags[value]
+    state.searchedTags = tmpSercheddTags
   }
 }
 
@@ -114,9 +119,9 @@ export const actions = {
     const cards = []
     commit("setLoading", true)
     await Promise.all(
-      payload.map(tag => {
+      Object.keys(payload).map(tag => {
         return refTags
-          .doc(tag.id)
+          .doc(tag)
           .get()
           .then(doc => {
             posts = [...posts, ...doc.data().posts]
@@ -185,7 +190,8 @@ export const actions = {
         console.log(error)
       })
   },
-  fetchCardsWithMatches({ dispatch, rootGetters }) {
+  fetchCardsWithMatches({ commit, dispatch, rootGetters }) {
+    commit("setLoading", true)
     if (rootGetters["userList/isInitialized"]) {
       dispatch("fetchCards", rootGetters["userList/ids"])
     } else {
@@ -216,7 +222,7 @@ export const getters = {
   nextCard: state => {
     return state.cardList[state.index]
   },
-  // searchTags: state => state.searchTags,
+  searchedTags: state => state.searchedTags,
   tags: state => desired_id => {
     const card = state.cardList.find(card => card.id === desired_id)
     return (

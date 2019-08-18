@@ -2,6 +2,8 @@
   "search": "искать",
   "select_language": "выбор языка",
   "feed": "поток",
+  "create": "создать",
+  "cancel": "отменить",
   "my_cards": "мои карточки",
   "dialogs": "диалоги",
   "exit": "выйти",
@@ -9,6 +11,9 @@
   "signup": "регистрация",
   "send_feedback": "Отправить отзыв",
   "enter": "вход",
-  "search_tag": "Найти тэги",
+  "search_tag": "Добавить тэги",
+  "delete": "Удалить",
+  "newCardPlaceholderHead": "Заголовок",
+  "newCardPlaceholderBody": "Текст карточки",
   "no_tag": "Тэг не найден"
 }
