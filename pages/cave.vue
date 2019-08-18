@@ -29,8 +29,8 @@
           :value="newCardTitle"
           :dark="false"
           :counter="50"
+          :label="$t('newCardPlaceholderHead')"
           color="dark-shwabler"
-          label="Header of your card"
           @input="inputTitle"
         />
 
@@ -38,8 +38,8 @@
           :value="newCardText"
           :dark="false"
           :counter="400"
+          :label="$t('newCardPlaceholderBody')"
           color="dark-shwabler"
-          label="Main plot goes here"
           @input="inputText"
         />
       
@@ -50,14 +50,14 @@
             flat
             @click="cancel"
           >
-            Cancel
+            {{ $t("cancel") }}
           </v-btn>
           <v-btn
             color="dark-shwabler darken-1"
             flat
             @click="add"
           >
-            Add
+            {{ $t("create") }}
           </v-btn>
         </template>
       </Card>

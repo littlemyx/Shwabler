@@ -2,6 +2,8 @@
   "search": "search",
   "select_language": "select language",
   "feed": "feed",
+  "create": "create",
+  "cancel": "cancel",
   "my_cards": "my cards",
   "dialogs": "dialogs",
   "exit": "exit",
@@ -9,6 +11,9 @@
   "signup": "signup",
   "send_feedback": "send your feedback to",
   "enter": "enter",
-  "search_tag": "Search tags",
+  "search_tag": "Add tags",
+  "delete": "Delete",
+  "newCardPlaceholderHead": "Header of your card",
+  "newCardPlaceholderBody": "Main plot goes here",
   "no_tag": "There are no such tag yet"
 }

@@ -22,6 +22,7 @@ import {
   VTextarea,
   VChip,
   VCombobox,
+  VTooltip,
   VProgressCircular,
   transitions
 } from "vuetify"
@@ -49,6 +50,7 @@ Vue.use(Vuetify, {
     VTextarea,
     VChip,
     VCombobox,
+    VTooltip,
     VProgressCircular,
     transitions
   },

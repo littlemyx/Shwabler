@@ -1,9 +1,16 @@
 <template>
   <v-layout>
     <Card :color="color">
-      <v-btn slot="controlItems" flat icon color="white" class="deleteIcon" @click="deleteCard">
-        <v-icon medium light>clear</v-icon>
-      </v-btn >
+      
+
+      <v-tooltip slot="controlItems" transition="scale-transition" bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn flat icon color="#fff" class="deleteIcon" @click="deleteCard" v-on="on">
+            <v-icon medium light>clear</v-icon>
+          </v-btn >
+        </template>
+        <span>{{ $t("delete") }}</span>
+      </v-tooltip>
 
       <!-- <Chips 
         slot="chips" 
