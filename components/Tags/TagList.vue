@@ -20,24 +20,34 @@
       </span>
       <input 
         v-if="editable"
-        v-model="value"
+        ref="inputRef"
+        :value="value"
         :placeholder="placeholder"
-        class="tagInput" 
-        @keypress.enter.capture="addTag">
+        class="tagInput"
+        @input="valueChangeHandler" 
+        @keypress.enter.capture="enterHandler">
     </div>
     <div v-if="isSuggestOpen" class="suggestsWrapper">
       <div class="suggests">
         <div v-if="isTagsLoading"> 
           <div class="loaderWrapper">
             <v-progress-circular
-              :size="48"
-              :width="7"
+              :size="30"
+              :width="3"
               color="dark-shwabler"
               indeterminate
             />
           </div>
         </div>
         <template v-else >
+          <template v-if="!existingTagId && value.length">
+            <div v-if="addable" class="loaderWrapper" >
+              <span>Press <code>Enter</code> to add <Tag :id="value" :text="value" /></span>
+            </div>
+            <div v-else class="loaderWrapper" >
+              <span>{{ $t("no_tag") }}</span>
+            </div>
+          </template>
           <ul v-if="Object.keys(tagsPull).length" class="list" >
             <li v-ripple v-for="tag in Object.keys(tagsPull)" :key="tag" class="item" >
               <ListItem :id="tag" @itemClicked="tagSelectedHandler">
@@ -45,14 +55,7 @@
               </ListItem>
             </li>
           </ul>
-          <template v-else>
-            <div v-if="addable" class="loaderWrapper" >
-              <span>Press <code>Enter</code> to add <Tag :text="value" /></span>
-            </div>
-            <div v-else class="loaderWrapper" >
-              <span>{{ $t("no_tag") }}</span>
-            </div>
-          </template>
+         
         </template>
       </div>
     </div>
@@ -82,6 +85,10 @@ export default {
       type: Boolean,
       default: true
     },
+    init_value: {
+      type: String,
+      default: () => ""
+    },
     editable: {
       type: Boolean,
       default: true
@@ -89,7 +96,7 @@ export default {
   },
   data() {
     return {
-      value: "",
+      value: this.init_value,
       isFocused: false,
       timeoutId: null,
       isTagsLoading: false,
@@ -106,6 +113,12 @@ export default {
     },
     isSuggestOpen() {
       return this.editable && this.isFocused
+    },
+    existingTagId() {
+      const pull = Object.keys(this.tagsPull)
+      const id =
+        pull[pull.findIndex(index => this.tagsPull[index] === this.value)]
+      return id !== -1 ? id : null
     }
   },
   watch: {
@@ -120,6 +133,10 @@ export default {
         this.isTagsLoading = false
       })
     },
+    init_value: function(newValue) {
+      this.value = newValue
+    },
+
     preselected_tags: function() {
       const filtered = { ...this.tagsPull }
       if (this.justSelectedTagKey) {
@@ -140,7 +157,7 @@ export default {
       } else {
         tmp = this.incoming_items
         comparator = key => {
-          return !tmp[key].includes(this.value) && !this.preselected_tags[key]
+          return tmp[key].includes(this.value) && !this.preselected_tags[key]
         }
       }
       Object.keys(tmp).forEach(key => {
@@ -153,6 +170,9 @@ export default {
         this.$emit("blurred")
       }
     }
+  },
+  beforeDestroy() {
+    console.log("test")
   },
   methods: {
     blurHandler() {
@@ -171,22 +191,33 @@ export default {
       }
     },
     deleteSelectedTagHandler(event) {
-      const filtered = { ...this.preselected_tags }
-      delete filtered[event]
-      this.preselected_tags = filtered
+      // const filtered = { ...this.preselected_tags }
+      // delete filtered[event]
+      // this.preselected_tags = filtered
       this.$emit("deleteTag", { id: event })
     },
+    valueChangeHandler(event) {
+      this.value = event.target.value
+      this.$emit("valueChanged", this.value)
+    },
+    enterHandler() {
+      if (this.existingTagId) {
+        this.tagSelectedHandler(this.existingTagId)
+      } else {
+        this.addTag()
+      }
+    },
     addTag() {
-      // this.tagsPull = [...this.tagsPull, this.value]
-      this.$emit("tagAdd", this.value)
+      const id = this.value
+      this.$emit("tagAdd", { id, text: this.value })
+      this.value = ""
+      this.$refs.inputRef.focus()
     },
     tagSelectedHandler(event) {
       this.justSelectedTagKey = event
-      // this.preselected_tags = {
-      //   ...this.selectedTags,
-      //   [event]: this.tagsPull[event]
-      // }
       this.$emit("selectTag", { id: event, text: this.tagsPull[event] })
+      this.value = ""
+      this.$refs.inputRef.focus()
     }
   }
 }
@@ -194,7 +225,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  z-index: 2;
+  z-index: 1;
   position: relative;
   width: 100%;
   display: flex;

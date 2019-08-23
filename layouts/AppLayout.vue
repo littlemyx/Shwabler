@@ -102,13 +102,13 @@ export default {
       return [
         { icon: "email", title: this.$t("feed"), to: "/feed", isAuth: true },
         {
-          icon: "home",
+          icon: "list",
           title: this.$t("my_cards"),
           to: "/cards",
           isAuth: true
         },
         {
-          icon: "list",
+          icon: "chat",
           title: this.$t("dialogs"),
           to: "/dialogs",
           isAuth: true

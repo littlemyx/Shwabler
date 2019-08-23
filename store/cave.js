@@ -6,7 +6,9 @@ export const state = () => ({
   newCardText: null,
   caveList: [],
   isInitialized: false,
-  isLoading: true
+  isLoading: true,
+  searchedTags: {},
+  newTags: {}
 })
 
 export const mutations = {
@@ -41,7 +43,10 @@ export const mutations = {
     state.newCardText = newValue
   },
   setInitialized(state, value) {
-    state.isInitialized = value
+    state.newTags = value
+  },
+  addNewTag(state, value) {
+    state.newTags = { ...state.newTags, [value.id]: value.text }
   },
   updateTagsList(state, data) {
     state.caveList[data.index].tags = [
@@ -65,6 +70,17 @@ export const mutations = {
     newTags.splice(removingTagIndex, 1)
     newValue[removingCardIndex].tags = newTags
     state.caveList = newValue
+  },
+  setSearchTags(state, value) {
+    state.searchedTags = value
+  },
+  setNewTags(state, value) {
+    state.newTags = value
+  },
+  removeTagById(state, value) {
+    const tmpSercheddTags = { ...state.searchedTags }
+    delete tmpSercheddTags[value]
+    state.searchedTags = tmpSercheddTags
   }
 }
 
@@ -176,6 +192,8 @@ export const getters = {
       return []
     }
   },
+  searchedTags: state => state.searchedTags,
+  newTags: state => state.newTags,
   textToId: state => desired_id => {
     const card = state.caveList.find(card => card.id === desired_id)
     if (card) {

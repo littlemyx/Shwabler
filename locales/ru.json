@@ -11,9 +11,12 @@
   "signup": "регистрация",
   "send_feedback": "Отправить отзыв",
   "enter": "вход",
-  "search_tag": "Добавить тэги",
+  "search_tag": "Поиск по тэгам",
   "delete": "Удалить",
   "newCardPlaceholderHead": "Заголовок",
   "newCardPlaceholderBody": "Текст карточки",
+  "show_dialog": "показать",
+  "hide_dialog": "скрыть",
+  "dialog_placeholder": "Сообщение",
   "no_tag": "Тэг не найден"
 }

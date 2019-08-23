@@ -11,9 +11,12 @@
   "signup": "signup",
   "send_feedback": "send your feedback to",
   "enter": "enter",
-  "search_tag": "Add tags",
+  "search_tag": "Find by tags",
   "delete": "Delete",
   "newCardPlaceholderHead": "Header of your card",
   "newCardPlaceholderBody": "Main plot goes here",
+  "show_dialog": "show",
+  "hide_dialog": "hide",
+  "dialog_placeholder": "Message",
   "no_tag": "There are no such tag yet"
 }
