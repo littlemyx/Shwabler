@@ -259,6 +259,11 @@ export default {
       // const newArray = [...this.selectedTags]
       // newArray.splice(deletedIndex, 1)
       // this.selectedTags = newArray
+      if (this.newTags[event.id]) {
+        const tmp = { ...this.newTags }
+        delete tmp[event.id]
+        this.$store.commit("cave/setNewTags", tmp)
+      }
       this.$store.commit("cave/removeTagById", event.id)
     },
     selectTag(event) {
