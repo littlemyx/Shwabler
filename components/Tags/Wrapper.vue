@@ -1,14 +1,18 @@
 <template>
   <div class="body">
+    <slot name="left"/>
     <TagList 
-      :incoming_items="incoming_items" 
+      :incoming_items="incoming_items"
       :preselected_tags="preselected_tags" 
       :placeholder="placeholder" 
       :editable="editable" 
       :addable="addable" 
+      :init_value="init_value" 
       @selectTag="selectTag" 
+      @tagAdd="tagAdd" 
       @deleteTag="deleteTag"
       @blurred="blurred"
+      @valueChanged="valueChanged"
     />
     <slot name="right"/>
   </div>
@@ -30,6 +34,7 @@ export default {
       default: () => ({})
     },
     placeholder: { type: String, required: false, default: () => "" },
+    init_value: { type: String, required: false, default: () => "" },
     addable: { type: Boolean, default: true },
     editable: { type: Boolean, default: true }
   },
@@ -42,11 +47,17 @@ export default {
     selectTag(event) {
       this.$emit("selectTag", event)
     },
+    tagAdd(event) {
+      this.$emit("tagAdd", event)
+    },
     deleteTag(event) {
       this.$emit("deleteTag", event)
     },
     blurred(event) {
       this.$emit("blurred", event)
+    },
+    valueChanged(event) {
+      this.$emit("valueChanged", event)
     }
   }
 }

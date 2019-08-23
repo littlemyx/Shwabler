@@ -27,20 +27,25 @@
         :id="id"
       />
 
-      <div v-if="isMessagesShow" class="messagesWrapper">
-        <v-progress-circular
-          v-if="isMessagesLoading"
-          :size="60"
-          :width="7"
-          color="white"
-          indeterminate
-        />
-        <DialogBody v-else :key="messagesId" :id="messagesId" :messages="messages" :color="color" :is-loading="isMessagesLoading" @sendMessage="sendMessage"/>
+      <div class="messagesWrapper">
+        <v-btn :color="color" dark class="lighten-1 messagesToggler" block @click="toggleDialogVisibility">
+          {{ isMessagesShow ? $t("hide_dialog") : $t("show_dialog") }}
+        </v-btn>
+        <template v-if="isMessagesShow">
+          <div v-if="isMessagesLoading" class="mesageLoaderWrapper">
+            <v-progress-circular
+           
+              :size="60"
+              :width="7"
+              color="white"
+              indeterminate
+            />
+          </div>
+          <DialogBody v-else :key="messagesId" :id="messagesId" :messages="messages" :color="color" :is-loading="isMessagesLoading" @sendMessage="sendMessage"/>
+        </template>
+        
       </div>
-
-      <v-btn slot="footer" :color="color" dark class="lighten-1" block @click="toggleDialogVisibility">
-        {{ buttonText }}
-      </v-btn>
+      
     </Card>
   </v-layout>
 </template>
@@ -93,8 +98,7 @@ export default {
   data() {
     return {
       isMessagesShow: false,
-      isLike: false,
-      buttonText: "Show Dialog"
+      isLike: false
     }
   },
   computed: {
@@ -167,5 +171,15 @@ export default {
 .messagesWrapper {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+.messagesToggler {
+  flex: 0 1 auto;
+}
+.mesageLoaderWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
 }
 </style>

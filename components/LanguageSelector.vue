@@ -50,6 +50,6 @@ export default {
   cursor: pointer;
 }
 .language.active {
-  text-decoration: underline;
+  color: #e94191;
 }
 </style>

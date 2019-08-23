@@ -66,6 +66,20 @@ export const actions = {
         })
     })
   },
+  async addListToTagsListAsync({ dispatch }, payload) {
+    const tags = {}
+    await Promise.all(
+      payload.list.map(tagText =>
+        dispatch("addToTagsListAsync", {
+          card_id: payload.id,
+          text: tagText
+        }).then(tagId => {
+          tags[tagId] = tagText
+        })
+      )
+    )
+    return tags
+  },
   fetchSearch({ commit }, substring) {
     return new Promise(resolve => {
       if (substring) {

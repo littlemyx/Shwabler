@@ -2,7 +2,7 @@
   <v-layout>
     <v-flex :xs12="layoutedtStyle" :sm6="layoutedtStyle" :offset-sm3="layoutedtStyle">
       <v-slide-y-transition>
-        <v-card :color="color" class="white--text darken-3 card">
+        <v-card :color="color" :class="className">
           <div class="controlWrapper">
             <slot name="controlItems"/>
             <slot name="chips" />
@@ -49,6 +49,7 @@ export default {
       },
       default: "black"
     },
+    className: { type: String, default: () => "white--text darken-3 card" },
     newCardValues: {
       type: Object,
       required: false,
@@ -78,5 +79,8 @@ export default {
 .controlWrapper {
   display: flex;
   flex-direction: row-reverse;
+}
+.card {
+  z-index: 0;
 }
 </style>

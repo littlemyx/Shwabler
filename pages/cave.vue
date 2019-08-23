@@ -2,27 +2,39 @@
   <div>
     <CaveList :cards="cards"/>
 
-    <v-btn fab dark class="add dark-gray mr-3" @click="openDialog">
-      <v-icon class="addIcon" medium dark>add</v-icon>
+    <v-btn :disabled="isNewCardAdding" fab dark class="add dark-gray mr-3" @click="openDialog">
+      <v-progress-circular
+        v-if="isNewCardAdding"
+        :size="30"
+        :width="5"
+        color="white"
+        indeterminate
+      />
+      <v-icon v-else class="addIcon" medium dark>add</v-icon>
     </v-btn>
 
     <v-dialog
       v-model="dialog"
       width="500"
     >
-      <div v-if="isNewCardLoading" class="newCardLoaderWrapper" >
-        <div class="newCardLoader">
-          <v-progress-circular
-            :size="60"
-            :width="7"
-            color="dark-shwabler"
-            indeterminate
-          />
-        </div>
-      </div>
-      <!-- тут эта хрень выперает потому что в скрытом состоянии крестик в чипсах делается широким почему-то  -->
-      <Card :new-card-values="newCard" :layoutedt-style="false" color="gray">
-        <Chips id="0" slot="chips" :list="[...newCardTags, ...newCardNewTags]" @updated="newCardTagsUpdated" @tag-added="tagAdded" @new-tag-added="newTagAdded" @chips-updated="chipsUpdated"/>
+      <Card :new-card-values="newCard" :layoutedt-style="false" class-name="darken-3 card" color="gray">
+
+        <TagList 
+          slot="chips" 
+          :incoming_items="searchTags"
+          :preselected_tags="searchedTags" 
+          :addable="true" 
+          :placeholder="$t('search_tag')"
+          :init_value="newCardTagsText" 
+          @selectTag="selectTag" 
+          @tagAdd="tagAdd" 
+          @deleteTag="deleteTag"
+          @valueChanged="valueChanged"
+        >
+          <v-btn slot="left" :disabled="!Object.keys(searchedTags).length" text icon @click="clear">
+            <v-icon>clear</v-icon>
+          </v-btn>
+        </TagList>
 
         <InputText 
           slot="header"
@@ -55,7 +67,7 @@
           <v-btn
             color="dark-shwabler darken-1"
             flat
-            @click="add"
+            @click="addNewCard"
           >
             {{ $t("create") }}
           </v-btn>
@@ -73,6 +85,7 @@
 import CaveList from "../components/CaveList.vue"
 import Card from "../components/Card.vue"
 import Chips from "../components/Chips.vue"
+import TagList from "../components/Tags"
 import InputText from "../components/InputText.vue"
 // <InputText label="Header of your card" slot-scope="head" slot="header" v-bind:value="head.value.title" v-bind:dark="false" v-bind:counter="50"/>
 // <InputText label="Main plot goes here" v-model="newCard.text" v-bind:dark="false" v-bind:counter="400"/>
@@ -81,7 +94,8 @@ export default {
     Card,
     CaveList,
     Chips,
-    InputText
+    InputText,
+    TagList
   },
   data() {
     return {
@@ -90,6 +104,8 @@ export default {
         title: "",
         text: ""
       },
+      newCardTagsText: "",
+      isNewCardAdding: false,
       newCardTags: [],
       newCardNewTags: [],
       isNewCardLoading: false
@@ -108,6 +124,15 @@ export default {
     },
     cards() {
       return this.$store.state.cave.caveList
+    },
+    searchTags() {
+      return this.$store.getters["tags/result"]
+    },
+    searchedTags() {
+      return this.$store.getters["cave/searchedTags"]
+    },
+    newTags() {
+      return this.$store.getters["cave/newTags"]
     }
   },
   watch: {
@@ -121,6 +146,64 @@ export default {
       this.$store.commit("cave/setNewCardTitle", "")
       this.$store.commit("cave/setNewCardText", "")
     },
+    tagAdd(event) {
+      this.$store.commit("cave/addNewTag", event)
+      this.selectTag(event)
+    },
+    async addNewCard() {
+      this.isNewCardAdding = true
+      this.dialog = false
+      const tmpTags = { ...this.searchedTags }
+      const list = Object.keys(this.newTags).map(tag => this.newTags[tag])
+      const newPost = {
+        tags: [],
+        title: this.newCardTitle,
+        text: this.newCardText,
+        author_id: this.$store.getters["user/userId"]
+      }
+
+      const id = await this.$store.dispatch("cave/updateCaveListAsync", [
+        newPost
+      ])
+
+      const newTagsIds = await this.$store.dispatch(
+        "tags/addListToTagsListAsync",
+        {
+          id,
+          list
+        }
+      )
+
+      await Promise.all(
+        Object.keys(newTagsIds).map(tagId => {
+          return this.$store.dispatch("tags/updateActivityAsync", {
+            id: tagId,
+            card_id: id
+          })
+        })
+      )
+
+      Object.keys(newTagsIds).forEach(tagId => {
+        const oldId = tmpTags[newTagsIds[tagId]]
+        if (oldId) {
+          delete tmpTags[newTagsIds[tagId]]
+        }
+        tmpTags[tagId] = newTagsIds[tagId]
+      })
+
+      this.$store.commit("cave/setSearchTags", tmpTags)
+
+      await this.$store.dispatch("cave/addCaveCardTagsAsync", {
+        id,
+        tags: Object.keys(this.searchedTags).map(tagId => ({
+          [tagId]: this.searchedTags[tagId]
+        }))
+      })
+
+      this.$store.commit("cave/setSearchTags", {})
+      this.$store.commit("cave/setNewTags", {})
+      this.isNewCardAdding = false
+    },
     add() {
       this.isNewCardLoading = true
       const newPost = {
@@ -133,17 +216,17 @@ export default {
         .dispatch("cave/updateCaveListAsync", [newPost])
         .then(async id => {
           await Promise.all(
-            this.newCardNewTags.map(newTag => {
+            Object.keys(this.searchedTags).map(newTag => {
               return this.$store
                 .dispatch("tags/addToTagsListAsync", {
-                  text: newTag.text,
+                  text: this.searchedTags(newTag).text,
                   card_id: id
                 })
                 .then(newTagId => {
                   this.chipsUpdated({
                     parent_id: id,
                     id: newTagId,
-                    text: newTag.text
+                    text: this.searchedTags(newTag).text
                   })
                 })
             })
@@ -169,10 +252,29 @@ export default {
           this.isNewCardLoading = false
         })
     },
+    deleteTag(event) {
+      // const deletedIndex = this.selectedTags.findIndex(
+      //   tag => tag.id === event.id
+      // )
+      // const newArray = [...this.selectedTags]
+      // newArray.splice(deletedIndex, 1)
+      // this.selectedTags = newArray
+      this.$store.commit("cave/removeTagById", event.id)
+    },
+    selectTag(event) {
+      this.$store.commit("cave/setSearchTags", {
+        ...this.searchedTags,
+        [event.id]: event.text
+      })
+    },
+    clear() {
+      this.$store.commit("cave/setSearchTags", {})
+    },
     cancel() {
       this.dialog = false
-      this.newCardTags = []
-      this.newCardNewTags = []
+      this.newCardTagsText = ""
+      this.$store.commit("cave/setSearchTags", {})
+      this.$store.commit("cave/setNewTags", {})
     },
     inputTitle(value) {
       this.$store.commit("cave/setNewCardTitle", value)
@@ -231,6 +333,9 @@ export default {
     },
     tagAdded(newTag) {
       this.newCardTags = [...this.newCardTags, newTag]
+    },
+    valueChanged(event) {
+      this.newCardTagsText = event
     }
   },
   layout: "AppLayout"

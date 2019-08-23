@@ -4,8 +4,8 @@
       ref="textarea" 
       v-model="message"
       :append-outer-icon="'send'"
+      :placeholder="$t('dialog_placeholder')"
       class="Input"
-      placeholder="Place your answer here"
       solo
       multi-line
       auto-grow
