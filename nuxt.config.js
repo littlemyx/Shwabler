@@ -93,6 +93,7 @@ module.exports = {
           loader: "eslint-loader",
           exclude: /(node_modules)/
         })
+        config.devtool = "eval-source-map"
       }
 
       if (ctx.isServer) {
@@ -101,10 +102,6 @@ module.exports = {
             whitelist: [/^vuetify/]
           })
         ]
-      }
-
-      if (ctx.isClient) {
-        config.devtool = "eval-source-map"
       }
     }
   }

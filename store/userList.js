@@ -112,7 +112,7 @@ export const actions = {
       .collection("matches")
       .where("members", "array-contains", rootGetters["user/userId"])
       // .where("owner", "<", store.getters["user/activeUser"])
-      .orderBy("date")
+      .orderBy("date", "desc")
       // .where("text", "==", "test")
       .onSnapshot(querySnapshot => {
         commit("setInitialized", true)
