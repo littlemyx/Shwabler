@@ -1,6 +1,18 @@
 const { colors } = require("../assets/data/colors.json")
 import { firestore, timestamp } from "@/services/fireinit.js"
 
+const refTags = firestore.collection("tags")
+const refPosts = firestore.collection("posts")
+const refOrderedByDatePosts = firestore
+  .collection("posts")
+  .orderBy("createdAt", "desc")
+
+const FIRST_ITERATION = 10
+const NEXT_ITERATION = 100
+
+let limit = FIRST_ITERATION
+let lastCard = null
+
 export const state = () => ({
   isFirstCardVisible: true,
   cardList: [],
@@ -57,11 +69,11 @@ export const mutations = {
 }
 
 export const actions = {
-  increaseIndex({ commit, state }) {
+  increaseIndex({ commit, state, dispatch, rootGetters }) {
     const newIndex = state.index + 1
     if (state.cardList.length === newIndex) {
       // load next pack of cards and set index to 0
-      commit("setEnd", true)
+      dispatch("fetchCards", rootGetters["userList/ids"])
     }
     commit("increaseIndex")
   },
@@ -113,8 +125,6 @@ export const actions = {
       })
   },
   async findByTag({ commit, rootGetters }, payload) {
-    const refTags = firestore.collection("tags")
-    const refPosts = firestore.collection("posts")
     let posts = []
     const cards = []
     commit("setLoading", true)
@@ -154,17 +164,19 @@ export const actions = {
 
     commit("setLoading", false)
   },
-  fetchCards({ commit, rootGetters }, ids) {
-    firestore
-      .collection("posts")
-      // .where("author_id", "array-contains", store.getters["user/userId"])
-      // .where("owner", "<", store.getters["user/activeUser"])
-      .orderBy("createdAt", "desc")
-      // .where("text", "==", "test")
+  fetchCards({ commit, rootGetters, dispatch }, ids) {
+    let ref = refOrderedByDatePosts
+    if (lastCard) {
+      ref = ref.startAfter(lastCard)
+    }
+    ref
+      .limit(limit)
       .get()
       .then(querySnapshot => {
         const list = []
         if (querySnapshot.docs.length) {
+          lastCard = querySnapshot.docs[querySnapshot.docs.length - 1]
+          limit = NEXT_ITERATION
           querySnapshot.forEach(doc => {
             const data = doc.data()
             data.id = doc.id
@@ -176,11 +188,13 @@ export const actions = {
               list.push(data)
             }
           })
-        }
-        if (list.length) {
-          commit("updateCardList", list) // тут нужно подумать над механикой индекса
-          commit("setEnd", false)
-          commit("resetIndex")
+          if (list.length) {
+            commit("updateCardList", list) // тут нужно подумать над механикой индекса
+            commit("setEnd", false)
+            commit("resetIndex")
+          } else {
+            dispatch("fetchCards", ids)
+          }
         } else {
           commit("setEnd", true)
         }
@@ -228,7 +242,7 @@ export const actions = {
 
 export const getters = {
   nextCard: state => {
-    return state.cardList[state.index]
+    return state.cardList[state.index] || null
   },
   searchedTags: state => state.searchedTags,
   tags: state => desired_id => {

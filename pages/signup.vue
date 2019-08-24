@@ -23,11 +23,8 @@
             @keyup.enter.exact="submit"
           />
           <v-card-actions>
-            <v-spacer/>
-            <v-btn
-              :disabled="!valid"
-              @click="submit"
-            >
+            <v-spacer />
+            <v-btn :disabled="!valid" @click="submit">
               <v-progress-circular
                 v-if="isLoading"
                 :size="20"
@@ -38,17 +35,20 @@
               <span v-else>{{ text }}</span>
             </v-btn>
             <v-btn @click="clear">clear</v-btn>
-            <v-spacer/>
+            <v-spacer />
           </v-card-actions>
         </v-form>
       </v-card>
       <v-flex pt-3>
         <div class="footer">
-          Already have an account ?&nbsp;<RouterLink url="login" text="Login!"/>
+          Already have an account ?&nbsp;<RouterLink
+            url="login"
+            text="Login!"
+          />
         </div>
       </v-flex>
     </v-layout>
-    <NotificationsList :offset="{'top':'10px'}" top right/>
+    <NotificationsList :offset="{ top: '10px' }" top right />
   </v-container>
 </template>
 
@@ -114,6 +114,7 @@ export default {
                 //   // }
                 //   // return resolve()
                 // })
+                this.$store.dispatch("ban/addNewUser", {}, { root: "ban" })
                 this.$router.push("/verification")
               }.bind(this)
             )

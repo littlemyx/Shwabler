@@ -2,6 +2,8 @@ import { firestore, fieldvalue } from "@/services/fireinit.js"
 
 const firebaseRef = firestore.collection("banned")
 
+const LIMIT = 3
+
 export const state = () => ({
   list: [],
   isInitialized: false
@@ -36,24 +38,27 @@ export const actions = {
       firebaseRef
         .doc(rootGetters["user/userId"])
         .get()
-        .then(querySnapshot => {
+        .then(doc => {
+          const { banned: data } = doc.data()
           let list = []
-          if (querySnapshot.docs.length) {
-            querySnapshot.forEach(doc => {
-              const data = doc.data()
-              list = [...list, ...data.banned]
+          if (data.length) {
+            data.forEach(card => {
+              list = [...list, card]
             })
           }
           if (list.length) {
             commit("setList", list)
           }
+          resolve()
         })
+
         .catch(error => {
           console.log(error)
-        }).finally
+          resolve()
+        })
     })
   },
-  updateList({ commit, rootGetters }, payload) {
+  updateList({ state, commit, rootGetters }, payload) {
     commit("addToList", payload)
     firebaseRef
       .doc(rootGetters["user/userId"])
@@ -66,6 +71,15 @@ export const actions = {
       .catch(error => {
         console.log(error)
       })
+    if (state.list.length > LIMIT) {
+      const newList = state.list
+      newList.splice(0, 1)
+      commit("setList", newList)
+      firebaseRef.doc(rootGetters["user/userId"]).set({ banned: newList }) //переделать на фбшные функции
+    }
+  },
+  addNewUser({ rootGetters }) {
+    firebaseRef.doc(rootGetters["user/userId"]).set({ banned: [] })
   },
   initFetch({ dispatch, commit, state }) {
     return new Promise(resolve => {

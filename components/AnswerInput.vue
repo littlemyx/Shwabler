@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-textarea
-      ref="textarea" 
+      ref="textarea"
       v-model="message"
       :append-outer-icon="'send'"
       :placeholder="$t('dialog_placeholder')"

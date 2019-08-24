@@ -3,8 +3,8 @@ const nodeExternals = require("webpack-node-externals")
 
 module.exports = {
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: "Shwabler",
     meta: [
@@ -41,8 +41,8 @@ module.exports = {
   },
   mode: "spa",
   /*
-  ** Customize the progress bar color
-  */
+   ** Customize the progress bar color
+   */
   loading: {
     color: "#e94191",
     height: "5px"
@@ -54,8 +54,8 @@ module.exports = {
   },
   modules: ["@nuxtjs/router-extras"],
   /*
-  ** Build configuration
-  */
+   ** Build configuration
+   */
   build: {
     analize: true,
     babel: {
@@ -83,16 +83,17 @@ module.exports = {
     ],
     extractCSS: true,
     /*
-    ** Run ESLint on save
-    */
+     ** Run ESLint on save
+     */
     extend(config, ctx) {
       if (ctx.isDev && ctx.isClient) {
-        config.module.rules.push({
-          enforce: "pre",
-          test: /\.(js|vue)$/,
-          loader: "eslint-loader",
-          exclude: /(node_modules)/
-        })
+        // remove commented after
+        // config.module.rules.push({
+        //   enforce: "pre",
+        //   test: /\.(js|vue)$/,
+        //   loader: "eslint-loader",
+        //   exclude: /(node_modules)/
+        // })
         config.devtool = "eval-source-map"
       }
 

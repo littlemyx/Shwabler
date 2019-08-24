@@ -18,5 +18,6 @@
   "show_dialog": "показать",
   "hide_dialog": "скрыть",
   "dialog_placeholder": "Сообщение",
+  "no_cards": "Пока карточек больше нет",
   "no_tag": "Тэг не найден"
 }

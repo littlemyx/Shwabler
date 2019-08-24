@@ -18,5 +18,6 @@
   "show_dialog": "show",
   "hide_dialog": "hide",
   "dialog_placeholder": "Message",
+  "no_cards": "No more cards yet",
   "no_tag": "There are no such tag yet"
 }

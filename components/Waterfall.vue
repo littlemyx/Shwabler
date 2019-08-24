@@ -1,20 +1,25 @@
 <template>
   <div class="cardWrapper">
     <div class="tagsWrapper flex xs12 sm6 offset-sm3">
-      <TagList 
-        :incoming_items="searchTags" 
-        :preselected_tags="searchedTags" 
-        :addable="false" 
-        :placeholder="$t('search_tag')" 
-        @selectTag="selectTag" 
+      <TagList
+        :incoming_items="searchTags"
+        :preselected_tags="searchedTags"
+        :addable="false"
+        :placeholder="$t('search_tag')"
+        @selectTag="selectTag"
         @deleteTag="deleteTag"
         @blurred="closeTagSearchHandler"
       >
-        <v-btn slot="right" :disabled="!Object.keys(searchedTags).length" text icon @click="clear">
+        <v-btn
+          slot="right"
+          :disabled="!Object.keys(searchedTags).length"
+          text
+          icon
+          @click="clear"
+        >
           <v-icon>clear</v-icon>
         </v-btn>
       </TagList>
-      
     </div>
     <template v-if="isLoading">
       <Card color="dark-shwabler">
@@ -31,7 +36,7 @@
     <template v-if="!isLoading">
       <template v-if="!isEnd">
         <transition name="bounce" mode="out-in">
-          <WaterfallCard 
+          <WaterfallCard
             v-show="firstCardVisibility"
             key="first"
             :id="firstCard.id"
@@ -44,13 +49,13 @@
           />
         </transition>
         <transition name="bounce" mode="out-in">
-          <WaterfallCard 
-            v-show="secondCardVisibility" 
-            key="second" 
+          <WaterfallCard
+            v-show="secondCardVisibility"
+            key="second"
             :id="secondCard.id"
             :author_id="secondCard.author_id"
-            :is-new="isNew" 
-            :title="secondCard.title" 
+            :is-new="isNew"
+            :title="secondCard.title"
             :card-text="secondCard.text"
             @accept="accept"
             @dismiss="discard"
@@ -84,7 +89,7 @@ export default {
   data() {
     return {
       isNew: true,
-      endText: "No more cards yet :-(",
+      endText: this.$t("no_cards"),
       loadingText: "Loading...",
       selectedListChanged: false
     }
