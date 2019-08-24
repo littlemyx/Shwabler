@@ -39,6 +39,7 @@
             :is-new="isNew"
             :title="firstCard.title"
             :card-text="firstCard.text"
+            @accept="accept"
             @dismiss="discard"
           />
         </transition>
@@ -51,6 +52,7 @@
             :is-new="isNew" 
             :title="secondCard.title" 
             :card-text="secondCard.text"
+            @accept="accept"
             @dismiss="discard"
           />
         </transition>
@@ -113,38 +115,22 @@ export default {
     searchedTags() {
       return this.$store.getters["waterfall/searchedTags"]
     }
-
-    // firstCard: {
-    //   get () {
-    //     const returnValue = this.$store.getters['waterfall/nextCard'];
-    //     this.$store.dispatch('waterfall/increaseIndex');
-    //     return returnValue;
-    //   }
-    // },
-    // secondCard: {
-    //   get () {
-    //     const returnValue = this.$store.getters['waterfall/nextCard'];
-    //     this.$store.dispatch('waterfall/increaseIndex');
-    //     return returnValue;
-    //   }
-    // }
   },
 
   methods: {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/")
     },
-    discard() {
+    discard(event) {
       this.$store.dispatch("waterfall/increaseIndex")
+      this.$store.dispatch("ban/updateList", event)
+      console.log("next card")
+    },
+    accept(event) {
+      this.$store.dispatch("ban/updateList", event)
       console.log("next card")
     },
     deleteTag(event) {
-      // const deletedIndex = this.selectedTags.findIndex(
-      //   tag => tag.id === event.id
-      // )
-      // const newArray = [...this.selectedTags]
-      // newArray.splice(deletedIndex, 1)
-      // this.selectedTags = newArray
       this.selectedListChanged = true
       this.$store.commit("waterfall/removeTagById", event.id)
     },

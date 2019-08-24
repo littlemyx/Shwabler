@@ -3,5 +3,6 @@
 export default function({ store }) {
   // if (store.getters["user/isUserExist"]) {
   store.dispatch("tags/fetchPopular")
+
   // }
 }

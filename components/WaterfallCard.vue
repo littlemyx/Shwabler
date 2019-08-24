@@ -116,7 +116,7 @@ export default {
             card_author_id: this.author_id
           }
           this.$store.dispatch("waterfall/createMatch", answer)
-          this.$emit("accept")
+          this.$emit("accept", { id: this.id })
           this.inputTextValue = ""
         }
       }
@@ -127,7 +127,7 @@ export default {
       console.log("dismiss")
       this.isShow = false
       this.isLike = false
-      this.$emit("dismiss")
+      this.$emit("dismiss", { id: this.id })
     },
     input(value) {
       this.inputError = false

@@ -170,6 +170,7 @@ export const actions = {
             data.id = doc.id
             if (
               data.author_id !== rootGetters["user/userId"] &&
+              !rootGetters["ban/list"].includes(data.id) &&
               !ids.includes(data.id)
             ) {
               list.push(data)
@@ -190,29 +191,36 @@ export const actions = {
         console.log(error)
       })
   },
-  fetchCardsWithMatches({ commit, dispatch, rootGetters }) {
+
+  async fetchCardsWithMatchesWithInit({ commit, dispatch, rootGetters }) {
     commit("setLoading", true)
     if (rootGetters["userList/isInitialized"]) {
-      dispatch("fetchCards", rootGetters["userList/ids"])
-    } else {
-      firestore
-        .collection("matches")
-        .where("members", "array-contains", rootGetters["user/userId"])
-        .orderBy("date")
-        .onSnapshot(querySnapshot => {
-          const ids = []
-          if (querySnapshot.docs.length) {
-            querySnapshot.forEach(doc => {
-              ids.push(doc.data().post_id)
-            })
-          }
-          dispatch("fetchCards", ids)
-        })
+      await dispatch("fetchCards", rootGetters["userList/ids"])
     }
+    if (rootGetters["ban/isInitialized"]) {
+      await dispatch("fetchCards", rootGetters["userList/ids"])
+    }
+    dispatch("fetchCardsWithMatches")
   },
-  initFetch({ dispatch, commit, state }) {
+  fetchCardsWithMatches({ dispatch, rootGetters }) {
+    firestore
+      .collection("matches")
+      .where("members", "array-contains", rootGetters["user/userId"])
+      .orderBy("date")
+      .onSnapshot(querySnapshot => {
+        const ids = []
+        if (querySnapshot.docs.length) {
+          querySnapshot.forEach(doc => {
+            ids.push(doc.data().post_id)
+          })
+        }
+        dispatch("fetchCards", ids)
+      })
+  },
+  async initFetch({ dispatch, commit, state }) {
     if (!state.isInitialized) {
-      dispatch("fetchCardsWithMatches")
+      await dispatch("ban/initFetch", {}, { root: "ban" })
+      dispatch("fetchCardsWithMatchesWithInit")
       commit("setInitialized", true)
     }
   }
