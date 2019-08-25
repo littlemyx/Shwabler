@@ -2,7 +2,7 @@ import { firestore, fieldvalue } from "@/services/fireinit.js"
 
 const firebaseRef = firestore.collection("banned")
 
-const LIMIT = 3
+const LIMIT = 100
 
 export const state = () => ({
   list: [],
