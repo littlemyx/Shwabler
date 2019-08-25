@@ -1,3 +1,8 @@
+const [, locale] = document.cookie
+  .split("; ")
+  .map(stringCookie => stringCookie.split("="))
+  .find(cookie => cookie[0] === "locale") || ["locale", "en"]
+
 export const state = () => ({
   sidebar: false,
   locales: [
@@ -10,7 +15,7 @@ export const state = () => ({
       name: "Рус"
     }
   ],
-  locale: null
+  locale: locale
 })
 
 export const mutations = {

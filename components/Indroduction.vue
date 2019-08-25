@@ -1,17 +1,16 @@
 <template>
   <v-layout align-center justify-center column fill-height>
-    <div class="logoWrapper">
-      <p>{{ $t("selling_text") }}</p>
+    <div class="carousel">
+      <WelcomeCarousel />
     </div>
-    
-  </v-layout >
+  </v-layout>
 </template>
 
 <script>
-import RouterLink from "../components/RouterLink"
+import WelcomeCarousel from "./WelcomeCarousel"
 export default {
   components: {
-    RouterLink
+    WelcomeCarousel
   },
   middleware: "index",
   layout: "centerLayout"
@@ -19,14 +18,10 @@ export default {
 </script>
 
 <style scoped>
-.logoWrapper {
+.carousel {
   position: relative;
-}
-
-.beta {
-  position: absolute;
-  top: 0;
-  right: -26px;
+  width: 90%;
+  max-width: 500px;
 }
 </style>
 >

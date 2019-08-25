@@ -24,6 +24,7 @@ import {
   VCombobox,
   VTooltip,
   VProgressCircular,
+  VSheet,
   transitions
 } from "vuetify"
 
@@ -52,6 +53,7 @@ Vue.use(Vuetify, {
     VCombobox,
     VTooltip,
     VProgressCircular,
+    VSheet,
     transitions
   },
   directives: {

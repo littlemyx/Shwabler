@@ -1,7 +1,9 @@
 <template>
-  <div class="wrapper" >
+  <div class="wrapper">
     <div v-for="pageNumber in pages" :key="pageNumber" class="page">
-      <slot :name="`page${pageNumber}`">slot name: {{ `page${pageNumber}` }}</slot>
+      <slot :name="`page${pageNumber}`">
+        slot name: {{ `page${pageNumber}` }}
+      </slot>
     </div>
   </div>
 </template>
@@ -80,6 +82,9 @@ export default {
   overflow-y: scroll;
   width: 100%;
   height: 100vh;
+}
+.wrapper::-webkit-scrollbar {
+  width: 0 !important;
 }
 </style>
 >
