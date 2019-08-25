@@ -10,10 +10,14 @@
       <v-list>
         <v-list-tile>
           <v-list-tile-content>
-            <v-list-tile-title v-text="user"/>
+            <v-list-tile-title v-text="user" />
           </v-list-tile-content>
           <v-list-tile-action>
-            <v-icon class="closeArrow" @click.stop="drawer = !drawer" v-html="arrow_left"/>
+            <v-icon
+              class="closeArrow"
+              @click.stop="drawer = !drawer"
+              v-html="arrow_left"
+            />
           </v-list-tile-action>
         </v-list-tile>
         <v-list-tile
@@ -25,7 +29,7 @@
           exact
         >
           <v-list-tile-action>
-            <v-icon v-html="item.icon"/>
+            <v-icon v-html="item.icon" />
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title v-if="item.to !== '/dialogs'" v-text="item.title.toUpperCase()"/>
@@ -34,38 +38,51 @@
         </v-list-tile>
         <v-list-tile @click="exit">
           <v-list-tile-action>
-            <v-icon v-html="exit_icon"/>
+            <v-icon v-html="exit_icon" />
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>{{ $t("exit") | uppercase }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile >
+        <v-list-tile>
           <v-list-tile-content>
             <LanguageSelector />
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile class="feedback">
           <v-list-tile-content>
-            <v-list-tile-title>{{ $t("send_feedback") | capitalize }} <a class="feedbackEmail" href="mailto:feedback@shwabler.com">feedback@shwabler.com</a></v-list-tile-title>
+            <v-list-tile-title>
+              {{ $t("send_feedback") | capitalize }}
+              <a class="feedbackEmail" href="mailto:feedback@shwabler.com">
+                feedback@shwabler.com
+              </a>
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo-purple" dark fixed app>
-      <v-toolbar-side-icon v-if="!drawer" @click.stop="drawer = !drawer"/>
+      <v-toolbar-side-icon v-if="!drawer" @click.stop="drawer = !drawer" />
       <v-toolbar-title>SHWABLER</v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container fluid>
-        <router-view/>
+        <router-view />
       </v-container>
-      <NotificationsList :offset="{'top':'56px'}" top right/>
+      <NotificationsList :offset="{ top: '56px' }" top right />
     </v-content>
     <v-footer color="grey" class="appFooter" app>
       <div class="logo">
         <span class="white--text">&copy;&nbsp;</span>
-        <span class="white--text digitalText"> <a class="teamLink" href="http://631am.com/" target="_blabk">6<span class="blinking">:</span>31 AM </a> </span>
+        <span class="white--text digitalText">
+          <a class="teamLink" href="http://631am.com/" target="_blabk">
+            6
+            <span class="blinking">
+              :
+            </span>
+            31 AM
+          </a>
+        </span>
       </div>
     </v-footer>
   </v-app>
@@ -158,7 +175,7 @@ export default {
 }
 </script>
 
-<style >
+<style>
 @font-face {
   font-family: DS;
   src: url(/assets/fonts/DS-Digital.otf);

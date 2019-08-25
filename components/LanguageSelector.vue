@@ -1,10 +1,13 @@
 <template>
   <div class="languages">
-    <span class="selectLanguage">{{ $t('select_language') | capitalize }}:</span>
+    <span class="selectLanguage">
+      {{ $t("select_language") | capitalize }}
+      :
+    </span>
     <div
       v-for="el in locales"
       :key="el.code"
-      :class="{ active: (el.code === locale) }"
+      :class="{ active: el.code === locale }"
       class="language"
       @click="switchLanguage(el.code)"
     >
@@ -12,7 +15,6 @@
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -35,7 +37,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
 .languages {

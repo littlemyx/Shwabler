@@ -10,7 +10,7 @@ export default function({ isHMR, app, store, route }) {
       let locale = document.cookie
         .split("; ")
         .map(stringCookie => stringCookie.split("="))
-        .find(cookie => cookie[0] === "locale") || ["locale", "EN"]
+        .find(cookie => cookie[0] === "locale") || ["locale", "en"]
 
       // check if the locale cookie is set
       // if (req.headers.cookie) {
