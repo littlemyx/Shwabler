@@ -3,7 +3,7 @@
   "[javascript]": {
     "editor.formatOnSave": false
   },
-  "eslint.options": { "configFile": "C:/Users/Littlemyx/Documents/github/Shwabler/.eslintrc.js" },
+  "eslint.options": { "configFile": "/Users/a.muhin/github/Shwabler/.eslintrc.js" },
   "prettier.stylelintIntegration": true,
   "css.validate": false,
   "less.validate": false,
