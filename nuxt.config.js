@@ -97,6 +97,10 @@ module.exports = {
         config.devtool = "eval-source-map"
       }
 
+      config.resolve.alias["firebaseConfig"] = ctx.isDev
+        ? "@/assets/config/test"
+        : "@/assets/config/prod"
+
       if (ctx.isServer) {
         config.externals = [
           nodeExternals({
