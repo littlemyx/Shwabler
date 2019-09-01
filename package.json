@@ -21,6 +21,7 @@
     "@mdi/font": "^3.9.97",
     "@nuxtjs/pwa": "^3.0.0-beta.16",
     "@nuxtjs/router-extras": "^0.1.0",
+    "@nuxtjs/svg": "^0.1.6",
     "arr-diff": "^4.0.0",
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
@@ -53,6 +54,7 @@
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1"
+    "stylus-loader": "^3.0.1",
+    "vue-svg-loader": "^0.12.0"
   }
 }

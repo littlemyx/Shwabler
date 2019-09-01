@@ -40,7 +40,10 @@ export default {
   },
   methods: {
     handleScroll() {
-      if (!this.isScrolling) {
+      if (
+        !this.isScrolling &&
+        Math.abs(this.$el.scrollTop - this.topOffset) > 60
+      ) {
         this.isScrolling = true
 
         const delta = this.$el.scrollTop - this.topOffset
@@ -87,4 +90,3 @@ export default {
   width: 0 !important;
 }
 </style>
->
