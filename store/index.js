@@ -33,5 +33,6 @@ export const actions = {
     commit("userList/resetStore", { root: "userList" })
     commit("waterfall/resetStore", { root: "waterfall" })
     commit("ban/resetStore", { root: "ban" })
+    commit("messagesNotification/resetStore", { root: "messagesNotification" })
   }
 }

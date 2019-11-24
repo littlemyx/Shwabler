@@ -1,9 +1,13 @@
 import cloneDeep from "lodash/cloneDeep"
 import { firestore, timestamp } from "@/services/fireinit.js"
+
+import { i18n } from "@/plugins/i18n.js"
+
 import Vue from "vue"
 
 export const state = () => ({
   messages: {},
+  newMessagesCount: 0,
   listeners: {}
 })
 
@@ -62,7 +66,7 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchMessagesAsync({ commit, state }, payload) {
+  fetchMessagesAsync({ commit, dispatch, state }, payload) {
     commit("updateMessgesLoading", {
       id: payload.id,
       isLoading: true
@@ -92,13 +96,15 @@ export const actions = {
                 id: payload.id,
                 messages
               })
-              commit(
+              // console.log(Vue.prototype)
+              dispatch(
                 "notifications/updateNotificationsList",
                 [
                   {
                     type: "info",
-                    text: "You have a new message!",
-                    id: "info" + new Date().getTime()
+                    text: i18n.t("new_message"),
+                    id: "info" + new Date().getTime(),
+                    autoClose: true
                   }
                 ],
                 { root: "notifications" }
@@ -170,5 +176,6 @@ export const getters = {
   },
   messages: state => id => {
     return state.messages[id].messages
-  }
+  },
+  newMessagesCount: state => state.newMessagesCount
 }

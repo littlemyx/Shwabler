@@ -1,14 +1,23 @@
 <template>
   <v-layout>
     <Card :color="color">
-      <v-tooltip slot="controlItems" transition="scale-transition" bottom>
-        <template v-slot:activator="{ on }">
-          <v-btn flat icon color="#fff" class="deleteIcon" @click="deleteCard" v-on="on">
-            <v-icon medium light>clear</v-icon>
-          </v-btn >
-        </template>
-        <span>{{ $t("delete") }}</span>
-      </v-tooltip>
+      <div slot="controlItems" class="controlsWrapper">
+        <v-tooltip v-if="hasNewMessage" transition="scale-transition" bottom>
+          <template v-slot:activator="{ on }">
+            <v-icon class="newMessageAlert" medium dark v-on="on">message</v-icon>
+          </template>
+          <span>{{ $t("new_message") }}</span>
+        </v-tooltip>
+        <v-tooltip transition="scale-transition" bottom>
+          <template v-slot:activator="{ on }">
+            <v-btn flat icon color="#fff" class="deleteIcon" @click="deleteCard" v-on="on">
+              <v-icon medium light >clear</v-icon>
+            </v-btn >
+          </template>
+          <span>{{ $t("delete") }}</span>
+        </v-tooltip>
+       
+      </div>
       
 
       
@@ -116,6 +125,11 @@ export default {
         return colors[seed]
       }
     })(),
+    hasNewMessage() {
+      return this.$store.getters["messagesNotification/checkNewMessageById"](
+        this.id
+      )
+    },
     isMessagesLoading() {
       return this.$store.getters["messages/isLoading"](
         this.$store.getters["userList/messagesId"](this.id)
@@ -139,6 +153,9 @@ export default {
       if (this.isMessagesShow) {
         this.$store.dispatch("messages/fetchMessagesAsync", {
           id: this.messagesId
+        })
+        this.$store.dispatch("messagesNotification/setMessagesCountAsync", {
+          id: this.id
         })
       } else {
         this.$store.dispatch("messages/unsubscribeListenerAsync", {
@@ -181,5 +198,11 @@ export default {
   display: flex;
   justify-content: center;
   margin-top: 10px;
+}
+.controlsWrapper {
+  display: flex;
+}
+.newMessageAlert {
+  cursor: default;
 }
 </style>

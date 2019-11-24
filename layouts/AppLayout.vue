@@ -28,7 +28,8 @@
             <v-icon v-html="item.icon"/>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title.toUpperCase()"/>
+            <v-list-tile-title v-if="item.to !== '/dialogs'" v-text="item.title.toUpperCase()"/>
+            <div v-else >{{ item.title.toUpperCase() }}{{ unreadCount }}</div>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile @click="exit">
@@ -98,6 +99,10 @@ export default {
     }
   },
   computed: {
+    unreadCount() {
+      const count = this.$store.getters["messagesNotification/newMessagesCount"]
+      return count ? `: ${count}` : ""
+    },
     items() {
       return [
         { icon: "email", title: this.$t("feed"), to: "/feed", isAuth: true },
@@ -134,6 +139,14 @@ export default {
         this.$router.push("/login")
         console.log("exit applayout")
       })
+    },
+    generateMenuItem(item) {
+      if (item.to === "/dialogs") {
+        const count = this.$store.getters["messages/newMessagesCount"]
+        return `${item.title.toUpperCase()}${count ? `: ${count}` : ""}`
+      } else {
+        return item.title.toUpperCase()
+      }
     },
     switchLanguage(localeCode) {
       // document.cookie = `locale=${localeCode}`

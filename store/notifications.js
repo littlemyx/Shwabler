@@ -29,5 +29,12 @@ export const mutations = {
 export const actions = {
   updateNotificationsList({ commit }, payload) {
     commit("updateNotificationsList", payload)
+    payload.forEach(item => {
+      if (item.autoClose) {
+        setTimeout(() => {
+          commit("deleteNotification", payload.id)
+        }, 5000)
+      }
+    })
   }
 }
