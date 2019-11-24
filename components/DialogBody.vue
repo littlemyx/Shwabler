@@ -10,7 +10,7 @@
           :color="color"
         />
       </div>
-      <AnswerInput @sendMessage="sendMessage"/>
+      <AnswerInput @sendMessage="sendMessage" @focus="focusHandler"/>
     </div>
   </v-layout>
 </template>
@@ -61,6 +61,11 @@ export default {
   methods: {
     sendMessage(message) {
       this.$emit("sendMessage", message)
+    },
+    focusHandler() {
+      this.$store.dispatch("messagesNotification/setMessagesCountAsync", {
+        id: this.id
+      })
     }
   }
 }
