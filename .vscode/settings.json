@@ -31,6 +31,9 @@
   "prettier.disableLanguages": [
     "Vue"
   ],
-  "vetur.validation.template": false
+  "vetur.validation.template": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
   
 }
