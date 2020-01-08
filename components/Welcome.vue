@@ -1,5 +1,5 @@
 <template>
-  <v-layout align-center justify-center column fill-height>
+  <v-layout align-center justify-center column fill-height class="pageWrapper">
     <div class="logoWrapper">
       <svg width="200" height="99">
         <defs id="SvgjsDefs2488" />
@@ -28,14 +28,23 @@
       <span class="beta">βeta</span>
     </div>
     <RouterLink :text="$t('enter')" color="indigo darken-3" url="login" />
+    <div class="arrowWrapper" @click="arrowClickHandler">
+      <v-icon class="arrow" x-large light >chevron_right</v-icon>
+    </div>
   </v-layout>
 </template>
 
 <script>
 import RouterLink from "../components/RouterLink"
+
 export default {
   components: {
     RouterLink
+  },
+  methods: {
+    arrowClickHandler() {
+      this.$parent.synteticScrollHandler("down") //bad practice
+    }
   },
   middleware: "index",
   layout: "centerLayout"
@@ -43,6 +52,10 @@ export default {
 </script>
 
 <style scoped>
+.pageWrapper {
+  position: relative;
+}
+
 .logoWrapper {
   position: relative;
 }
@@ -51,6 +64,50 @@ export default {
   position: absolute;
   top: 0;
   right: -26px;
+}
+
+.arrow {
+  font-size: 46px;
+}
+
+.arrowWrapper {
+  cursor: pointer;
+  transform: rotate(90deg);
+  position: absolute;
+  bottom: 20%;
+  animation: bounce 3s infinite linear;
+  transition: transform 0.04s linear;
+}
+
+.arrowWrapper:hover {
+  animation: none;
+  transform: rotate(90deg) scale(1.2);
+}
+
+@keyframes bounce {
+  0% {
+    transform: rotate(90deg) scale(1);
+  }
+
+  60% {
+    transform: rotate(90deg) scale(1);
+  }
+
+  70% {
+    transform: rotate(90deg) scale(1.2);
+  }
+
+  80% {
+    transform: rotate(90deg) scale(1);
+  }
+
+  90% {
+    transform: rotate(90deg) scale(1.2);
+  }
+
+  100% {
+    transform: rotate(90deg) scale(1);
+  }
 }
 </style>
 >
