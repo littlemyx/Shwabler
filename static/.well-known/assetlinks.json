@@ -1,0 +1,5 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target" : { "namespace": "android_app", "package_name": "Shwabler",
+               "sha256_cert_fingerprints": ["71:51:9D:F9:4F:47:8D:58:68:29:D7:D3:1F:02:F9:38:D8:F9:93:C1:3D:A4:80:D1:AE:2C:A1:52:77:2F:FE:81"] }
+}]
