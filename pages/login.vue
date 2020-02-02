@@ -43,10 +43,10 @@
       </v-card>
       <v-flex pt-3>
         <div class="footer">
-          Don't have an account yet ?&nbsp;<RouterLink url="signup" text="Sign up!"/>
+          {{ $t("have_no_account_question") | capitalize }} ?&nbsp;<RouterLink :text="`${$t('signup')}!`" url="signup"/>
         </div>
       </v-flex>
-      <span>OR</span>
+      <span>{{ $t("orLogin") | uppercase }}</span>
       <v-flex>
         <v-btn color="#4267b2" @click="facebookAuth">
           <v-layout align-center justify-center row fill-height>
@@ -59,7 +59,7 @@
           11.9-11.9V11.9C216 5.3 210.7 0 204.1 0z"/></svg>
             </div>
             <div class="facebookText">
-              Continue with Facebook
+              {{ $t("continue_with_facebook") | capitalize }}
             </div>
           </v-layout>
         </v-btn>
