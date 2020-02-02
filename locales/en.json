@@ -8,9 +8,9 @@
   "dialogs": "dialogs",
   "exit": "exit",
   "login": "login",
-  "signup": "signup",
+  "signup": "Register",
   "send_feedback": "send your feedback to",
-  "enter": "enter",
+  "enter": "Enter",
   "delete": "Delete",
   "newCardPlaceholderHead": "Header of your card",
   "newCardPlaceholderBody": "Main plot goes here",
@@ -21,5 +21,15 @@
   "no_cards": "No more cards yet",
   "no_tag": "There are no such tag yet",
   "search_tag": "Search tags",
-  "selling_text": "Shwabler is cool"
+  "selling_text": "Shwabler is cool",
+  "free_fish": "it is free",
+  "more_info": "learn more about Shwabler",
+  "have_no_account_question": "don't have an account yet",
+  "orLogin": "or",
+  "continue_with_facebook": "continue with Facebook",
+  "createWord": "Create...",
+  "likeWord": "Like ♥...",
+  "dislikeWord": "...Or skip ╳",
+  "answerWord": "Answer...",
+  "discussWord": "Chat!"
 }

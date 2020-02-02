@@ -89,8 +89,8 @@
 </template>
 
 <script>
-import NotificationsList from "../components/NotificationsList"
-import LanguageSelector from "../components/LanguageSelector"
+import NotificationsList from "@/components/NotificationsList"
+import LanguageSelector from "@/components/LanguageSelector"
 
 export default {
   components: {

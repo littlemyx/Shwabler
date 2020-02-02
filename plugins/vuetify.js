@@ -25,6 +25,7 @@ import {
   VTooltip,
   VProgressCircular,
   VSheet,
+  VImg,
   transitions
 } from "vuetify"
 
@@ -54,6 +55,7 @@ Vue.use(Vuetify, {
     VTooltip,
     VProgressCircular,
     VSheet,
+    VImg,
     transitions
   },
   directives: {

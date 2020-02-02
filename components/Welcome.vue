@@ -27,8 +27,10 @@
       </svg>
       <span class="beta">βeta</span>
     </div>
-    <RouterLink :text="$t('enter')" color="indigo darken-3" url="login" />
+    <RouterLink :text="$t('enter')" color="indigo darken-3" url="login" class="enterLink"/>
+    <p class="free">{{ $t('free_fish') }}</p>
     <div class="arrowWrapper" @click="arrowClickHandler">
+      <p class="moreInfo">{{ $t('more_info') }}</p>
       <v-icon class="arrow" x-large light >chevron_right</v-icon>
     </div>
   </v-layout>
@@ -66,20 +68,37 @@ export default {
   right: -26px;
 }
 
+.enterLink {
+  font-size: 28px;
+  margin-top: 15px;
+  line-height: 1;
+}
+
+.free {
+  color: #9c9c9c;
+  margin: 0;
+}
+
+.moreInfo {
+  color: #9c9c9c;
+  margin: 0;
+}
+
 .arrow {
-  font-size: 46px;
+  transform: rotate(90deg);
+  animation: bounce 3s infinite linear;
 }
 
 .arrowWrapper {
+  display: flex;
+  flex-direction: column;
   cursor: pointer;
-  transform: rotate(90deg);
   position: absolute;
-  bottom: 20%;
-  animation: bounce 3s infinite linear;
+  bottom: 10%;
   transition: transform 0.04s linear;
 }
 
-.arrowWrapper:hover {
+.arrowWrapper:hover .arrow {
   animation: none;
   transform: rotate(90deg) scale(1.2);
 }
@@ -110,4 +129,3 @@ export default {
   }
 }
 </style>
->
