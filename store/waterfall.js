@@ -164,7 +164,7 @@ export const actions = {
 
     commit("setLoading", false)
   },
-  fetchCards({ commit, rootGetters, dispatch }, ids) {
+  fetchCards({ commit, rootGetters, dispatch, state }, ids) {
     let ref = refOrderedByDatePosts
     if (lastCard) {
       ref = ref.startAfter(lastCard)
@@ -195,7 +195,7 @@ export const actions = {
           } else {
             dispatch("fetchCards", ids)
           }
-        } else {
+        } else if (state.index === state.cardList.length) {
           commit("setEnd", true)
         }
 

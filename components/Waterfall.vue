@@ -35,7 +35,7 @@
     </template>
     <template v-if="!isLoading">
       <template v-if="!isEnd">
-        <transition name="bounce" mode="out-in">
+        <transition v-if="firstCard" name="bounce" mode="out-in">
           <WaterfallCard
             v-show="firstCardVisibility"
             key="first"
@@ -48,7 +48,7 @@
             @dismiss="discard"
           />
         </transition>
-        <transition name="bounce" mode="out-in">
+        <transition v-if="secondCard" name="bounce" mode="out-in">
           <WaterfallCard
             v-show="secondCardVisibility"
             key="second"

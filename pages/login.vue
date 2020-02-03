@@ -153,7 +153,9 @@ export default {
         .then(function(result) {
           console.log(result)
           if (result.additionalUserInfo.isNewUser) {
-            dispatch("ban/addNewUser", {}, { root: "ban" })
+            dispatch("user/setUser", result.user, { root: "user" }).then(() => {
+              dispatch("ban/addNewUser", {}, { root: "ban" })
+            })
           }
           router.push("/feed")
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
