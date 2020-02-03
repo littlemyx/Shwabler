@@ -151,6 +151,9 @@ export default {
         .signInWithPopup(provider)
         .then(function(result) {
           console.log(result)
+          if (result.additionalUserInfo.isNewUser) {
+            this.$store.dispatch("ban/addNewUser", {}, { root: "ban" })
+          }
           router.push("/feed")
           // This gives you a Facebook Access Token. You can use it to access the Facebook API.
           // var token = result.credential.accessToken
