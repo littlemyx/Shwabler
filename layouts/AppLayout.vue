@@ -143,7 +143,7 @@ export default {
           isAuth: false
         },
         {
-          icon: "cog-outline",
+          icon: "settings",
           title: this.$t("settings"),
           to: "/settings",
           isAuth: true

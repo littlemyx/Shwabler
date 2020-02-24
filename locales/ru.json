@@ -31,5 +31,8 @@
   "likeWord": "Лайкай ♥...",
   "dislikeWord": "...Или нет... ╳",
   "answerWord": "Отвечай...",
-  "discussWord": "Общайся!"
+  "discussWord": "Общайся!",
+  "settings": "настройки",
+  "save": "сохранить",
+  "notification_setting_label": "получать уведомления по электронной почте"
 }

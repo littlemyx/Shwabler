@@ -1,31 +1,27 @@
-import { firestore, fieldvalue } from "@/services/fireinit.js"
+import { firestore, timestamp } from "@/services/fireinit.js"
 
-const firebaseRef = firestore.collection("banned")
-
-const LIMIT = 100
+const firebaseRef = firestore.collection("settings")
 
 export const state = () => ({
-  list: [],
-  isInitialized: false
+  settings: {},
+  isInitialized: false,
+  isSaving: false,
+  isLoading: true
 })
 
 export const mutations = {
   resetStore(state) {
     state.list = []
   },
-  setList(state, payload) {
-    state.list = payload
+  setSettings(state, payload) {
+    state.isSaved = false
+    state.settings = { ...state.settings, ...payload }
   },
-  addToList(state, payload) {
-    state.list = [...state.list, payload.id]
+  setSaveLoading(state, payload) {
+    state.isSaving = payload
   },
-  removeFromList(state, payload) {
-    const indexToDelete = state.list.findIndex(item => item.id === payload.id)
-    if (indexToDelete !== -1) {
-      const tmp = [...state.list]
-      tmp.list.splice(indexToDelete, 1)
-      state.list = tmp
-    }
+  setLoading(state, payload) {
+    state.isLoading = payload
   },
   setInitialized(state, payload) {
     state.initialized = payload
@@ -33,22 +29,16 @@ export const mutations = {
 }
 
 export const actions = {
-  fetchBanned({ commit, rootGetters }) {
+  fetchSettings({ commit, rootGetters }) {
     return new Promise(resolve => {
       firebaseRef
         .doc(rootGetters["user/userId"])
         .get()
         .then(doc => {
-          const { banned: data } = doc.data()
-          let list = []
-          if (data.length) {
-            data.forEach(card => {
-              list = [...list, card]
-            })
-          }
-          if (list.length) {
-            commit("setList", list)
-          }
+          const data = doc.data()
+
+          commit("setSettings", data)
+
           resolve()
         })
 
@@ -58,33 +48,29 @@ export const actions = {
         })
     })
   },
-  updateList({ state, commit, rootGetters }, payload) {
-    commit("addToList", payload)
+  addNewUser({ rootGetters }) {
+    firebaseRef.doc(rootGetters["user/userId"]).set({
+      language: "en",
+      notifications: true,
+      lastNotification: new timestamp.fromDate(new Date())
+    })
+  },
+  set({ commit, rootGetters, state }) {
+    commit("setSaveLoading", true)
     firebaseRef
       .doc(rootGetters["user/userId"])
-      .update({
-        banned: fieldvalue.arrayUnion(payload.id)
+      .set({
+        ...state.settings
       })
-      .then(() => {
-        console.log("banned updated")
+      .finally(() => {
+        commit("setSaveLoading", false)
       })
-      .catch(error => {
-        console.log(error)
-      })
-    if (state.list.length > LIMIT) {
-      const newList = state.list
-      newList.splice(0, 1)
-      commit("setList", newList)
-      firebaseRef.doc(rootGetters["user/userId"]).set({ banned: newList }) //переделать на фбшные функции
-    }
-  },
-  addNewUser({ rootGetters }) {
-    firebaseRef.doc(rootGetters["user/userId"]).set({ banned: [] })
   },
   initFetch({ dispatch, commit, state }) {
     return new Promise(resolve => {
       if (!state.isInitialized) {
-        dispatch("fetchBanned").then(() => {
+        dispatch("fetchSettings").then(() => {
+          commit("setLoading", false)
           resolve()
         })
         commit("setInitialized", true)
@@ -96,5 +82,9 @@ export const actions = {
 }
 
 export const getters = {
-  list: state => state.list
+  lastNotification: state => state.settings.lastNotification,
+  language: state => state.settings.language,
+  notifications: state => state.settings.notifications,
+  isSaving: state => state.isSaving,
+  isLoading: state => state.isLoading
 }
