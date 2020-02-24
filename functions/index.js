@@ -10,6 +10,8 @@ const functions = require("firebase-functions")
 // The Firebase Admin SDK to access the Firebase Realtime Database.
 const admin = require("firebase-admin")
 
+const { sendEmail } = require("./mailer")
+
 admin.initializeApp()
 
 const db = admin.firestore()
@@ -124,4 +126,56 @@ exports.tagCreateSearchIndex = functions.firestore
       return newVal
     }, "")
     return snap.ref.set({ searchIndex }, { merge: true })
+  })
+
+exports.sendNotification = exports.sendNotification = functions.firestore
+  .document("/messages/{documentId}")
+  .onUpdate((change, { params: { documentId } }) => {
+    const data = change.after.data()
+    const author_id = data.messages[data.messages.length - 1].author_id
+    return db
+      .collection("matches")
+      .where("messages_id", "==", documentId)
+      .get()
+      .then(querySnapshot => {
+        let retValue
+        if (querySnapshot.docs.length) {
+          querySnapshot.forEach(doc => {
+            const data = doc.data()
+            if (data) {
+              const pairIds = data.members.filter(
+                memberId => memberId !== author_id
+              )
+              retValue = new Promise((resolve, reject) => {
+                const sets = pairIds.map(pair =>
+                  admin
+                    .auth()
+                    .getUser(pair)
+                    .then(user => {
+                      const { email } = user
+                      return sendEmail({
+                        to: email,
+                        from: "shwabler.com@gmail.com",
+                        subject: "You have a new message!",
+                        html:
+                          "<a href='https://shwabler.com/dialogs'>Go check it!</a>"
+                      })
+                    })
+                )
+                Promise.all(sets)
+                  .then(() => resolve())
+                  .catch(error => reject(error))
+              })
+            } else {
+              return new Error("Invalid messages_id")
+            }
+          })
+          return retValue
+        } else {
+          return new Error("Invalid messages_id")
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
   })

@@ -136,7 +136,18 @@ export default {
           isAuth: true
         },
         { icon: "apps", title: this.$t("login"), to: "/login", isAuth: false },
-        { icon: "apps", title: this.$t("signup"), to: "/signup", isAuth: false }
+        {
+          icon: "apps",
+          title: this.$t("signup"),
+          to: "/signup",
+          isAuth: false
+        },
+        {
+          icon: "cog-outline",
+          title: this.$t("settings"),
+          to: "/settings",
+          isAuth: true
+        }
       ].filter(item => item.isAuth === !!this.$store.state.user.user)
     },
     user() {
