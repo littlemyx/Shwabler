@@ -26,6 +26,7 @@ import {
   VProgressCircular,
   VSheet,
   VImg,
+  VSwitch,
   transitions
 } from "vuetify"
 
@@ -56,6 +57,7 @@ Vue.use(Vuetify, {
     VProgressCircular,
     VSheet,
     VImg,
+    VSwitch,
     transitions
   },
   directives: {
