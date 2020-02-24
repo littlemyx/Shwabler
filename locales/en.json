@@ -31,5 +31,8 @@
   "likeWord": "Like ♥...",
   "dislikeWord": "...Or skip ╳",
   "answerWord": "Answer...",
-  "discussWord": "Chat!"
+  "discussWord": "Chat!",
+  "settings": "settings",
+  "save": "save",
+  "notification_setting_label": "get notifications over email"
 }

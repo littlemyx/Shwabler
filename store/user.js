@@ -11,7 +11,7 @@ export const mutations = {
     state.isEmailVerified = false
   },
   setUser(state, payload) {
-    console.log("mutation user/setUser")
+    // console.log("mutation user/setUser")
     // name = user.displayName
     // email = user.email
     // photoUrl = user.photoURL
@@ -52,14 +52,14 @@ export const actions = {
   },
 
   setUser({ commit }, payload) {
-    console.log("action user/setUser")
+    // console.log("action user/setUser")
     commit("setUser", payload)
   }
 }
 
 export const getters = {
   activeUser(state) {
-    console.log("activeUser")
+    // console.log("activeUser")
     return state.user && state.user.email
   },
   userId(state) {
@@ -70,7 +70,7 @@ export const getters = {
   },
   isUserNeedVerification(state) {
     return state.user.providerData.some(provider => {
-      console.log(provider.providerId)
+      // console.log(provider.providerId)
       return provider.providerId === "password"
     })
   }

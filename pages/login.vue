@@ -155,6 +155,7 @@ export default {
           if (result.additionalUserInfo.isNewUser) {
             dispatch("user/setUser", result.user, { root: "user" }).then(() => {
               dispatch("ban/addNewUser", {}, { root: "ban" })
+              dispatch("settings/addNewUser", {}, { root: "settings" })
             })
           }
           router.push("/feed")

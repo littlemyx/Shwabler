@@ -115,6 +115,11 @@ export default {
                 //   // return resolve()
                 // })
                 this.$store.dispatch("ban/addNewUser", {}, { root: "ban" })
+                this.$store.dispatch(
+                  "settings/addNewUser",
+                  {},
+                  { root: "settings" }
+                )
                 this.$router.push("/verification")
               }.bind(this)
             )
