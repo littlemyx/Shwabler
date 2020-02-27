@@ -59,7 +59,7 @@ export const actions = {
     commit("setSaveLoading", true)
     firebaseRef
       .doc(rootGetters["user/userId"])
-      .set({
+      .update({
         ...state.settings
       })
       .finally(() => {
