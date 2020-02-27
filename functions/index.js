@@ -14,6 +14,8 @@ const { sendEmail } = require("./mailer")
 
 admin.initializeApp()
 
+const timestamp = admin.firestore.Timestamp
+
 const db = admin.firestore()
 
 // Take the text parameter passed to this HTTP endpoint and insert it into the
@@ -128,7 +130,7 @@ exports.tagCreateSearchIndex = functions.firestore
     return snap.ref.set({ searchIndex }, { merge: true })
   })
 
-exports.sendNotification = exports.sendNotification = functions.firestore
+exports.sendNotification = functions.firestore
   .document("/messages/{documentId}")
   .onUpdate((change, { params: { documentId } }) => {
     const data = change.after.data()
@@ -147,21 +149,41 @@ exports.sendNotification = exports.sendNotification = functions.firestore
                 memberId => memberId !== author_id
               )
               retValue = new Promise((resolve, reject) => {
-                const sets = pairIds.map(pair =>
-                  admin
-                    .auth()
-                    .getUser(pair)
-                    .then(user => {
-                      const { email } = user
-                      return sendEmail({
-                        to: email,
-                        from: "shwabler.com@gmail.com",
-                        subject: "You have a new message!",
-                        html:
-                          "<a href='https://shwabler.com/dialogs'>Go check it!</a>"
-                      })
+                const sets = pairIds.map(async pair => {
+                  const user = await admin.auth().getUser(pair)
+
+                  const userSettings = await db
+                    .collection("settings")
+                    .doc(pair)
+                    .get()
+
+                  const {
+                    lastNotification,
+                    notifications
+                  } = userSettings.data()
+
+                  const now = timestamp.fromDate(new Date())
+
+                  const diff = now.toMillis() - lastNotification.toMillis()
+
+                  if (notifications && diff > 86400000) {
+                    const { email } = user
+                    db.collection("settings")
+                      .doc(pair)
+                      .update({ lastNotification: now })
+
+                    return sendEmail({
+                      to: email,
+                      from: "shwabler.com@gmail.com",
+                      subject: "You have a new message!",
+                      html:
+                        "<a href='https://shwabler.com/dialogs'>Go check it!</a>"
                     })
-                )
+                  }
+
+                  return new Promise(resolve => resolve())
+                })
+
                 Promise.all(sets)
                   .then(() => resolve())
                   .catch(error => reject(error))
