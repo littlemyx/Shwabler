@@ -120,6 +120,11 @@ export default {
                   {},
                   { root: "settings" }
                 )
+                this.$store.dispatch(
+                  "messagesNotification/addNewUser",
+                  {},
+                  { root: "messagesNotification" }
+                )
                 this.$router.push("/verification")
               }.bind(this)
             )
@@ -131,7 +136,8 @@ export default {
                 {
                   type: "error",
                   text: error.message,
-                  id: error.code + new Date().getTime()
+                  id: error.code + new Date().getTime(),
+                  autoClose: true
                 }
               ])
             }.bind(this)

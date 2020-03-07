@@ -1,6 +1,8 @@
 import { firestore } from "@/services/fireinit.js"
 import Vue from "vue"
 
+const firebaseRef = firestore.collection("messagesNotifications")
+
 export const state = () => ({
   idsList: [],
   isInitialized: false
@@ -68,8 +70,7 @@ export const actions = {
     //   isLoading: true
     // })
     // const listener =
-    firestore
-      .collection("messagesNotifications")
+    firebaseRef
       .doc(rootGetters["user/userId"])
       // .where("messages_id", "==", payload.id)
       // .orderBy("date")
@@ -111,10 +112,14 @@ export const actions = {
         }
       })
   },
+  addNewUser({ rootGetters }) {
+    firebaseRef.doc(rootGetters["user/userId"]).set({
+      updated: []
+    })
+  },
   setMessagesCountAsync({ commit, state, rootGetters }, payload) {
     const newCountArray = state.idsList.filter(match => match !== payload.id)
-    firestore
-      .collection("messagesNotifications")
+    firebaseRef
       .doc(rootGetters["user/userId"])
       .update({
         updated: newCountArray

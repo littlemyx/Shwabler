@@ -4,7 +4,7 @@
       <div :id="identify" :class="['darken-2', color]" class="DialogWrapper">
         <Message
           v-for="message in messages"
-          :key="`${message.date.seconds}_${message.date.nanoseconds}_${message.text}`"
+          :key="`${message.date.getSeconds()}_${message.date.getMilliseconds()}_${message.text}`"
           :author="message.author_id" 
           :text="message.text"
           :color="color"

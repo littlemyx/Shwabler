@@ -131,7 +131,8 @@ export default {
                 {
                   type: "error",
                   text: error.message,
-                  id: error.code + new Date().getTime()
+                  id: error.code + new Date().getTime(),
+                  autoClose: true
                 }
               ])
             }
@@ -156,6 +157,11 @@ export default {
             dispatch("user/setUser", result.user, { root: "user" }).then(() => {
               dispatch("ban/addNewUser", {}, { root: "ban" })
               dispatch("settings/addNewUser", {}, { root: "settings" })
+              dispatch(
+                "messagesNotification/addNewUser",
+                {},
+                { root: "messagesNotification" }
+              )
             })
           }
           router.push("/feed")
