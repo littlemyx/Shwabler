@@ -12,6 +12,8 @@ const admin = require("firebase-admin")
 
 const { sendEmail } = require("./mailer")
 
+const { letterText } = require("./letter")
+
 admin.initializeApp()
 
 const timestamp = admin.firestore.Timestamp
@@ -176,8 +178,7 @@ exports.sendNotification = functions.firestore
                       to: email,
                       from: "shwabler.com@gmail.com",
                       subject: "You have a new message!",
-                      html:
-                        "<a href='https://shwabler.com/dialogs'>Go check it!</a>"
+                      html: letterText
                     })
                   }
 
