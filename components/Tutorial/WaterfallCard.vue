@@ -31,10 +31,10 @@
 </template>
 
 <script>
-import InputText from "./InputText.vue"
-import Card from "./Card.vue"
-import Chips from "./Chips.vue"
-const { colors } = require("../assets/data/colors.json")
+import InputText from "@/components/InputText.vue"
+import Card from "@/components/Card.vue"
+import Chips from "@/components/Chips.vue"
+const { colors } = require("@/assets/data/colors.json")
 
 export default {
   components: {
@@ -110,16 +110,7 @@ export default {
           this.inputLabel = "Message is empty!"
           return
         } else {
-          let answer = {
-            title: this.title,
-            text: this.cardText,
-            card_id: this.id,
-            author_id: this.$store.getters["user/userId"],
-            message: this.inputTextValue,
-            card_author_id: this.author_id
-          }
-          this.$store.dispatch("waterfall/createMatch", answer)
-          this.$emit("accept", { id: this.id })
+          this.$emit("accept", { id: this.id, text: this.inputTextValue })
           this.inputTextValue = ""
         }
       }
@@ -127,7 +118,6 @@ export default {
       this.isLike = !this.isLike
     },
     dismiss() {
-      console.log("dismiss")
       this.isShow = false
       this.isLike = false
       this.$emit("dismiss", { id: this.id })

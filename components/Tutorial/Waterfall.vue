@@ -1,5 +1,5 @@
 <template>
-  <div muhin="q" class="cardWrapper">
+  <div class="cardWrapper">
     <div class="tagsWrapper flex xs12 sm6 offset-sm3">
       <TagList
         :incoming_items="searchTags"
@@ -36,31 +36,34 @@
     <template v-if="!isLoading">
       <template v-if="!isEnd">
         <transition v-if="firstCard" name="bounce" mode="out-in">
-          <WaterfallCard
-            v-show="firstCardVisibility"
-            key="first"
-            :id="firstCard.id"
-            :author_id="firstCard.author_id"
-            :is-new="isNew"
-            :title="firstCard.title"
-            :card-text="firstCard.text"
-            @accept="accept"
-            @dismiss="discard"
-          />
+          <div id="firstCard">
+            <WaterfallCard
+              v-show="firstCardVisibility"
+              key="first"
+              :id="firstCard.id"
+              :author_id="firstCard.author_id"
+              :is-new="isNew"
+              :title="$t(firstCard.title)"
+              :card-text="$t(firstCard.text)"
+              @accept="accept"
+              @dismiss="discard"
+            />
+          </div>
         </transition>
         <transition v-if="secondCard" name="bounce" mode="out-in">
-          
-          <WaterfallCard
-            v-show="secondCardVisibility"
-            key="second"
-            :id="secondCard.id"
-            :author_id="secondCard.author_id"
-            :is-new="isNew"
-            :title="secondCard.title"
-            :card-text="secondCard.text"
-            @accept="accept"
-            @dismiss="discard"
-          />
+          <div id="secondCard">
+            <WaterfallCard
+              v-show="secondCardVisibility"
+              key="second"
+              :id="secondCard.id"
+              :author_id="secondCard.author_id"
+              :is-new="isNew"
+              :title="$t(secondCard.title)"
+              :card-text="$t(secondCard.text)"
+              @accept="accept"
+              @dismiss="discard"
+            />
+          </div>
         </transition>
       </template>
       <template v-if="isEnd">
@@ -75,10 +78,10 @@
 </template>
 
 <script>
-import WaterfallCard from "./WaterfallCard.vue"
-import Card from "./Card.vue"
-import Chips from "./Chips.vue"
-import TagList from "./Tags"
+import WaterfallCard from "@/components/Tutorial/WaterfallCard.vue"
+import Card from "@/components/Card.vue"
+import Chips from "@/components/Chips.vue"
+import TagList from "@/components/Tags"
 
 export default {
   components: {
@@ -98,28 +101,28 @@ export default {
 
   computed: {
     firstCardVisibility() {
-      return this.$store.state.waterfall.isFirstCardVisible
+      return true
     },
     secondCardVisibility() {
-      return !this.$store.state.waterfall.isFirstCardVisible
+      return false
     },
     isEnd() {
-      return this.$store.state.waterfall.isEnd
+      return this.$store.getters["tutorial/appState"].isCardsEnded
     },
     isLoading() {
-      return this.$store.state.waterfall.isLoading
+      return this.$store.getters["tutorial/appState"].isCardsLoading
     },
     firstCard() {
-      return this.$store.getters["waterfall/nextCard"]
+      return this.$store.getters["tutorial/appState"].firstCard
     },
     secondCard() {
-      return this.$store.getters["waterfall/nextCard"]
+      return this.$store.getters["tutorial/appState"].secondCard
     },
     searchTags() {
-      return this.$store.getters["tags/result"]
+      return this.$store.getters["tutorial/appState"].searchTags
     },
     searchedTags() {
-      return this.$store.getters["waterfall/searchedTags"]
+      return this.$store.getters["tutorial/appState"].searchedTags
     }
   },
 
@@ -127,14 +130,23 @@ export default {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/")
     },
-    discard(event) {
-      this.$store.dispatch("waterfall/increaseIndex")
-      this.$store.dispatch("ban/updateList", event)
-      console.log("next card")
+    discard() {
+      this.$store.commit("tutorial/goToStep", { stepNumber: 3 })
     },
-    accept(event) {
-      this.$store.dispatch("ban/updateList", event)
-      console.log("next card")
+    accept({ text }) {
+      this.$store.commit("tutorial/updateMessages", {
+        newData: {
+          author_id: this.$store.getters["user/userId"],
+          date: {
+            seconds: new Date().getSeconds(),
+            nanoseconds: new Date().getMilliseconds()
+          },
+          text: text
+        },
+        cardNumber: 0,
+        stepNumber: 4
+      })
+      this.$store.commit("tutorial/goToStep", { stepNumber: 4 })
     },
     deleteTag(event) {
       this.selectedListChanged = true

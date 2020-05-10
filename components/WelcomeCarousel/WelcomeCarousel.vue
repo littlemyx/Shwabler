@@ -26,12 +26,12 @@ export default {
       // colors: ["primary", "secondary", "yellow darken-2", "red", "orange"],
       slides: [
         {
-          topText: "createWord",
+          topText: "create_word",
           image: "/create.png"
         },
         {
-          topText: "likeWord",
-          bottomText: "dislikeWord",
+          topText: "like_word",
+          bottomText: "dislike_word",
           image: "/answer.png"
         },
         {

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div>
-      <Waterfall />
-    </div>
+    <Waterfall />
     <!-- <v-btn depressed color="error" @click="goBack">
       Back
     </v-btn>
@@ -14,11 +12,11 @@
 </template>
 
 <router lang="yaml">
-    path: /feed
+    path: /tutorial/feed
 </router>
 
 <script>
-import Waterfall from "../components/Waterfall.vue"
+import Waterfall from "@/components/Tutorial/Waterfall.vue"
 
 export default {
   // fetch({ store }) {
@@ -37,10 +35,6 @@ export default {
       console.log("log out")
     }
   },
-  layout(context) {
-    return context.store.getters["settings/isTutorial"]
-      ? "Tutorial"
-      : "AppLayout"
-  }
+  layout: "Tutorial"
 }
 </script>

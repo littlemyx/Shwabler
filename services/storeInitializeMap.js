@@ -1,8 +1,7 @@
 const routeStoreMap = {
   waterfall: "waterfall/initFetch",
   cave: "cave/initFetch",
-  wardrobe: "userList/initFetch",
-  settings: "settings/initFetch"
+  wardrobe: "userList/initFetch"
 }
 
 export default route => {
