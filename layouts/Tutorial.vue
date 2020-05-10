@@ -24,6 +24,7 @@
           v-for="(item, i) in items"
           :to="item.to"
           :key="i"
+          :id="item.id"
           class="list"
           router
           exact
@@ -36,7 +37,7 @@
             <div v-else >{{ item.title.toUpperCase() }}{{ unreadCount }}</div>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="exit">
+        <v-list-tile id="exit" @click="exit">
           <v-list-tile-action>
             <v-icon v-html="exit_icon" />
           </v-list-tile-action>
@@ -64,6 +65,10 @@
     <v-toolbar color="indigo-purple" dark fixed app>
       <v-toolbar-side-icon v-if="!drawer" @click.stop="drawer = !drawer" />
       <v-toolbar-title>SHWABLER</v-toolbar-title>
+      <v-spacer/>
+      <v-toolbar-items>
+        <v-btn flat @click="exitTutorialHandler">{{ $t("exit_tutorial") }}</v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <v-content>
       <v-container fluid>
@@ -73,9 +78,10 @@
     </v-content>
     <v-footer color="grey" class="appFooter" app>
       <div class="logo">
-        <span class="white--text">&copy;&nbsp;</span>
+        <span class="white--text">Made by</span>
+        &nbsp;
         <span class="white--text digitalText">
-          <a class="teamLink" href="http://631am.com/" target="_blabk">
+          <a class="teamLink" href="http://631am.com/" target="_blank">
             6
             <span class="blinking">
               :
@@ -85,21 +91,61 @@
         </span>
       </div>
     </v-footer>
+    <TutorialTooltip/>
 
-    <TutorialPopUp :model="offerTutorial" :close="closeTutorialPopUp"/>
+    <v-dialog
+      v-model="closeTutorialModel"
+      width="500"
+      max-width="90vw"
+    >
+      
+      <v-card>
+        <v-card-title
+          class="headline shwabler darken-3 exitTitle"
+          primary-title
+        >
+          {{ $t("exit_tutorial_title") }}
+        </v-card-title>
+
+        <v-card-text>
+          {{ $t("exit_tutorial_text") }}
+        </v-card-text>
+
+        <v-divider/>
+
+        <v-card-actions>
+          <v-spacer/>
+          <v-btn
+            color="shwabler"
+            flat
+            @click="dislineExit"
+          >
+            {{ $t("continue_tutorial") }}
+          </v-btn>
+          <v-btn
+            color="shwabler"
+            flat
+            @click="acceptExit"
+          >
+            {{ $t("exit_tutorial") }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-app>
+    
 </template>
 
 <script>
 import NotificationsList from "@/components/NotificationsList"
 import LanguageSelector from "@/components/LanguageSelector"
-import TutorialPopUp from "@/components/TutorialPopUp"
+import TutorialTooltip from "@/components/Tutorial/TutorialTooltip"
 
 export default {
   components: {
     NotificationsList,
     LanguageSelector,
-    TutorialPopUp
+    TutorialTooltip
   },
   props: {
     source: {
@@ -116,49 +162,62 @@ export default {
       fixed: false,
       miniVariant: false,
       right: true,
-      rightDrawer: false
+      rightDrawer: false,
+      // popUpped: [],
+      closeTutorialModel: false
     }
   },
   computed: {
-    offerTutorial: {
-      get() {
-        return this.$store.getters["settings/isFirstTime"] || false
-      },
-      set() {
-        this.$store.commit("settings/setSettings", { isFirstTime: false })
-      }
-    },
     unreadCount() {
       const count = this.$store.getters["messagesNotification/newMessagesCount"]
       return count ? `: ${count}` : ""
     },
+    popupedElementIds() {
+      return this.$store.getters["tutorial/popupedElementIds"]
+    },
     items() {
       return [
-        { icon: "email", title: this.$t("feed"), to: "/feed", isAuth: true },
+        {
+          icon: "email",
+          id: "feed",
+          title: this.$t("feed"),
+          to: "/tutorial/feed",
+          isAuth: true
+        },
         {
           icon: "list",
+          id: "cards",
           title: this.$t("my_cards"),
-          to: "/cards",
+          to: "/tutorial/cards",
           isAuth: true
         },
         {
           icon: "chat",
+          id: "dialogs",
           title: this.$t("dialogs"),
-          to: "/dialogs",
+          to: "/tutorial/dialogs",
           isAuth: true
-        },
-        { icon: "apps", title: this.$t("login"), to: "/login", isAuth: false },
-        {
-          icon: "apps",
-          title: this.$t("signup"),
-          to: "/signup",
-          isAuth: false
         },
         {
           icon: "settings",
+          id: "settings",
           title: this.$t("settings.settings_name"),
           to: "/settings",
           isAuth: true
+        },
+        {
+          icon: "apps",
+          id: "login",
+          title: this.$t("login"),
+          to: "/tutorial/login",
+          isAuth: false
+        },
+        {
+          icon: "apps",
+          id: "signup",
+          title: this.$t("signup"),
+          to: "/signup",
+          isAuth: false
         }
       ].filter(item => item.isAuth === !!this.$store.state.user.user)
     },
@@ -172,6 +231,34 @@ export default {
       return this.$store.state.locale
     }
   },
+  // watch: {
+  //   popupedElementIds: function(newValue) {
+  //     this.popUpped.forEach(
+  //       item => (document.querySelectorAll(item)[0].style.zIndex = "")
+  //     )
+  //     this.popUpped = newValue
+  //     this.popUpped.forEach(
+  //       item => (document.querySelectorAll(item)[0].style.zIndex = 100)
+  //     )
+  //   }
+  // },
+  mounted() {
+    // eslint-disable-next-line no-undef
+    if (this.$route.path !== this.$store.getters["tutorial/appState"].route) {
+      this.$router.replace(this.$store.getters["tutorial/appState"].route)
+    }
+  },
+  middleware({ store, route, redirect }) {
+    // If the user is not authenticated
+    if (
+      !["/tutorial/feed", "/tutorial/cards", "/tutorial/dialogs"].some(str =>
+        route.path.includes(str)
+      )
+      // TODO replace with generic list
+    ) {
+      return redirect(store.getters["tutorial/appState"].route)
+    }
+  },
   methods: {
     exit() {
       this.$store.dispatch("user/signOut").then(() => {
@@ -179,9 +266,6 @@ export default {
         this.$router.push("/login")
         console.log("exit applayout")
       })
-    },
-    closeTutorialPopUp() {
-      this.offerTutorial = false
     },
     generateMenuItem(item) {
       if (item.to === "/dialogs") {
@@ -196,6 +280,17 @@ export default {
       // location.reload()
       this.$store.commit("SET_LANG", localeCode)
       this._i18n.locale = this.$store.state.locale
+    },
+    acceptExit() {
+      this.$store.commit("settings/setSettings", { isFirstTime: false })
+      // this.$store.dispatch("settings/set")
+      this.$router.push("/feed")
+    },
+    dislineExit() {
+      this.closeTutorialModel = false
+    },
+    exitTutorialHandler() {
+      this.closeTutorialModel = true
     }
   }
 }
@@ -250,6 +345,10 @@ export default {
 
 .list .v-list__tile--active {
   color: #a01259 !important;
+}
+
+.exitTitle {
+  color: #fff;
 }
 
 @keyframes blink {

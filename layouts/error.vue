@@ -3,7 +3,7 @@
   <div class="container">
     <h1 v-if="error.statusCode === 404">Page not found</h1>
     <h1 v-else>An error occurred</h1>
-    <nuxt-link to="/waterfall">Home page</nuxt-link>
+    <nuxt-link to="/">Home page</nuxt-link>
     <p>error message - {{ error.message }}</p>
   </div>
 </template>

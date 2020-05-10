@@ -27,6 +27,7 @@ import {
   VSheet,
   VImg,
   VSwitch,
+  VDivider,
   transitions
 } from "vuetify"
 
@@ -58,6 +59,7 @@ Vue.use(Vuetify, {
     VSheet,
     VImg,
     VSwitch,
+    VDivider,
     transitions
   },
   directives: {

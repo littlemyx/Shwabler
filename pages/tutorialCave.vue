@@ -79,11 +79,11 @@
 </template>
 
 <router lang="yaml">
-    path: /cards
+    path: /tutorial/cards
 </router>
 
 <script>
-import CaveList from "../components/CaveList.vue"
+import CaveList from "@/components/Tutorial/CaveList.vue"
 import Card from "../components/Card.vue"
 import Chips from "../components/Chips.vue"
 import TagList from "../components/Tags"
@@ -124,7 +124,7 @@ export default {
       return this.$store.state.cave.newCardText
     },
     cards() {
-      return this.$store.state.cave.caveList
+      return this.$store.getters["tutorial/appState"].cards
     },
     searchTags() {
       return this.$store.getters["tags/result"]
@@ -146,6 +146,7 @@ export default {
       this.dialog = true
       this.$store.commit("cave/setNewCardTitle", "")
       this.$store.commit("cave/setNewCardText", "")
+      this.$store.commit("tutorial/goToStep", { stepNumber: 7 })
     },
     tagAdd(event) {
       this.$store.commit("cave/addNewTag", event)
@@ -281,6 +282,7 @@ export default {
       this.newCardTagsText = ""
       this.$store.commit("cave/setSearchTags", {})
       this.$store.commit("cave/setNewTags", {})
+      this.$store.commit("tutorial/goToStep", { stepNumber: 6 })
     },
     inputTitle(value) {
       this.$store.commit("cave/setNewCardTitle", value)
@@ -344,7 +346,7 @@ export default {
       this.newCardTagsText = event
     }
   },
-  layout: "AppLayout"
+  layout: "Tutorial"
 }
 </script>
 

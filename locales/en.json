@@ -12,8 +12,8 @@
   "send_feedback": "send your feedback to",
   "enter": "Enter",
   "delete": "Delete",
-  "newCardPlaceholderHead": "Header of your card",
-  "newCardPlaceholderBody": "Main plot goes here",
+  "new_card_placeholder_head": "Header of your card",
+  "new_card_placeholder_body": "Main plot goes here",
   "show_dialog": "show",
   "hide_dialog": "hide",
   "dialog_placeholder": "Message",
@@ -27,12 +27,56 @@
   "have_no_account_question": "don't have an account yet",
   "orLogin": "or",
   "continue_with_facebook": "continue with Facebook",
-  "createWord": "Create...",
-  "likeWord": "Like ♥...",
-  "dislikeWord": "...Or skip ╳",
+  "create_word": "Create...",
+  "like_word": "Like ♥...",
+  "dislike_word": "...Or skip ╳",
   "answerWord": "Answer...",
   "discussWord": "Chat!",
-  "settings": "settings",
+  
   "save": "save",
-  "notification_setting_label": "get notifications over email"
+  "welcome": "welcome",
+  "welcome_to": "welcome to",
+  "show_me": "show me",
+  "no_thank_you": "No, thank you",
+  "next": "next",
+  "previous": "previous",
+  "welcome_text": "Welocome to Shwabler! Here you can do things, or not. Also you can close it and return next day. BTW call your parents as soon as possible, they love you and missing so much. Click 'SHOW ME' if you want to see the tutorial. 'NO, THANK YOU' leads you directly to Shwabler and skips the tutorial",
+  "notification_setting_label": "get notifications over email",
+  "exit_tutorial_title": "Exit tutorial?",
+  "exit_tutorial_text": "Do you want to exit? You always can try again from the settings page.",
+  "continue_tutorial": "continue tutorial",
+  "exit_tutorial": "exit tutorial",
+  "try_again":"try again",
+  "input_tooltip_first_row": "Press <code>Enter</code> to send message",
+  "input_tooltip_second_row": "Press <code>Shift+Enter</code> to add new line",
+  "settings": {
+    "settings_name": "settings",
+    "tutorial" : "tutorial"
+  },
+  "tutorial": {
+    "tooltip":{
+      "next_button_text": "next",
+      "previous_button_text": "previous",
+      "close_button": "close tutorial",
+      "text_step_0": "Welcome to Shwabler! Now we will take a brief tour through all possibilities of our service. Click \"NEXT\" to move forward.",
+      "text_step_1": "In the center of the window you can see the Card. It is the root element of Shwabler. Deal with it like it is a common post in common social networks, but without any distracting elements.",
+      "text_step_2": "There are a lot of cards flying around and you can always skip current one and go forward to find the most interesting for you. You can do it by clicking the cross button.",
+      "text_step_3": "Now lets try to answer to the card. Click the heart button and place your answer in the field beneath it.",
+      "text_step_4": "This is the dialogs page. Here you can find all your dialogs of all cards. You can open card's dialog with the button on each dialog. When someone answer you, you'll get a notification.",
+      "text_step_5": "This is your cards page. Here you can find all cards you created, manage them or create a new one.",
+      "text_step_6": "Now lets create your first card. To open the creation menu click on the plus icon in the right bottom corner.",
+      "text_step_7": "Here you can fill the header of your card and it's title. Also you can add some tags to it, it can be chosen from existed list or you can create a new one.",
+      "text_step_8": "Great! Very soon someone will find your card and answer to it. That's mean that we are just finished out tour and and you are completely ready to dive into Shwabler. Hope you enjoy it and have fun!"
+    },
+    "components": {
+      "feed": {
+        "welcome_card_title": "This is card",
+        "welcome_card_text": "You can skip it by clicking the cross button",
+        "like_card_text": "",
+        "like_card_title": "Do you like Shwabler?"
+      },
+      "dialogs": {
+      }
+    }
+  }
 }

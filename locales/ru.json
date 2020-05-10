@@ -12,8 +12,8 @@
   "send_feedback": "Отправить отзыв",
   "enter": "Вход",
   "delete": "Удалить",
-  "newCardPlaceholderHead": "Заголовок",
-  "newCardPlaceholderBody": "Текст карточки",
+  "new_card_placeholder_head": "Заголовок",
+  "new_card_placeholder_body": "Текст карточки",
   "show_dialog": "показать",
   "hide_dialog": "скрыть",
   "dialog_placeholder": "Сообщение",
@@ -27,12 +27,55 @@
   "have_no_account_question": "ещё нет аккаунта",
   "orLogin": "или",
   "continue_with_facebook": "войти через Facebook",
-  "createWord": "Создавай...",
-  "likeWord": "Лайкай ♥...",
-  "dislikeWord": "...Или нет... ╳",
+  "create_word": "Создавай...",
+  "like_word": "Лайкай ♥...",
+  "dislike_word": "...Или нет... ╳",
   "answerWord": "Отвечай...",
   "discussWord": "Общайся!",
-  "settings": "настройки",
   "save": "сохранить",
-  "notification_setting_label": "получать уведомления по электронной почте"
+  "welcome": "добро пожаловать",
+  "welcome_to": "добро пожаловать в",
+  "show_me": "покажите мне",
+  "no_thank_you": "нет, спасибо",
+  "next": "next",
+  "previous": "previous",
+  "welcome_text": "Welocome to Shwabler! Here you can do things, or not. Also you can close it and return next day. BTW call your parents as soon as possible, they are loving you missing so much. Click 'SHOW ME' if you want to see the tutorial. 'NO, THANK YOU' leads you directly to shwabler and skips the tutorial",
+  "notification_setting_label": "получать уведомления по электронной почте",
+  "exit_tutorial_title": "Выйти из обучения?",
+  "exit_tutorial_text": "Вы хотите выйти? Вы всегда можете попробовать ещё раз из раздела настроек.",
+  "continue_tutorial": "продолжить обучение",
+  "exit_tutorial": "закрыть обучение",
+  "try_again":"посмотреть туториал",
+  "input_tooltip_first_row": "Нажмите <code>Enter</code> для отправки сообщения",
+  "input_tooltip_second_row": "Нажмите <code>Shift+Enter</code> для переноса строки",
+  "settings": {
+    "settings_name": "настройки",
+    "tutorial" : "туториал"
+  },
+  "tutorial": {
+    "tooltip":{
+      "next_button_text": "далее",
+      "previous_button_text": "назад",
+      "close_button": "закрыть туториал",
+      "text_step_0": "Добро пожалова в Shwabler! В этом туториале мы пройдёмся по основным функциям нашего сервиса. Нажмите \"ДАЛЕЕ\" для продолжения.",
+      "text_step_1": "В центре экрана вы видите Карточку. Это основной элемент Shwabler-а. Это тоже самое что и пост в обычный социальных сетях, но без отвлекающих элементов.",
+      "text_step_2": "В нашем сервисе есть множество карточек, вы всегда можете пропустить текущую и найти ту что вас заинтересует, для этого нужно нажать на кнопку с крестиком.",
+      "text_step_3": "Теперь давайте попробуем ответить на карточку. Нажмите на кнопку с сердечком и напишите ваш ответ под ней.",
+      "text_step_4": "Это страница диалогов. На ней вы можете найти все ваши диалоги по всем карточкам. С помощью кнопки на карточке вы можете раскрыть диалог. Когда кто-нибудь ответит вы получите оповещение.",
+      "text_step_5": "Это страница с вашими карточками. Здесь вы можете найти все карточки что вы создали, а так же создать новые карточки.",
+      "text_step_6": "Теперь давайте попробуем создать вашу первую карточку. Для того что бы открыть окно создания карточки нажмите на иконку плюса в правом нижнем углу.",
+      "text_step_7": "В этом окне вы можете добавить заголовок карточки и её текст. Так же вы можете добавить тэги, либо из списка уже имеющихся тэгов. либо создать новый.",
+      "text_step_8": "Отлично! Очень скоро кто-нибудь найдёт вашу карточку  и ответит на неё. А так же это означает что мы только что закончили наш туториал, теперь вы можете полностью погрузиться в Shwabler. Надеемся что будет весело!"
+    },
+    "components": {
+      "feed": {
+        "welcome_card_title": "This is card",
+        "welcome_card_text": "You can skip it by clicking the cross button",
+        "like_card_text": "",
+        "like_card_title": "Do you like Shwabler?"
+      },
+      "dialogs": {
+      }
+    }
+  }
 }

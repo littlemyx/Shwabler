@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import Message from "./Message.vue"
-import AnswerInput from "./AnswerInput.vue"
+import Message from "@/components/Message.vue"
+import AnswerInput from "@/components/AnswerInput.vue"
 
 export default {
   components: {
@@ -43,7 +43,7 @@ export default {
 
   computed: {
     messages() {
-      return this.$store.getters["messages/messages"](this.id)
+      return this.$store.getters["tutorial/appState"].cards[0].messages
     }
   },
   mounted() {

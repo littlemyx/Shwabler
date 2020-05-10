@@ -9,7 +9,7 @@
     />
     <div v-else>
       <div class="title">
-        {{ $t("settings") | capitalize }}
+        {{ $t("settings_name") | capitalize }}
       </div>
       <div>
         <v-switch v-model="notifications" :label="`${$t('notification_setting_label')}` | capitalize" ripple flat color="shwabler"/>
@@ -17,6 +17,13 @@
       <div>
         <v-btn :loading="isSaving" depressed dark small color="shwabler" @click="save">{{ $t("save")|uppercase }}</v-btn>
       </div>
+    </div>
+
+    <div class="tutorial">
+      <div class="title">
+        {{ $t("settings.tutorial") | capitalize }}
+      </div>
+      <v-btn depressed dark small color="shwabler" @click="tryAgain">{{ $t("try_again")|uppercase }}</v-btn>
     </div>
   </div>
 </template>
@@ -49,6 +56,9 @@ export default {
       this.$store.dispatch("settings/set", {
         notifications: this.notifications
       })
+    },
+    tryAgain() {
+      this.$router.push("/tutorial/feed")
     }
   },
   layout: "AppLayout"
@@ -58,5 +68,8 @@ export default {
 <style scoped>
 .title {
   font-size: 48px;
+}
+.tutorial {
+  margin-top: 16px;
 }
 </style>

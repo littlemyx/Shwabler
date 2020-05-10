@@ -5,6 +5,7 @@ const firebaseRef = firestore.collection("settings")
 export const state = () => ({
   settings: {},
   isInitialized: false,
+  isTutorial: false,
   isSaving: false,
   isLoading: true
 })
@@ -24,7 +25,7 @@ export const mutations = {
     state.isLoading = payload
   },
   setInitialized(state, payload) {
-    state.initialized = payload
+    state.isInitialized = payload
   }
 }
 
@@ -52,6 +53,7 @@ export const actions = {
     firebaseRef.doc(rootGetters["user/userId"]).set({
       language: "en",
       notifications: true,
+      isFirstTime: true,
       lastNotification: new timestamp.fromDate(new Date())
     })
   },
@@ -65,6 +67,12 @@ export const actions = {
       .finally(() => {
         commit("setSaveLoading", false)
       })
+  },
+  setSettingsAsync({ rootGetters, state }, payload) {
+    firebaseRef.doc(rootGetters["user/userId"]).update({
+      ...state.settings,
+      ...payload
+    })
   },
   initFetch({ dispatch, commit, state }) {
     return new Promise(resolve => {
@@ -85,6 +93,8 @@ export const getters = {
   lastNotification: state => state.settings.lastNotification,
   language: state => state.settings.language,
   notifications: state => state.settings.notifications,
+  isFirstTime: state => state.settings.isFirstTime,
+  isTutorial: state => state.isTutorial,
   isSaving: state => state.isSaving,
   isLoading: state => state.isLoading
 }
