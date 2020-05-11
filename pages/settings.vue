@@ -9,7 +9,7 @@
     />
     <div v-else>
       <div class="title">
-        {{ $t("settings_name") | capitalize }}
+        {{ $t("settings.settings_name") | capitalize }}
       </div>
       <div>
         <v-switch v-model="notifications" :label="`${$t('notification_setting_label')}` | capitalize" ripple flat color="shwabler"/>
