@@ -53,7 +53,21 @@ module.exports = {
     color: "#A01259",
     background: "#fafafa"
   },
-  modules: ["@nuxtjs/router-extras", "@nuxtjs/pwa"],
+  modules: [
+    "@nuxtjs/router-extras",
+    "@nuxtjs/pwa",
+    [
+      "@nuxtjs/yandex-metrika",
+      {
+        id: "62721739",
+        webvisor: true
+        // clickmap:true,
+        // useCDN:false,
+        // trackLinks:true,
+        // accurateTrackBounce:true,
+      }
+    ]
+  ],
   icon: {
     iconSrc: "static/icons/icon.png"
   },
