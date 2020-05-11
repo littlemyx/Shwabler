@@ -19,6 +19,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.0.0",
     "@mdi/font": "^3.9.97",
+    "@nuxtjs/google-analytics": "^2.2.3",
     "@nuxtjs/pwa": "^3.0.0-beta.16",
     "@nuxtjs/router-extras": "^0.1.0",
     "@nuxtjs/svg": "^0.1.6",

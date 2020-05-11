@@ -60,11 +60,17 @@ module.exports = {
       "@nuxtjs/yandex-metrika",
       {
         id: "62721739",
-        webvisor: true
-        // clickmap:true,
-        // useCDN:false,
-        // trackLinks:true,
-        // accurateTrackBounce:true,
+        webvisor: true,
+        clickmap: true,
+        useCDN: false,
+        trackLinks: true,
+        accurateTrackBounce: true
+      }
+    ],
+    [
+      "@nuxtjs/google-analytics",
+      {
+        id: "UA-165927846-1"
       }
     ]
   ],
