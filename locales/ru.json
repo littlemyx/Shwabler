@@ -9,7 +9,6 @@
   "exit": "выйти",
   "login": "вход",
   "signup": "Зарегистрироваться",
-  "send_feedback": "Отправить отзыв",
   "enter": "Вход",
   "delete": "Удалить",
   "new_card_placeholder_head": "Заголовок",
@@ -45,15 +44,24 @@
   "exit_tutorial_text": "Вы хотите выйти? Вы всегда можете попробовать ещё раз из раздела настроек.",
   "continue_tutorial": "продолжить обучение",
   "exit_tutorial": "закрыть обучение",
-  "try_again":"посмотреть туториал",
+  "try_again": "посмотреть туториал",
   "input_tooltip_first_row": "Нажмите <code>Enter</code> для отправки сообщения",
   "input_tooltip_second_row": "Нажмите <code>Shift+Enter</code> для переноса строки",
+  "help": {
+    "help_name": "помощь",
+    "tutorial": "туториал",
+    "feedback": "отзыв",
+    "send_feedback": "отправить отзыв",
+    "also_send_feedback_to": "вы так же можете отправить отзыв на электронную почту:",
+    "send_anonymously": "отправить анонимно",
+    "close": "закрыть",
+    "send": "отправить"
+  },
   "settings": {
-    "settings_name": "настройки",
-    "tutorial" : "туториал"
+    "settings_name": "настройки"
   },
   "tutorial": {
-    "tooltip":{
+    "tooltip": {
       "next_button_text": "далее",
       "previous_button_text": "назад",
       "close_button": "закрыть туториал",
@@ -74,8 +82,7 @@
         "like_card_text": "",
         "like_card_title": "Do you like Shwabler?"
       },
-      "dialogs": {
-      }
+      "dialogs": {}
     }
   }
 }

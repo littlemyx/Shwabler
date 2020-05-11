@@ -49,16 +49,6 @@
             <LanguageSelector />
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile class="feedback">
-          <v-list-tile-content>
-            <v-list-tile-title>
-              {{ $t("send_feedback") | capitalize }}
-              <a class="feedbackEmail" href="mailto:feedback@shwabler.com">
-                feedback@shwabler.com
-              </a>
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="indigo-purple" dark fixed app>
@@ -159,6 +149,13 @@ export default {
           title: this.$t("settings.settings_name"),
           to: "/settings",
           isAuth: true
+        },
+        {
+          icon: "help_outline",
+          id: "help",
+          title: this.$t("help.help_name"),
+          to: "/help",
+          isAuth: true
         }
       ].filter(item => item.isAuth === !!this.$store.state.user.user)
     },
@@ -211,11 +208,6 @@ export default {
     url("../assets/fonts/DS-Digital.woff?v=4.4.0") format("woff"),
     url("../assets/fonts/DS-Digital.ttf?v=4.4.0") format("truetype"),
     url("../assets/fonts/DS-Digital.svg?v=4.4.0#futuranewbook") format("svg");
-}
-
-.feedback {
-  position: absolute;
-  bottom: 0;
 }
 
 .feedbackEmail {

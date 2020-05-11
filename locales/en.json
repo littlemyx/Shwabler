@@ -9,7 +9,6 @@
   "exit": "exit",
   "login": "login",
   "signup": "Register",
-  "send_feedback": "send your feedback to",
   "enter": "Enter",
   "delete": "Delete",
   "new_card_placeholder_head": "Header of your card",
@@ -32,7 +31,6 @@
   "dislike_word": "...Or skip ╳",
   "answerWord": "Answer...",
   "discussWord": "Chat!",
-  
   "save": "save",
   "welcome": "welcome",
   "welcome_to": "welcome to",
@@ -46,15 +44,24 @@
   "exit_tutorial_text": "Do you want to exit? You always can try again from the settings page.",
   "continue_tutorial": "continue tutorial",
   "exit_tutorial": "exit tutorial",
-  "try_again":"try again",
+  "try_again": "try again",
   "input_tooltip_first_row": "Press <code>Enter</code> to send message",
   "input_tooltip_second_row": "Press <code>Shift+Enter</code> to add new line",
+  "help": {
+    "help_name": "help",
+    "tutorial": "tutorial",
+    "feedback": "feedback",
+    "send_feedback": "send feedback",
+    "also_send_feedback_to": "also you can send us your feedback with email:",
+    "send_anonymously": "send anonymously",
+    "close": "close",
+    "send": "send"
+  },
   "settings": {
-    "settings_name": "settings",
-    "tutorial" : "tutorial"
+    "settings_name": "settings"
   },
   "tutorial": {
-    "tooltip":{
+    "tooltip": {
       "next_button_text": "next",
       "previous_button_text": "previous",
       "close_button": "close tutorial",
@@ -75,8 +82,7 @@
         "like_card_text": "",
         "like_card_title": "Do you like Shwabler?"
       },
-      "dialogs": {
-      }
+      "dialogs": {}
     }
   }
 }
