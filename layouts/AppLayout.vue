@@ -63,7 +63,7 @@
     </v-content>
     <v-footer color="grey" class="appFooter" app>
       <div class="logo">
-        <span class="white--text">&copy;&nbsp;</span>
+        <span class="white--text">Made by</span>
         <span class="white--text digitalText">
           <a class="teamLink" href="http://631am.com/" target="_blabk">
             6
