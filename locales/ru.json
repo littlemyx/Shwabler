@@ -1,4 +1,7 @@
 {
+  "email": "электронная почта",
+  "password": "пароль",
+  "clear": "очистить",
   "search": "искать",
   "select_language": "выбор языка",
   "feed": "поток",
@@ -24,6 +27,7 @@
   "free_fish": "это бесплатно",
   "more_info": "узнать больше про Shwabler",
   "have_no_account_question": "ещё нет аккаунта",
+  "already_have_account_question": "уже есть аккаунт",
   "orLogin": "или",
   "continue_with_facebook": "войти через Facebook",
   "create_word": "Создавай...",
@@ -36,8 +40,8 @@
   "welcome_to": "добро пожаловать в",
   "show_me": "покажите мне",
   "no_thank_you": "нет, спасибо",
-  "next": "next",
-  "previous": "previous",
+  "next": "далее",
+  "previous": "назад",
   "welcome_text": "Welocome to Shwabler! Here you can do things, or not. Also you can close it and return next day. BTW call your parents as soon as possible, they are loving you missing so much. Click 'SHOW ME' if you want to see the tutorial. 'NO, THANK YOU' leads you directly to shwabler and skips the tutorial",
   "notification_setting_label": "получать уведомления по электронной почте",
   "exit_tutorial_title": "Выйти из обучения?",
@@ -47,6 +51,13 @@
   "try_again": "посмотреть туториал",
   "input_tooltip_first_row": "Нажмите <code>Enter</code> для отправки сообщения",
   "input_tooltip_second_row": "Нажмите <code>Shift+Enter</code> для переноса строки",
+  "welcome_slogan_text": {
+    "row1": "Место для общения и знакомста.",
+    "row2": "Тут вы можете выразить свою точку зрения на любые темы, не боясь быть осужденым или осмеянным.",
+    "row3": "Познакомиться с другими людьми, их точками зрения и тем что их интересует.",
+    "row4": "И всё это совершенно",
+    "anonymous": "анонимно"
+  },
   "help": {
     "help_name": "помощь",
     "tutorial": "туториал",

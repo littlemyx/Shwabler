@@ -6,8 +6,8 @@
           <v-text-field
             v-model="email"
             :rules="emailRules"
+            :label="$t('email') | capitalize"
             color="dark-shwabler"
-            label="Email"
             validate-on-blur
             @keyup.enter.exact="submit"
           />
@@ -15,8 +15,8 @@
             v-model="password"
             :rules="passwordRules"
             :type="'password'"
+            :label="$t('password') | capitalize"
             color="dark-shwabler"
-            label="Password"
             validate-on-blur
             @keyup.enter.exact="submit"
           />
@@ -35,7 +35,7 @@
                 color="purple"
                 indeterminate
               />
-              <span v-else>{{ text }}</span>
+              <span v-else>{{ $t("login") }}</span>
             </v-btn>
             <v-spacer/>
           </v-card-actions>
@@ -83,7 +83,6 @@ export default {
   },
   data: () => ({
     valid: true,
-    text: "login",
     isLoading: false,
     email: "",
     emailRules: [
