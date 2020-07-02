@@ -56,6 +56,7 @@ module.exports = {
   modules: [
     "@nuxtjs/router-extras",
     "@nuxtjs/pwa",
+    "@nuxtjs/device",
     [
       "@nuxtjs/yandex-metrika",
       {

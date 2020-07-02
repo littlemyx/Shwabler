@@ -1,4 +1,7 @@
 {
+  "email": "email",
+  "password": "password",
+  "clear": "clear",
   "search": "search",
   "select_language": "select language",
   "feed": "feed",
@@ -24,6 +27,7 @@
   "free_fish": "it is free",
   "more_info": "learn more about Shwabler",
   "have_no_account_question": "don't have an account yet",
+  "already_have_account_question": "already have an account",
   "orLogin": "or",
   "continue_with_facebook": "continue with Facebook",
   "create_word": "Create...",
@@ -47,6 +51,13 @@
   "try_again": "try again",
   "input_tooltip_first_row": "Press <code>Enter</code> to send message",
   "input_tooltip_second_row": "Press <code>Shift+Enter</code> to add new line",
+  "welcome_slogan_text": {
+    "row1": "A place for communication and dating.",
+    "row2": "Here you can express your point of view on any topic without fear of being condemned or ridiculed.",
+    "row3": "Get to know other people, their points of view and what interests them.",
+    "row4": "And all this is completely.",
+    "anonymous": "anonymous"
+  },
   "help": {
     "help_name": "help",
     "tutorial": "tutorial",
