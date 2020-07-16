@@ -33,7 +33,7 @@
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-vue": "^4.7.1",
     "firebase": "^5.7.2",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.19",
     "nuxt": "^2.6.3",
     "nuxt-material-design-icons": "^1.0.4",
     "prettier": "^1.14.3",
