@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import TestCard from "../components/TestCard.vue"
-const { colors } = require("../assets/data/colors.json")
+import TestCard from "@/components/TestCard.vue"
+const { colors } = require("@/assets/data/colors.json")
 
 export default {
   components: {

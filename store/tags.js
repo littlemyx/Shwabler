@@ -1,4 +1,4 @@
-const { colors } = require("../assets/data/colors.json")
+const { colors } = require("@/assets/data/colors.json")
 import { firestore, timestamp, fieldvalue } from "@/services/fireinit.js"
 
 export const state = () => ({

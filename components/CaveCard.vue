@@ -48,7 +48,7 @@
 import InputText from "./InputText.vue"
 import Card from "./Card.vue"
 import TagList from "./Tags"
-const { colors } = require("../assets/data/colors.json")
+const { colors } = require("@/assets/data/colors.json")
 
 export default {
   components: {

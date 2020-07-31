@@ -41,7 +41,7 @@ export default {
     },
     nextClickHandler() {
       if (this.$store.getters["tutorial/isLastStep"]) {
-        this.$router.push("/feed")
+        this.$router.push("/app/feed")
       } else {
         this.$store.commit("tutorial/increaseStep")
       }

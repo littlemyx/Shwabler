@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import RouterLink from "../components/RouterLink"
+import RouterLink from "@/components/RouterLink"
 
 export default {
   components: {

@@ -22,7 +22,7 @@
 </template>
 
 <router lang="yaml">
-    path: /settings
+    path: /app/settings
 </router>
 
 <script>

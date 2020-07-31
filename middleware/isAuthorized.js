@@ -9,7 +9,7 @@ export default function({ store, redirect, route }) {
       route.name === "index" ||
       route.name === "welcome")
   ) {
-    redirect("/feed")
+    redirect("/app/feed")
     console.log("auth")
   }
   if (

@@ -35,7 +35,7 @@
 
 <script>
 import CaveCard from "../components/CaveCard.vue"
-import Card from "../components/Card.vue"
+import Card from "@/components/Card.vue"
 
 export default {
   components: {

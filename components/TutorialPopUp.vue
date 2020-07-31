@@ -57,7 +57,7 @@ export default {
     showClickHandler() {
       this.$store.dispatch("settings/setSettingsAsync", { isFirstTime: false })
       // this.$store.dispatch("settings/set")
-      this.$router.push("/tutorial/feed")
+      this.$router.push("/app/tutorial/feed")
     },
     closeClickHandler() {
       this.$store.dispatch("settings/setSettingsAsync", { isFirstTime: false })

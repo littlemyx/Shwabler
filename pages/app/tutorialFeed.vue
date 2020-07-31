@@ -12,7 +12,7 @@
 </template>
 
 <router lang="yaml">
-    path: /tutorial/feed
+    path: /app/tutorial/feed
 </router>
 
 <script>

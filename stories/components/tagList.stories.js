@@ -5,8 +5,8 @@ import { linkTo } from "@storybook/addon-links"
 import Vuex from "vuex"
 import VueI18n from "vue-i18n"
 
-import TagList from "../../components/Tags"
-import tmpTagPull from "../../components/Tags/tmpTag.js"
+import TagList from "@/components/Tags"
+import tmpTagPull from "@/components/Tags/tmpTag.js"
 
 storiesOf("Components/TagList", module)
   .add("editable", () => ({

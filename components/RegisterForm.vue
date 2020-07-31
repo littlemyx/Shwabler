@@ -39,8 +39,8 @@
 <script>
 // import axios from 'axios';
 import { auth } from "@/services/fireinit.js"
-import RouterLink from "../components/RouterLink"
-import NotificationsList from "../components/NotificationsList"
+import RouterLink from "@/components/RouterLink"
+import NotificationsList from "@/components/NotificationsList"
 
 export default {
   components: {

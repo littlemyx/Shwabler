@@ -98,7 +98,7 @@
 <script>
 import arrDiff from "arr-diff"
 
-const { colors } = require("../assets/data/colors.json")
+const { colors } = require("@/assets/data/colors.json")
 
 export default {
   props: {

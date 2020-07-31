@@ -1,6 +1,6 @@
 export default [
   {
-    route: "/tutorial/feed",
+    route: "/app/tutorial/feed",
     firstCard: {
       text: "tutorial.components.feed.welcome_card_text",
       title: "tutorial.components.feed.welcome_card_title",
@@ -22,7 +22,7 @@ export default [
     isCardsLoading: false
   },
   {
-    route: "/tutorial/feed",
+    route: "/app/tutorial/feed",
     firstCard: {
       text: "tutorial.components.feed.welcome_card_text",
       title: "tutorial.components.feed.welcome_card_title",
@@ -44,7 +44,7 @@ export default [
     isCardsLoading: false
   },
   {
-    route: "/tutorial/feed",
+    route: "/app/tutorial/feed",
     firstCard: {
       text: "tutorial.components.feed.welcome_card_text",
       title: "tutorial.components.feed.welcome_card_title",
@@ -66,7 +66,7 @@ export default [
     isCardsLoading: false
   },
   {
-    route: "/tutorial/feed",
+    route: "/app/tutorial/feed",
     firstCard: {
       text: "tutorial.components.feed.like_card_text",
       title: "tutorial.components.feed.like_card_title",
@@ -88,7 +88,7 @@ export default [
     isCardsLoading: false
   },
   {
-    route: "/tutorial/dialogs",
+    route: "/app/tutorial/dialogs",
     cards: [
       {
         messages: [],
@@ -114,7 +114,7 @@ export default [
     isCardsLoading: false
   },
   {
-    route: "/tutorial/cards",
+    route: "/app/tutorial/cards",
     cards: [
       {
         author_id: "i2MLC6Pb24R1oe4NVs7ntyJcNkB2",
@@ -132,7 +132,7 @@ export default [
     isCardsLoading: false
   },
   {
-    route: "/tutorial/cards",
+    route: "/app/tutorial/cards",
     cards: [
       {
         author_id: "i2MLC6Pb24R1oe4NVs7ntyJcNkB2",
@@ -150,7 +150,7 @@ export default [
     isCardsLoading: false
   },
   {
-    route: "/tutorial/cards",
+    route: "/app/tutorial/cards",
     cards: [
       {
         author_id: "i2MLC6Pb24R1oe4NVs7ntyJcNkB2",
@@ -168,7 +168,7 @@ export default [
     isCardsLoading: false
   },
   {
-    route: "/tutorial/cards",
+    route: "/app/tutorial/cards",
     cards: [
       {
         author_id: "i2MLC6Pb24R1oe4NVs7ntyJcNkB2",

@@ -1,4 +1,4 @@
-const { colors } = require("../assets/data/colors.json")
+const { colors } = require("@/assets/data/colors.json")
 import { firestore, timestamp } from "@/services/fireinit.js"
 
 const refTags = firestore.collection("tags")

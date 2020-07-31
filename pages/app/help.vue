@@ -70,7 +70,7 @@
 </template>
 
 <router lang="yaml">
-    path: /help
+    path: /app/help
 </router>
 
 <script>

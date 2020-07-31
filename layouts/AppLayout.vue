@@ -32,7 +32,7 @@
             <v-icon v-html="item.icon" />
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-if="item.to !== '/dialogs'" v-text="item.title.toUpperCase()"/>
+            <v-list-tile-title v-if="item.to !== '/app/dialogs'" v-text="item.title.toUpperCase()"/>
             <div v-else >{{ item.title.toUpperCase() }}{{ unreadCount }}</div>
           </v-list-tile-content>
         </v-list-tile>
@@ -124,17 +124,22 @@ export default {
     },
     items() {
       return [
-        { icon: "email", title: this.$t("feed"), to: "/feed", isAuth: true },
+        {
+          icon: "email",
+          title: this.$t("feed"),
+          to: "/app/feed",
+          isAuth: true
+        },
         {
           icon: "list",
           title: this.$t("my_cards"),
-          to: "/cards",
+          to: "/app/cards",
           isAuth: true
         },
         {
           icon: "chat",
           title: this.$t("dialogs"),
-          to: "/dialogs",
+          to: "/app/dialogs",
           isAuth: true
         },
         { icon: "apps", title: this.$t("login"), to: "/login", isAuth: false },
@@ -147,14 +152,14 @@ export default {
         {
           icon: "settings",
           title: this.$t("settings.settings_name"),
-          to: "/settings",
+          to: "/app/settings",
           isAuth: true
         },
         {
           icon: "help_outline",
           id: "help",
           title: this.$t("help.help_name"),
-          to: "/help",
+          to: "/app/help",
           isAuth: true
         }
       ].filter(item => item.isAuth === !!this.$store.state.user.user)

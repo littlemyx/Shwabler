@@ -5,11 +5,11 @@
 </template>
 
 <router lang="yaml">
-    path: /tutorial/dialogs
+    path: /app/dialogs
 </router>
 
 <script>
-import WardrobeList from "@/components/Tutorial/WardrobeList.vue"
+import WardrobeList from "@/components/WardrobeList.vue"
 
 export default {
   // fetch({ store }) {
@@ -28,6 +28,6 @@ export default {
       console.log("log out")
     }
   },
-  layout: "Tutorial"
+  layout: "AppLayout"
 }
 </script>

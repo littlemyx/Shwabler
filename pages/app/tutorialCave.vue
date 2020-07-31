@@ -79,15 +79,15 @@
 </template>
 
 <router lang="yaml">
-    path: /cards
+    path: /app/tutorial/cards
 </router>
 
 <script>
-import CaveList from "../components/CaveList.vue"
-import Card from "../components/Card.vue"
-import Chips from "../components/Chips.vue"
-import TagList from "../components/Tags"
-import InputText from "../components/InputText.vue"
+import CaveList from "@/components/Tutorial/CaveList.vue"
+import Card from "@/components/Card.vue"
+import Chips from "@/components/Chips.vue"
+import TagList from "@/components/Tags"
+import InputText from "@/components/InputText.vue"
 // <InputText label="Header of your card" slot-scope="head" slot="header" v-bind:value="head.value.title" v-bind:dark="false" v-bind:counter="50"/>
 // <InputText label="Main plot goes here" v-model="newCard.text" v-bind:dark="false" v-bind:counter="400"/>
 export default {
@@ -124,7 +124,7 @@ export default {
       return this.$store.state.cave.newCardText
     },
     cards() {
-      return this.$store.state.cave.caveList
+      return this.$store.getters["tutorial/appState"].cards
     },
     searchTags() {
       return this.$store.getters["tags/result"]
@@ -146,6 +146,7 @@ export default {
       this.dialog = true
       this.$store.commit("cave/setNewCardTitle", "")
       this.$store.commit("cave/setNewCardText", "")
+      this.$store.commit("tutorial/goToStep", { stepNumber: 7 })
     },
     tagAdd(event) {
       this.$store.commit("cave/addNewTag", event)
@@ -281,6 +282,7 @@ export default {
       this.newCardTagsText = ""
       this.$store.commit("cave/setSearchTags", {})
       this.$store.commit("cave/setNewTags", {})
+      this.$store.commit("tutorial/goToStep", { stepNumber: 6 })
     },
     inputTitle(value) {
       this.$store.commit("cave/setNewCardTitle", value)
@@ -344,7 +346,7 @@ export default {
       this.newCardTagsText = event
     }
   },
-  layout: "AppLayout"
+  layout: "Tutorial"
 }
 </script>
 

@@ -171,28 +171,28 @@ export default {
           icon: "email",
           id: "feed",
           title: this.$t("feed"),
-          to: "/tutorial/feed",
+          to: "/app/tutorial/feed",
           isAuth: true
         },
         {
           icon: "list",
           id: "cards",
           title: this.$t("my_cards"),
-          to: "/tutorial/cards",
+          to: "/app/tutorial/cards",
           isAuth: true
         },
         {
           icon: "chat",
           id: "dialogs",
           title: this.$t("dialogs"),
-          to: "/tutorial/dialogs",
+          to: "app//tutorial/dialogs",
           isAuth: true
         },
         {
           icon: "settings",
           id: "settings",
           title: this.$t("settings.settings_name"),
-          to: "/settings",
+          to: "/app/settings",
           isAuth: true
         },
         {

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import RouterLink from "../components/RouterLink"
+import RouterLink from "@/components/RouterLink"
 import NotificationsList from "@/components/NotificationsList"
 import RegisterForm from "@/components/RegisterForm"
 

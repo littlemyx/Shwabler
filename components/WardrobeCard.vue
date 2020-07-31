@@ -63,7 +63,7 @@
 import Card from "./Card.vue"
 import TagList from "./Tags"
 import DialogBody from "./DialogBody.vue"
-const { colors } = require("../assets/data/colors.json")
+const { colors } = require("@/assets/data/colors.json")
 
 export default {
   components: {

@@ -14,11 +14,11 @@
 </template>
 
 <router lang="yaml">
-    path: /feed
+    path: /app/feed
 </router>
 
 <script>
-import Waterfall from "../components/Waterfall.vue"
+import Waterfall from "@/components/Waterfall.vue"
 
 export default {
   // fetch({ store }) {

@@ -2,9 +2,9 @@
 
 export const state = () => ({
   items: [
-    { icon: "email", title: "feed", to: "/feed", isAuth: true },
-    { icon: "home", title: "My cards", to: "/cards", isAuth: true },
-    { icon: "list", title: "Dialogs", to: "/dialogs", isAuth: true },
+    { icon: "email", title: "feed", to: "/app/feed", isAuth: true },
+    { icon: "home", title: "My cards", to: "/app/cards", isAuth: true },
+    { icon: "list", title: "Dialogs", to: "/app/dialogs", isAuth: true },
     { icon: "apps", title: "Login", to: "/login", isAuth: false },
     { icon: "apps", title: "SignUp", to: "/signup", isAuth: false }
   ]
